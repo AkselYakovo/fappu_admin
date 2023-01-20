@@ -1,0 +1,132 @@
+.children-website-modal {
+    display: grid;
+    grid-template-columns: 1fr 1.250fr;
+    grid-template-rows: 1fr;
+
+    width: 700px;
+    height: 500px;
+    padding: 0;
+
+    z-index: 7;
+
+    .picture {
+        position: relative;
+
+        overflow: hidden;
+
+        background-color: gray;
+
+        .embed-picture {
+            display: none;
+            height: 100%;
+
+            position: absolute;
+        }
+
+        .logotype {
+            @include center-x-abs;
+
+            position: absolute;
+            bottom: 20px;
+
+            width: 175px;
+
+            visibility: hidden;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        button.add-picture {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border: 0;
+            
+
+            background-color: $outlines-gray;
+
+            transition: background-color 125ms linear,
+                        outline 50ms linear 150ms;
+
+
+            &:hover,
+            &:focus {
+                svg {
+                    fill: $deactivated-gray;
+                }
+                p {
+                    color: $deactivated-gray;
+                }
+            }
+
+            &:active {
+                background-color: lightgray;
+            }
+
+            svg {
+                fill: $secondary-gray;
+                margin-bottom: 65px;
+                transition: fill 125ms linear;
+            }
+
+            p {
+                font-family: 'Roboto Condensed Regular';
+                font-size: 28px;
+
+                letter-spacing: 0.025em;
+                color: $secondary-gray;
+
+                transition: color 125ms linear;
+            }
+        }
+
+        .controls {
+            display: none;
+
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+    }
+}
+
+.children-website-modal .information-input {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+
+    position: relative;
+
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:first-child { margin-top: 100px; margin-bottom: 70px; }
+    }
+
+    span.label {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        text-transform: uppercase;
+    }
+
+
+    button.add {
+        @include center-x-abs;
+
+        position: absolute;
+
+        bottom: 20px;
+    }
+}
+

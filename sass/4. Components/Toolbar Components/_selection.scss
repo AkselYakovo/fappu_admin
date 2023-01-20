@@ -1,0 +1,112 @@
+.selection {
+    position: relative;
+
+    width: 180px;
+    height: 40px;
+
+    font-family: 'Roboto Condensed Regular';
+    font-size: 18px;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    
+    color: $fappu-purple;
+
+    .main-bar {
+        position: relative;
+        z-index: 4;
+
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        padding: 0 15px 0 20px;
+        border: solid $fappu-purple 0.75px;
+        border-radius: 100px;
+
+        background-color: $classic-w;
+
+        cursor: pointer;
+
+        .label {
+            flex: 1 1 auto;
+            
+            font-family: inherit;
+
+            letter-spacing: inherit;
+            text-overflow: clip;
+            
+            white-space: nowrap;
+            overflow: hidden;
+            
+            color: inherit;
+
+            &::selection {
+                background-color: transparent;
+            }
+        }
+
+        svg {
+            fill: $fappu-purple;
+            
+        }
+    }
+
+    .options-list {
+        @include fix-box;
+
+        display: none;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+
+        width: 100%;
+
+        padding-top: 40px;
+        border: 1px solid $fappu-purple;
+        border-radius: 25px 25px 22px 22px;
+
+        overflow: hidden;
+
+        .option {
+            margin-bottom: 1px;
+            padding: 10px 0;
+
+            text-align: center;
+
+            background-color: $classic-w;
+            
+            box-shadow: 0 1px 0 $outlines-gray;
+            
+            cursor: pointer;
+
+            &:nth-last-child(1) {
+                box-shadow: 0;
+            }
+
+            &::selection {
+                background-color: transparent;
+            }
+
+            &:hover {
+                background-color: $bone;
+            }
+
+        }
+
+        .option--active {
+            background-color: $bone;
+        }
+    }
+
+    
+}
+
+
+.selection--options-active {
+    .options-list {
+        display: block;
+    }
+}

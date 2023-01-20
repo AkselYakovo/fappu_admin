@@ -1,0 +1,146 @@
+main article.card-websites-accounts-listing {
+    @include fix-box;
+
+    flex: 0 0 90%;
+
+    margin: 0;
+}
+
+main article.card-website-accounts-listing {
+    width: 100%;
+    padding: 0 0 20px 0;
+    margin: 0;
+
+    background-color: $bone;
+
+    overflow: visible;
+
+    & > * { margin-bottom: 0; }
+}
+
+.card-website-accounts-listing .header {
+    padding: 20px;
+
+    background-color: $classic-k;
+
+    .site-logo {
+        display: inline-block;
+        height: 165px;
+        margin-right: 5px;
+        img {
+            height: 100%;
+        }
+    }
+
+    .site-info {
+        display: inline-block;
+        color: $classic-w;
+
+        .title {
+            font-family: 'Work Sans Regular';
+            font-size: 20px;
+            
+            letter-spacing: 0.10em;
+            margin-bottom: 3px;
+        }
+
+        .code {
+            font-family: 'Work Sans Bold';
+            font-size: 60px;
+
+            letter-spacing: 0.1em;
+
+            margin-left: -2px;
+            margin-bottom: 7px;
+        }
+
+        .accounts {
+            font-family: 'Work Sans Light';
+            font-size: 16px;
+
+            letter-spacing: 0.02em;
+
+            margin-left: 2px;
+        }
+
+        .toolbar {
+            margin-top: 20px;
+        }
+
+    }
+
+    .option-wrap {
+        float: right;
+        height: 100%;
+
+        .link-wrapper {
+            margin-bottom: auto;
+            .page-link {
+                color: $classic-w;
+                &::after {
+                    content: url('../assets/svg/launch_alt.svg');
+                }
+            }
+        }
+    }
+
+    .close-button {
+        float: left;
+        margin-left: -41px;
+        margin-top: -41px;
+    }
+}
+
+
+.card-website-accounts-listing .navigation {
+    display: flex;
+    justify-content: center;
+
+    p {
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 20px 3px;
+
+        font-family: 'Roboto Condensed Regular';
+        font-size: 12px;
+
+        letter-spacing: 0.1em;
+
+        color: $deactivated-gray;
+        
+        cursor: pointer;
+
+    }
+
+    .active {
+        color: $fappu-purple;
+    }
+}
+
+.card-website-accounts-listing section.content {
+    min-height: 700px;
+    max-height: 700px;
+
+    .active-accounts-listing,
+    .inactive-accounts-listing {
+        display: none;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        max-height: 700px;
+        overflow-y: auto;
+    }
+
+}
+
+.card-website-accounts-listing .content.active-accounts {
+    .active-accounts-listing {
+        display: flex;
+    }
+}
+.card-website-accounts-listing .content.inactive-accounts {
+    .inactive-accounts-listing {
+        display: flex;
+    }
+}
+

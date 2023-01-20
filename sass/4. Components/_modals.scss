@@ -1,0 +1,44 @@
+@import './Modal Components/new-accounts';
+@import './Modal Components/edit-account';
+@import './Modal Components/inactive_account';
+@import './Modal Components/edit-children-website';
+@import './Modal Components/new-website';
+@import './Modal Components/new-vendor';
+@import './Modal Components/reclaim';
+
+
+.modal {
+    @include modal-sh;
+    @include center-abs;
+
+    position: fixed;
+
+    background-color: $classic-w;
+    visibility: hidden;
+    animation: hide_modal 125ms linear;
+}
+
+.modal + .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+
+    visibility: hidden;
+    
+    animation: hide_modal 125ms linear;
+    
+    background-color: rgba(black, 0.25);
+}
+
+.modal.visible {
+    visibility: visible;
+    animation: show_modal 125ms linear;
+}
+
+.modal.visible + .overlay {
+    visibility: visible;
+    animation: show_modal 125ms linear;
+}

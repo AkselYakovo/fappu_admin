@@ -1,0 +1,57 @@
+.message-row {
+    @include fix-box;
+
+    display: flex;
+    width: 100%;
+    height: 115px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: 1px solid $classic-k;
+    border-bottom-right-radius: 30px;
+
+    color: $classic-k;
+
+    cursor: pointer;
+
+    .message-info {
+        flex: 1 1 325px;
+
+        .regard {
+            font-family: 'Roboto Condensed Bold';
+            font-size: 18px;
+
+            letter-spacing: 0.075em;
+
+            margin-bottom: 10px;
+        }
+
+        .date {
+            display: block;
+            font-family: 'Roboto Condensed Light';
+            font-size: 14px;
+
+            letter-spacing: 0.05em;
+            margin-left: 5px;
+        }
+
+        .email {
+            display: block;
+            font-family: 'Roboto Mono Var';
+            font-size: 14px;
+
+            letter-spacing: 0.025em;
+            margin-top: 25px;
+        }
+    }
+
+
+    .message {
+        flex: 1 1 450px;
+
+        font-family: 'Work Sans Regular';
+        font-size: 16px;
+
+        letter-spacing: -0.025em;
+        line-height: 1.333;
+    }
+}

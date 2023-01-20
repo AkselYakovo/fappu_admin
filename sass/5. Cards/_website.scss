@@ -1,0 +1,191 @@
+.card-website {
+    margin-bottom: 40px;
+}
+.card.card-website .header {
+    position: relative;
+    margin-bottom: 20px;
+
+    .site-logo {
+        width: 175px;
+        height: 175px;
+        margin: 0 auto;
+        border: 3px solid $outlines-gray;
+        border-radius: 100px;
+
+        overflow: hidden;
+
+        img {
+            position: relative;
+            top: 50%;
+            left: 50%;
+
+            width: 100%;
+
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .round, .options { position: absolute; }
+
+    .round { 
+        top: 0; 
+        left: 0; 
+    }
+
+    .options {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        top: 0;
+        right: 0;
+        button:first-child {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+
+.card.card-website .site-info {
+    margin-bottom: 50px;
+
+    .accounts {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+
+        .total-accounts,
+        .available-accounts {
+            display: flex;
+            align-items: center;
+            .counter {
+                font-family: 'Roboto Condensed Regular';
+                font-size: 24px;
+                letter-spacing: -0.025em;
+
+                margin-left: 15px;
+            }
+            svg { transform: scale(1.5); }
+        }
+
+        .total-accounts {
+            margin-right: 20px;
+            svg { fill: $deactivated-gray; }
+            .counter { color: $deactivated-gray; }
+        }
+
+        .available-accounts {
+            margin-left: 20px;
+            svg { fill: $yay;  }
+            .counter { color: $yay; }
+        }
+
+        .available-accounts.no-accounts { 
+            svg { fill: $oh-no; }
+            .counter { color: $oh-no; }
+         }
+    }
+
+    
+    .info-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        color: $classic-k;
+
+        .col {
+            display: inline-block;
+            &:nth-child(odd) { margin-right: 10px; }
+            &:nth-child(even) { margin-left: 10px; }
+        }
+
+        .label { 
+            font-family: 'Work Sans Light';
+            font-size: 16px;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+
+            margin-right: 10px;
+        }
+        .site-title {
+            font-family: 'Work Sans Regular';
+            font-size: 24px;
+            letter-spacing: 0.05em;
+        }
+        .site-code {
+            font-family: 'Work Sans Bold';
+            font-size: 96px;
+            letter-spacing: 0.075em;
+        }
+        .price {
+            font-family: 'Roboto Condensed Regular';
+            font-size: 24px;
+            letter-spacing: 0.05em;
+            sup {
+                vertical-align: super;
+                font-size: smaller;
+            }
+        }
+        .original-price { color: $oh-no; }
+        .new-price { color: $yay; }
+
+    }
+}
+
+
+.card.card-website .site-screens {
+    position: relative;
+
+    margin-bottom: 40px;
+    padding: 10px;
+
+    overflow: hidden;
+
+    .label { 
+        display: block;
+        margin-bottom: 20px;
+
+        font-family: 'Work Sans Light';
+        font-size: 18px;
+
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .toolbar { 
+        margin: 0 auto 30px auto;
+     }
+
+    .screens-wrap {
+        @include fix-box;
+        position: relative;
+        display: flex;
+        margin: 0 30px;
+        padding-bottom: 25px;
+
+        button.add-screen {
+            flex: 0 0 auto;
+        }
+
+        .screens-strip {
+            display: flex;
+            flex: 0 1 auto;
+            margin-left: 70px;
+
+            .screen {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+    }   
+}
+
+.card.card-website .link-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+}

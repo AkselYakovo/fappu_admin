@@ -1,0 +1,48 @@
+.toast {
+    @include fix-box;
+    display: flex;
+    padding: 10px;
+
+    align-items: center;
+
+    position: fixed;
+    left: 50px;
+    bottom: 50px;
+
+    background-color: $classic-k;
+    color: $classic-w;
+
+    box-shadow: 0 0 4px rgba(black, 0.07),
+                0 4px 29px rgba(black, 0.25);
+
+    overflow: hidden;
+    
+    .warningIcon {
+        @include center-y-abs;
+
+        position: absolute;
+        left: -5px;
+    }
+
+    .message {
+        max-width: 300px;
+        margin-left: 35px;
+        padding-right: 10px;
+        border-right: 1px solid $classic-w;
+
+        font-family: 'Roboto Condensed Regular';
+        font-size: 16px;
+        
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+    .closeIcon {
+        margin-left: 10px;
+        fill: $classic-w;
+
+        cursor: pointer;
+    }
+
+    
+}

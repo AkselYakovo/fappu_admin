@@ -1,0 +1,44 @@
+html {
+    background-color: $bone;
+    height: 110vh;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osc-font-smoothing: grayscale;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 50px;
+
+    & > article:nth-child(1) {
+        margin-right: 50px;
+    }
+    // article.card-data:nth-child(2) {
+    //     margin-left: 50px;
+    // }
+}
+
+* > a {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+
+    text-decoration: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+    
+    color: inherit;
+}
+
+img::selection {
+    color: transparent;
+}
+
+figure > img {
+    width: 100%;
+}

@@ -1,0 +1,123 @@
+.vendor-input {
+    position: relative;
+
+    width: 350px;
+    border: 0.75px solid $outlines-gray;
+    border-radius: 30px;
+
+    background-color: $classic-w;
+
+    .main-bar {
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+
+        .vendor__avatar {
+            @include center-y-abs;
+
+            position: absolute;
+            left: 15px;
+            
+            width: 36px;
+            height: 36px;
+            border: 1px solid $deactivated-gray;
+            border-radius: 50px;
+
+            overflow:hidden;
+
+            img {
+                @include center-abs;
+
+                position: absolute;
+
+                width: 110%;
+            }
+        }
+
+        .vendor__input {
+            flex: 1 1 auto;
+            height: 59px;
+
+            font-family: 'Work Sans Light';
+            font-size: 24px;
+
+            letter-spacing: -0.025em;
+            text-align: center;
+            text-transform: uppercase;
+
+            background: transparent;
+        }
+    }
+
+    .options-list {
+        @include fix-box;
+
+        position: absolute;
+        top: 10px;
+        left: 0;
+        z-index: -1;
+
+        display: none;
+
+        width: 100%;
+        padding-top: 49px;
+        border: 0.75px solid $outlines-gray;
+        border-radius: 30px;
+
+        background-color: $classic-w;
+        box-shadow: 0 4px 16px rgba(black, 0.09);
+        overflow: hidden;
+
+        .option {
+            @include fix-box;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 0.75px solid $outlines-gray;
+
+            background-color: $classic-w;
+
+            cursor: pointer;
+
+            &:last-child {
+                border-width: 0;
+            }
+
+            &:hover {
+                background-color: $bone;
+            }
+
+            .vendor__avatar {
+                display: block;
+                width: 36px;
+                height: 36px;
+                position: relative;
+                margin-right: 15px;
+                border-radius: 100px;
+
+                box-shadow: 1px 0 6px rgba(black, 0.16);
+                overflow: hidden;
+
+                img { transform: scale(1.125); }
+            }
+
+            .vendor__label {
+                font-family: 'Work Sans Light';
+                font-size: 24px;
+                
+                letter-spacing: -0.025em;
+
+                color: $deactivated-gray;
+            }
+        }
+
+    }
+}
+
+.vendor-input.visible-menu {
+    .options-list {
+        display: initial;
+    }
+}

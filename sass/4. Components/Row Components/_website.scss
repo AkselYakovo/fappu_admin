@@ -1,0 +1,98 @@
+.website-row a {
+    @include row-unfocused;
+    @include fix-box;
+
+    display: inline-flex;
+    align-items: center;
+
+    width: 400px;
+    height: 170px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+
+    transition: box-shadow 100ms linear;
+
+    &:hover {
+        @include row-focused;
+        .site-logo { opacity: 1; }
+    }
+
+    .site-logo {
+        width: 170px;
+        opacity: 0.36;
+        transition: opacity 100ms linear;
+
+        img {
+            width: 100%;
+        }
+
+    }
+
+    .site-info {
+        color: black;
+        padding-left: 10px;
+
+        & > * { 
+            margin-bottom: 10px;
+            color: inherit
+         }
+
+        .title {
+            font-family: 'Work Sans Regular';
+            font-size: 18px;
+            letter-spacing: 0.025em;
+        }
+
+        .code {
+            font-family: 'Work Sans Bold';
+            font-size: 38px;
+            letter-spacing: 0.075em;
+        }
+
+        .accounts {
+            display: flex;
+
+            .total-accounts,
+            .available-accounts {
+                display: flex;
+                align-items: center;
+                .counter {
+                    font-family: 'Roboto Condensed Regular';
+                    font-size: 16px;
+                    letter-spacing: -0.025em;
+
+                    margin-left: 5px;
+                }
+            }
+
+            .total-accounts {
+                margin-right: 10px;
+                svg { fill: $deactivated-gray; }
+                .counter { color: $deactivated-gray; }
+            }
+
+            .available-accounts {
+                margin-left: 10px;
+                svg { fill: $yay;  }
+                .counter { color: $yay; }
+            }
+
+            .available-accounts.no-accounts { 
+                svg { fill: $oh-no; }
+                .counter { color: $oh-no; }
+             }
+        }
+
+        .url {
+            font-family: 'Work Sans Regular';
+            font-size: 14px;
+            text-transform: lowercase;
+            letter-spacing: 0.025em;
+
+            margin-bottom: 0;
+            padding-top: 5px;
+        }
+    }
+}

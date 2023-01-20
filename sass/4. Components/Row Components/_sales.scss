@@ -1,0 +1,40 @@
+.sale-row {
+    height: 40px;
+
+    font-family: 'Roboto Condensed Regular';
+    font-size: 16px;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+
+    background-color: $classic-w;
+    color: $deactivated-gray;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: $bone;
+    }
+
+    
+
+    .sale__id {
+        text-decoration: underline;
+        color: $fappu-purple;
+    }
+    .sale__email {
+        letter-spacing: 0.05em;
+    }
+    .sale__date {
+        font-size: normal;
+    }
+    .sale__payment {
+        font-size: 18px;
+
+        color: $oh-no;
+    }
+}
+
+.sale-row.paid {
+    .sale__payment { color: $yay; }
+}

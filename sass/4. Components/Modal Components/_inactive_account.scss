@@ -1,0 +1,173 @@
+#Inactive-Account-Modal {
+   background-color: $bone;
+}
+
+.inactive-account-modal {
+    z-index: 7;
+
+    width: 900px;
+    height: 600px;
+
+    overflow: hidden;
+
+    .reactivate-button {
+        @include center-x-abs;
+        position: absolute;
+        
+        bottom: 40px;
+    }
+
+    .account-label {
+        @include center-x-abs;
+        position: absolute;
+        
+        bottom: 10px;
+
+        font-family: 'Work Sans Regular';
+        font-size: 12px;
+
+        letter-spacing: 0.025em;
+
+        color: $deactivated-gray;
+    }
+}
+
+.inactive-account-modal .content {
+    @include fix-box;
+
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    height: 85%;
+    // border: 1px solid $deactivated-gray;
+    // border-radius: 7px;
+    padding: 15px 0 50px 0;
+
+    overflow: auto;
+
+    & > *:last-child {
+        padding-bottom: 20px;
+    }
+
+    .separator {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 30px;
+
+        .line {
+            width: 150px;
+            height: 1px;
+            background-color: $secondary-gray;
+        }
+        .label {
+            margin-right: 5px; 
+            margin-left: 5px; 
+
+            font-size: 16px;
+
+            color: $secondary-gray;
+
+            &::selection {
+                background-color: transparent;
+                color: inherit;
+            }
+
+            cursor: default;
+        }
+    }
+
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin-bottom: 30px;
+
+        & > * {
+            margin-bottom: 20px;
+        }
+
+        & > *:last-child {
+            margin-bottom: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 40px;
+        }
+
+
+    }
+
+    .row.straight {
+        flex-direction: row;
+
+        & > * {
+            margin-bottom: 0;
+        }
+
+        & > *:last-child {
+            margin-left: 10px;
+        }
+    }
+
+    .expiration {
+        margin-top: -10px;
+
+        font-family: 'Roboto Condensed Regular';
+        font-size: 14px;
+        
+        letter-spacing: 0.05em;
+
+        color: $deactivated-gray;
+    }
+
+    h4.site-code {
+        font-family: 'Work Sans Bold';
+        font-size: 36px;
+
+        letter-spacing: 0.025em;
+
+        color: $deactivated-gray;
+        // box-shadow: 0 1px 5px 0px rgba(black, 0.1);
+    }
+
+    .text {
+        font-family: 'Roboto Condensed Regular';
+        font-size: 20px;
+
+        letter-spacing: 0.05em;
+
+        color: $deactivated-gray;
+
+        sup {
+            font-size: 0.75em;
+            vertical-align: super;
+        }
+    }
+
+    .account-offers {
+        display: flex;
+        align-items: center;
+
+        svg {
+            fill: $deactivated-gray;
+            margin-right: 10px;
+        }
+
+        .offers-number {
+            display: flex;
+
+            span {
+                font-family: 'Roboto Condensed Regular';
+                font-size: 32px;
+
+                color: $deactivated-gray;
+            }
+
+            .separator {
+                margin: 0 2px;
+            }
+        }
+    }
+}

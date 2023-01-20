@@ -1,0 +1,49 @@
+a {
+    text-transform: uppercase;
+    color: inherit;
+}
+
+
+.page-link {
+    display: inline-flex; 
+    align-items: center;
+
+    font-family: 'Roboto Condensed Italic';
+    font-size: 13px;
+
+    text-decoration: underline;
+    color: $fappu-purple;
+
+    &::after {
+        content: url('../assets/svg/launch.svg');
+        margin-left: 5px;
+    }
+}
+
+
+.vendor-link {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+
+    box-shadow: 0 0 7px rgba(black, 0.08);
+
+    .vendor__avatar {
+        width: 24px;
+        height: 24px;
+        margin-right: 5px;
+        border: 0.5px solid $outlines-gray;
+        border-radius: 20px;
+
+        background-position: center;
+        background-size: cover;
+    }
+
+    .vendor__label {
+        font-family: 'Roboto Condensed Regular';
+        font-size: 14px;
+
+        letter-spacing: 0.05em;
+    }
+}

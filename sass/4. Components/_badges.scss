@@ -1,0 +1,23 @@
+.badge {
+    padding: 5px 15px;
+    border-radius: 4px;
+
+    font-family: 'Roboto Mono Var';
+    font-size: 10px;
+    font-weight: 500;
+
+    color: $classic-w;
+    background-color: $outlines-gray;
+
+    cursor: pointer;
+}
+
+.badge-killed {
+    background-color: $oh-no;
+}
+.badge-expired {
+    background-color: $deactivated-gray;
+}
+.badge-active {
+    background-color: $yay;
+}

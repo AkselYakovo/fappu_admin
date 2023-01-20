@@ -1,0 +1,19 @@
+article.card-reclaims-records {
+    .content {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .pagination--dual {
+        .link {
+            width: 24px;
+            height: 24px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
+

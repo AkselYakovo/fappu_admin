@@ -1,0 +1,43 @@
+input {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline-width: 0;
+}
+
+input:hover,
+input:focus {
+    outline: 0;
+}
+
+
+// @LabelLess-Text-Input
+
+.LL {
+    width: 300px;
+    padding: 10px 5px;
+    border: 1px solid $outlines-gray;
+    border-radius: 20px;
+
+    font-size: 24px;
+    font-family: 'Roboto Condensed Light';
+    
+    letter-spacing: -0.025em;
+    text-align: center;
+
+    background-color: $classic-w;
+    color: $deactivated-gray;
+
+    &::placeholder {
+        color: $outlines-gray;
+    }
+
+    &:focus {
+        border-color: $fappu-purple;
+        color: $fappu-purple;
+        box-shadow: 0px 4px 12px 0px rgba($fappu-purple, 0.11);
+        &::placeholder {
+            color: $fappu-purple;
+        }
+    }
+}

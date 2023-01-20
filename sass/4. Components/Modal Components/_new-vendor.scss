@@ -1,0 +1,50 @@
+.new-vendor-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 750px;
+    height: 400px;
+    padding: 20px 0;
+
+    z-index: 6;
+
+    *:nth-child(n) {
+        margin-bottom: 20px;
+    }
+
+    *:last-child {
+        margin-bottom: 0;
+    }
+
+    .vendor__avatar {
+        position: relative;
+
+        width: 84px;
+        height: 84px;
+        border: 1px solid $secondary-gray;
+        border-radius: 100px;
+
+        background-color: $bone;
+        
+        cursor: pointer;
+
+        transition: background-color 125ms linear;
+
+        &:hover { background-color: $outlines-gray; }
+
+        svg {
+            @include center-abs;
+
+            position: absolute;
+
+            fill: $secondary-gray;
+        }
+    }
+
+    .submit {
+        @include center-x-abs;
+        position: absolute;
+        bottom: 25px;
+    }
+}

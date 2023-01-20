@@ -1,0 +1,178 @@
+.website-accounts-row {
+    @include fix-box;
+    @include row-unfocused;
+
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    width: 220px;
+
+    transition: box-shadow 100ms linear;
+ 
+    &:hover {
+        @include row-focused;
+    }
+
+    a > * {
+        margin-bottom: 5px;
+    }
+
+    a {
+        display: block;
+        padding: 20px;
+    }
+
+    .site-logo {
+        position: relative;
+
+        width: 140px;
+        height: 140px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid $outlines-gray;
+        border-radius: 100px;
+
+        overflow: hidden;
+
+        img {
+            @include center-abs;
+
+            position: absolute;
+            
+            width: 110%;
+        }
+    }
+
+    .site-code {
+        font-family: 'Work Sans Bold';
+        font-size: 24px;
+
+        letter-spacing: 0.05em;
+        text-align: center;
+    }
+
+    .site-total-accounts {
+        display: block;
+        margin-bottom: 0;
+
+        font-family: 'Work Sans Light';
+        font-size: 16px;
+
+        letter-spacing: 0.025em;
+        text-align: center;
+    }
+}
+
+
+.account-row {
+    @include fix-box;
+    @include row-unfocused;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    // height: 390px;
+
+    margin: 0 25px 50px 25px;
+    padding: 15px 20px 20px 20px;
+    border-radius: 5px;
+    border: 0.75px solid $outlines-gray;
+
+    background-color: $classic-w;
+
+    &:hover {
+        .edit {
+            visibility: visible;
+        }
+    }
+
+    .edit {
+        visibility: hidden;
+        margin-bottom: 20px;
+    }
+
+    .input-row {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+
+        margin-bottom: 20px;
+
+        label {
+            font-family: 'Work Sans Light';
+            font-size: 14px;
+
+            letter-spacing: 0.05em;
+            text-align: center;
+
+            margin-bottom: 10px;
+        }
+        
+        input {
+            align-self: stretch;
+            padding: 10px;
+            border: 2px solid gray;
+            border-radius: 30px;
+
+            background-color: $bone;
+
+            font-family: 'Roboto Mono Var';
+            font-size: 16px;
+            font-weight: 300;
+
+            text-align: center;
+
+            cursor: default;
+        }
+    }
+
+    .vendor-link {
+        margin-top: 10px;
+    }
+
+    .account-offers {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+
+        svg {
+            fill: $classic-k;
+            margin-right: 10px;
+        }
+
+        .offers-number {
+            display: flex;
+
+            span {
+                font-family: 'Roboto Condensed Regular';
+                font-size: 28px;
+            }
+
+            .separator {
+                margin: 0 2px;
+            }
+        }
+    }
+
+    .expiration-date {
+        font-family: 'Work Sans Regular';
+        font-size: 18px;
+
+        letter-spacing: 0.1em;
+
+        color: $deactivated-gray;
+    }
+
+
+}
+
+.account-row--inactive {
+    background-color: $bone;
+
+    .input-row {
+        input {
+            background-color: $outlines-gray;
+        }
+    }
+}

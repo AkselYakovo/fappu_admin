@@ -1,0 +1,37 @@
+.screen {
+    position: relative;
+    width: 205px;
+    height: 330px;
+    border-radius: 10px;
+
+    background-image: url('https://sm-members.bangbros.com/shoots/mydirtymaid/mda13367/screencaps/mda133671062.jpg');
+    background-size: cover;
+    background-position: center;
+
+    cursor: pointer;
+    
+    .subsite-logo {
+        position: absolute;
+        left: 50%;
+        bottom: 30px;
+
+        height: 75px;
+
+        transform: translateX(-50%);
+    }
+
+    .title {
+        position: relative;
+        top: calc(100% + 10px);
+
+        font-family: 'Roboto Mono Var', monospace;
+        font-size: 16px;
+        font-weight: 275;
+
+        letter-spacing: 0.05em;
+        text-align: center;
+        &::selection {
+            color: unset;
+        }
+    }
+}

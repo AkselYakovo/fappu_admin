@@ -1,0 +1,26 @@
+.month-option {
+    display: flex;
+
+    font-family: 'Work Sans Regular';
+    font-size: 14px;
+
+    text-align: center;
+    letter-spacing: 0.05em;
+
+    span {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 4px;
+
+        color: $deactivated-gray;
+
+        cursor: pointer;
+
+        &:first-child { margin-left: 0; }
+        &:last-child { margin-right: 0; }
+    }
+
+    span.active {
+        color: $fappu-purple;
+    }
+}

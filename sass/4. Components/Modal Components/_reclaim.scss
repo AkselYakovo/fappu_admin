@@ -1,0 +1,122 @@
+.reclaim-modal {
+    width: 550px;
+    height: 600px;
+    padding: 20px 0;
+
+    z-index: 6;
+}
+
+.reclaim-modal .information {
+    padding: 10px 20px 30px 20px;
+
+    &:nth-child(even) { background-color: $bone; }
+
+    & > * { margin-bottom: 25px; }
+
+    .heading-separator {
+        display: flex;
+
+        span {
+            padding: 0 10px;
+
+            font-family: 'Work Sans Light';
+            font-size: 16px;
+
+            letter-spacing: 0.1em;
+        }
+
+        .underline {
+            flex: 1 1 100%;
+
+            border-bottom: 1px solid black;
+        }
+    }
+
+    .row {
+        display: flex;
+
+        & > *:first-child { margin-right: auto; }
+
+        a {
+            font-family: 'Roboto Mono Var';
+            font-weight: 275;
+            font-size: 18px;
+
+            letter-spacing: 0.025em;
+            text-decoration: underline;
+
+            color: $fappu-purple;
+        }
+
+        .label-info {
+            font-family: 'Roboto Mono Var';
+            font-weight: 275;
+            font-size: 18px;
+
+            letter-spacing: 0.025em;
+            text-transform: lowercase;
+
+            color: $deactivated-gray;
+        }
+
+
+    }
+
+    .detail {
+        display: block;
+
+        font-family: 'Roboto Condensed Regular';
+        font-size: 14px;
+    
+        letter-spacing: 0.05em;
+        text-align: center;
+
+        color: $deactivated-gray;
+    }
+
+}
+
+.reclaim-modal .options {
+    display: flex;
+    justify-content: center;
+
+    padding-top: 20px;
+
+    button {
+        margin-right: 20px;
+
+        &:last-child { margin-right: 0; }
+    }
+}
+
+.replace-account-modal {
+    @include fix-box;
+
+    display: flex;
+    flex-direction: column;
+    
+
+    width: 550px;
+    // height: 335px;
+    padding: 40px 0;
+
+    z-index: 7;
+
+    .label { 
+        margin-bottom: 10px;
+
+        text-align: center;
+    }
+
+    .toolbar { 
+        align-self: center;
+
+        margin-bottom: 35px; 
+
+        &:last-of-type { margin-bottom: 40px; }
+
+        input { text-transform: none; }
+    }
+
+    button { align-self: center; }
+}

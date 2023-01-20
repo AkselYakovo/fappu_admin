@@ -1,0 +1,80 @@
+.new-account-modal {
+    @include fix-box;
+
+    z-index: 10;
+
+    width: 920px;
+    height: 500px;
+
+    .selector-phase {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        .phase {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 15px;
+
+            background-color: $outlines-gray;
+
+            transition: background-color 100ms linear 200ms;
+            
+            cursor: pointer;
+        }
+        
+        .valid {
+            background-color: $fappu-purple;
+        }
+
+        .focus {
+            background-color: rgba($fappu-purple, 0.32);
+        }
+    }
+
+    .buttons {
+        @include center-x-abs;
+
+        position: absolute;
+        bottom: 15px;
+
+        button {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        
+    }
+
+}
+
+.new-account-modal .phases {
+
+    & > * {
+        @include center-x-abs;
+
+        position: absolute;
+        top: 120px;
+        visibility: hidden;
+
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+
+        & > * { margin-bottom: 20px; }
+
+    }
+
+    .focused {
+        @include center-x-abs;
+        visibility: inherit;
+        animation: phase_to_center 200ms ease;
+    }
+
+    .had-focus {
+        visibility: hidden;
+        animation: phase_to_left 200ms ease;
+    }
+}

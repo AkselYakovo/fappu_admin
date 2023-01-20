@@ -1,0 +1,127 @@
+article.card {
+    margin-bottom: 40px;
+    padding: 20px 20px 0 20px;
+
+    background-color: $classic-w;
+    box-shadow: 0 4px 72px rgba(black, 0.04);
+
+    overflow: hidden;
+
+    transition: box-shadow 200ms ease;
+
+    &:hover {
+        box-shadow: 0px 4px 35px rgba(black, 0.08)
+    }
+
+    & > * {
+        margin-bottom: 20px;
+    }
+
+    & > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .card-heading {
+        font-family: 'Work Sans Bold';
+        font-size: 24px;
+
+        letter-spacing: 0.075em;
+        text-align: center;
+    }
+
+    .toolbars {
+        display: flex;
+        justify-content: center;
+
+        & > .toolbar {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+
+}
+
+article.card .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    max-height: 500px;
+    min-height: 300px;
+    padding: 20px 0 0 0;
+
+    overflow: auto;
+}
+
+
+article.card-main {
+    flex-grow: 1;
+    flex-basis: auto;
+}
+
+
+article.card-data {
+    display: flex;
+    flex: 0 0 322px;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.card-data .fact {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    h2 { 
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-family: 'Work Sans Regular';
+        font-size: 18px;
+
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-align: center;
+
+        color: $classic-k;
+    }
+
+    .number {
+        font-family: 'Roboto Condensed Regular';
+        font-size: 40px;
+        
+        letter-spacing: 0.075em;
+        text-align: center;
+        
+        color: $classic-k;
+    }
+
+    .number-important { 
+        color: $yay; 
+    }
+    
+    .number-err { 
+        color: $oh-no; 
+    }
+
+    .vendor-link {
+        margin-top: 10px;
+    }
+
+}
+
+.card-data .toolbar {
+    margin-top: 10px;
+}
+
+
+article.card-data-emphasized {
+    flex: 0 0 445px;
+}

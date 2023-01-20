@@ -1,0 +1,35 @@
+.searchbox {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    height: 40px;
+    padding: 0 10px 0 15px;
+    border: 0.75px solid $outlines-gray;
+    border-radius: 100px;
+    box-sizing: border-box;
+
+    input[type="text"] {
+        font-family: 'Roboto Condensed Regular';
+        font-size: 14px;
+        color: $deactivated-gray;
+        text-transform: uppercase;
+
+        flex: 1 1 auto;
+        border: 0;
+
+        &:focus {
+            color: $fappu-purple;
+            &::placeholder {
+                color: $fappu-purple;
+            }
+        }
+
+        &::placeholder {
+            color: $secondary-gray;
+        }
+    }
+
+    svg {
+        fill: $secondary-gray;
+    }
+}

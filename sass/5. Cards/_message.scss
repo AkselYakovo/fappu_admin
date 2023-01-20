@@ -1,0 +1,9 @@
+article.card-messages-listing {
+    padding: 20px;
+    flex: 1 1 auto;
+    .content {
+        flex-flow: column nowrap;
+        justify-content: stretch;
+        max-height: 500px;
+    }
+}

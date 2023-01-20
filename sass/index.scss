@@ -1,0 +1,34 @@
+
+@import './1. Vendors/reset';
+
+@import './2. Tools/typographies';
+@import './2. Tools/functions';
+@import './2. Tools/mixins';
+@import './2. Tools/animations';
+@import './2. Tools/variables';
+
+@import './3. General Use/body'; 
+@import './3. General Use/headings';
+@import './3. General Use/inputs';
+@import './3. General Use/links';
+@import './3. General Use/buttons';
+@import './3. General Use/form';
+// @import './3. General Use/footer';
+
+@import './4. Components/header';
+@import './4. Components/screens';
+@import './4. Components/toolbars';
+@import './4. Components/rows';
+@import './4. Components/badges';
+@import './4. Components/modals';
+@import './4. Components/toast';
+// @import './4. Components/loader';
+// @import './4. Components/alert';
+
+@import './5. Cards/card';
+@import './5. Cards/accounts';
+@import './5. Cards/reclaims';
+@import './5. Cards/website';
+@import './5. Cards/vendors';
+@import './5. Cards/message';
+@import './5. Cards/sales';

@@ -1,0 +1,34 @@
+.offer-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .counter {
+        font-family: 'Roboto Mono Var';
+        font-weight: 400;
+        font-size: 32px;
+
+        letter-spacing: 0.05em;
+
+        margin: 0 30px;
+    }
+
+    .round {
+        svg { fill: $classic-w; }
+    }
+
+    .round:disabled {
+        svg { fill: $outlines-gray; }
+    }
+}
+
+.offer-input.edit {
+    .label {
+        font-family: 'Roboto Mono Var';
+        font-weight: 400;
+        font-size: 32px;
+
+        letter-spacing: 0.05em;
+
+    }
+}

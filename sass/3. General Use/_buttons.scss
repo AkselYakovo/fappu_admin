@@ -1,0 +1,198 @@
+button {
+    cursor: pointer;
+    outline-width: 0;
+
+    &:active {
+        outline-width: 0;
+    }
+}
+
+.button {
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 10px;
+
+    font-family: 'Roboto Condensed Light';
+    font-size: 24px;
+    letter-spacing: 0.025em;
+
+    &:disabled {
+        border-color: $secondary-gray;
+        color: $bone;
+        background-color: $deactivated-gray;
+    }
+}
+
+.button-primary {
+    color: $classic-w;
+    background-color: $fappu-purple;
+
+    transition: background-color 150ms linear;
+
+    svg {
+        fill: $classic-w;
+    }
+}
+
+.button-secondary {
+    border: 1px solid $fappu-purple;
+    color: $fappu-purple;
+    background-color: $classic-w;
+
+    &:active {
+        background-color: $bone;
+    }
+
+    &:disabled {
+        border-color: $deactivated-gray;
+        background-color: $bone;
+        color: $deactivated-gray;
+    }
+
+    svg {
+        fill: $fappu-purple;
+    }
+}
+
+
+.button-medium {
+    padding: 7px 11px;
+    border-width: 0.75px;
+    border-radius: 9px;
+
+    font-size: 20px;
+}
+
+.button-small {
+    padding: 5px 9px;
+    border-width: 0.5px;
+    border-radius: 7px;
+
+    font-size: 16px;
+}
+
+.button-x-small {
+    padding: 5px 8px;
+    border-width: 0.4px;
+    border-radius: 5px;
+
+    font-size: 12px;
+}
+
+.round {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 100px;
+    
+    box-shadow: 0 2px 5px rgba(black, 0.2);
+
+    svg {
+        fill: $fappu-purple;
+    }
+
+    &:disabled {
+        background-color: $deactivated-gray;
+        svg { fill: $bone; }
+        cursor: unset;
+    }
+}
+
+.ico-button {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 10px 20px;
+
+    transition: box-shadow 150ms ease-out;
+
+    &:focus {
+        box-shadow: 0px 0px 0px 2px rgba($fappu-purple, 0.36);
+    }
+
+    svg {
+        fill: $classic-w;
+        margin-right: 15px;
+    }
+
+    p {
+        font-size: 20px;
+        font-family: 'Roboto Mono Var';
+        font-weight: 375;
+
+        letter-spacing: 0.025em;
+
+        color: $classic-w;
+    }
+
+}
+
+.ico-button.touched {
+    box-shadow: 0px 0px 0px 2px rgba($fappu-purple, 0.36);
+}
+
+
+button.floating {
+    position: fixed;
+    bottom: 95px;
+    right: 50px;
+
+    width: 56px;
+    height: 56px;
+    border: 0;
+    border-radius: 100px;
+
+    box-shadow: 0px 2px 7px rgba(black, 0.19);
+}
+
+// button.floating-primary {
+//     background-color: $fappu-purple;
+//     color: $classic-w;
+//     &:active {
+//         background-color: $bone;
+//     }
+// }
+
+// button.floating-secondary {
+//     background-color: $classic-w;
+//     color: $fappu-purple;
+//     &:active {
+//         background-color: $bone;
+//     }
+// }
+
+
+button.add-screen {
+    width: 205px;
+    height: 330px;
+    border: 0.25px solid $outlines-gray;
+    border-radius: 10px;
+
+    box-shadow: 0 1px 5px rgba(black, 0.1);
+    background-color: $classic-w;
+    color: $secondary-gray;
+    fill: $secondary-gray;
+
+    transition: box-shadow 125ms linear, fill 125ms linear, color 125ms linear;
+    cursor: pointer;
+
+    svg {
+        fill: inherit;
+        margin-bottom: 30px;
+    }
+
+    p {
+        font-family: 'Roboto Condensed Regular';
+        font-size: 20px;
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+
+    &:hover {
+        box-shadow: 0 1px 7px rgba(black, 0.16);
+        border-width: 0.75px;
+        color: $deactivated-gray;
+        fill: $deactivated-gray;
+    }
+    
+}
