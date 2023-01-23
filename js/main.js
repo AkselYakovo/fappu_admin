@@ -1172,7 +1172,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 }
 
 
-// # Edit account modal coding part.
+// # Edit account modal.
 if ( document.querySelector('#Edit-Account-Modal') ) 
 {
     let modal = document.querySelector('#Edit-Account-Modal');
@@ -1205,7 +1205,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     let dictionary = new Map;
     dictionary.set('Warranty Begins', '__WBEGINS');
     dictionary.set('Warranty Ends', '__WENDS');
-    dictionary.set('nickname', '__NICKNAME');
+    dictionary.set('Nickname', '__NICKNAME');
     dictionary.set('Password', '__PASSWORD');
     dictionary.set('Price Paid', '__PRICE');
     dictionary.set('Available Accounts', '__AVAILABLE_ACCOUNTS');
@@ -1253,9 +1253,6 @@ if ( document.querySelector('#Edit-Account-Modal') )
             modal.querySelector('.phases .details').classList.add('focused');
         }
     };
-
-    // Clean & reset modal.
-    // modal.flush = function() {};
 
     // Check for variations on input data.
     modal.isDirty = function(inputLabel) {
@@ -1369,6 +1366,10 @@ if ( document.querySelector('#Edit-Account-Modal') )
         request.data.append('__ACCOUNT', '1');
         request.data.append('__ACCOUNT_ID', accountID);
 
+        // Append changed values to the request.
+
+        console.log(inputsValuesUpdated)
+        
         for(const inputLabel of inputsValuesUpdated) {
             request.data.append(dictionary.get(inputLabel), inputsValues.get(inputLabel) );
         }
@@ -1489,6 +1490,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
                     inputsValuesUpdated.add(inputName, this.value);
                     modalSaveButton.removeAttribute('disabled');
                 }
+
                 else {
                     this.value = inputsValues.get(inputName);
                     console.log('Dirty But Invalid.');
@@ -1596,7 +1598,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
     });
 
 
-    // Add save button handler.
+    // + Add save button handler.
+    // # Update account.
     document.querySelector('.buttons .save-button').addEventListener('click', function(e) {
         // console.log(savedAccount);
         let request = modal.update(savedAccount);
@@ -1720,7 +1723,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
     inactiveAccountsCards.forEach( card => {
-        
+
         let editButton = card.querySelector('.edit');
         let accountID = editButton.getAttribute('data-display');
 
