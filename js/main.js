@@ -1623,8 +1623,9 @@ if ( document.querySelector('#Edit-Account-Modal') )
     
 }
 
-// Inactive account modal coding part.
+// # Inactive account modal.
 if ( document.querySelector('#Inactive-Account-Modal') ) {
+
     let modal = document.querySelector('#Inactive-Account-Modal');
     let modalOverlay = document.querySelector('#Inactive-Account-Modal + .overlay');
     // let modalSaveButton = modal.querySelector('.buttons .save-button');
@@ -1634,12 +1635,12 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
 
-    // Open/close functionality.
+    // ~ Open/close functionality.
     // Open modal.
     modal.open = function() {
         this.classList.add('visible');
     }
-    // Open/close functionality.
+
     // Close modal.
     modal.close = function() {
         modal.classList.remove('visible');
@@ -1705,24 +1706,26 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
     // Modal getters.
-    modal.getKilledAccount = function(accountid) {
+    modal.getKilledAccount = function(acc) {
+        
         let request = new XMLHttpRequest;
         request.data = new FormData;
 
         request.data.append('__PULL', '1');
         request.data.append('__KILLED_ACCOUNT', '1');
-        request.data.append('__ACCOUNT_ID', accountID);
+        request.data.append('__ACCOUNT_ID', acc);
 
         return request;
     };
 
 
     inactiveAccountsCards.forEach( card => {
+        
         let editButton = card.querySelector('.edit');
         let accountID = editButton.getAttribute('data-display');
 
-        editButton.addEventListener('click', function(e) 
-        {
+        editButton.addEventListener('click', function(e) {
+
             // Disabled edit button momentary.
             this.setAttribute('disabled', ''); 
             
