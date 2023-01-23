@@ -1463,8 +1463,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
         });
     }
 
-    // Inputs general functionality.
-    // Set general event handlers for all input elements.
+    // # Inputs general functionality.
+    // + Set general event handlers for all input elements.
     for(const input of inputs) 
     {
         let inputName = input.getAttribute('name');
@@ -1499,18 +1499,25 @@ if ( document.querySelector('#Edit-Account-Modal') )
 
             // console.log(inputsValues);
         });
+
         input.addEventListener('keydown', function(e) {
-            // console.log(e.key);
-            if ( e.keyCode == 32 ) { e.preventDefault(); }
-            // if ( e.key == 'Enter' ) { this.removeAttribute('focused'); }
+
+            if ( e.keyCode == 32 ) { // 'Space' key.
+                e.preventDefault();
+            }
+            
+            else if ( e.keyCode == 13 ) {  // 'Enter' key.
+                this.blur();
+            }
+            
+            // console.log(e)
         });
     }
 
 
-    // Individual input & nodes handlers.
-    // Total offers number handler(s).
-    //
-    // Minus button handler.
+    // # Individual input & nodes handlers.
+    // # Total offers number handler(s).
+    // + Minus button handler.
     document.querySelector('button.round.minus').addEventListener('click', function(e) {
         let soldAccounts = modal.querySelector('.label.sold-accounts').innerHTML;
         let totalAccounts = modal.querySelector('.label.total-accounts').innerHTML;
@@ -1534,8 +1541,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
         }
     });
 
-    // Total offers number handler(s).
-    // Plus button handler.
+    // # Total offers number handler(s).
+    // + Plus button handler.
     document.querySelector('button.round.plus').addEventListener('click', function(e) {
         // let soldAccounts = modal.querySelector('.label.sold-accounts').innerHTML;
         let totalAccounts = modal.querySelector('.label.total-accounts').innerHTML;
