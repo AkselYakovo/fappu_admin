@@ -39,7 +39,7 @@ function Request(data) {
 }
 
 
-// Header Open/Close Menu..
+// Header open/close menu.
 let header_menu = document.getElementById('header_menu');
 
 header_menu.addEventListener('click', function() {
@@ -47,19 +47,28 @@ header_menu.addEventListener('click', function() {
 });
 
 
-// Set Click Handler For .toolbar.selection Elements...
+// Set click handler for .toolbar.selection elements.
 if ( document.querySelector('.toolbar.selection') ) {
     setEarsForSelection();
 }
-// Set Handler(s) For .toolbar.vendor-input Element...
+// Set handler(s) for .toolbar.vendor-input element.
 if ( document.querySelector('.toolbar.vendor-input') ) {
     setEarsForVendorSelection();
 }
 
 
+// # SECTIONING BEGINS.
+// # INDEX:
+// # 1. website.php (page).
+// # 2. accounts.php (page).
+// # 3. .php (page).
+// # . .php (page).
+// # . .php (page).
+// # . .php (page).
 
-// website.php
-// Only Executes Within website.php Main Page..
+
+// # website.php (landing).
+// # Only executes within website.php landing page.
 if ( document.querySelector('article.websites-listing') ) {
     let originalWebsitesCollection = document.querySelectorAll('div.website-row');
     let wrapper = document.querySelector('section.content');
@@ -93,16 +102,14 @@ if ( document.querySelector('article.websites-listing') ) {
 }
 
 
+// # website.php (single).
+// # Will only run when the link variable "website" contains a valid site code.
+if ( document.querySelector('.screens-wrap') ) {
 
-
-
-// website.php -> Single Website Page..
-if ( document.querySelector('.screens-wrap') )
-{
     let screens_wrap = document.querySelector('.screens-wrap');
     let screens_strip = document.querySelector('.screens-strip');
 
-    // Screen Strip Slidding Handler Code...
+    // Screen strip slidding handler code.
     screens_wrap.addEventListener('mousedown', function(e) 
     {
         let cursorX = e.pageX;
@@ -117,7 +124,7 @@ if ( document.querySelector('.screens-wrap') )
                 this.style.left =  new_position_left + 'px';
             
             else if ( new_position_left == 0 ) 
-                window // Do nothing..
+                window // Do nothing.
 
             else if ( new_position_left > 0 ) 
                 this.style.left = '0px';
@@ -134,8 +141,8 @@ if ( document.querySelector('.screens-wrap') )
 
 
 
-
-// New Subsite Modal..
+// # website.php (landing || single).
+// # Modal config for creation of subsites (children of a website).
 if ( document.querySelector('#New-Children-Website-Modal') ) {
     let modal = new Modal('New-Children-Website-Modal');
 
@@ -152,12 +159,12 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
     // let pictureFile;
     let logoFile;
 
-    // Open Modal...
+    // Open modal.
     addScreenButton.addEventListener('click', function(e) {
         modal.open();
     });
 
-    // Send Information To The Server.
+    // Send information to the server.
     modal.upload = function(site, subsite) {
         let pictureOrigin = getOrigin( modal.node.querySelector('section.picture'), picture.imageNode );
 
@@ -207,12 +214,12 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
     };
 
 
-    // Open File Input Dialog For Screen Picture..
+    // Open file input dialog for screen picture.
     addButton.addEventListener('click', function(e) {
         modal.node.querySelector('input[name="Subsite Image"]').click();
     });
 
-    // Set Picture To Screen Node...
+    // Set picture to screen node.
     modal.node.querySelector('input[name="Subsite Image"]').addEventListener('change', function(e) {
         let file = this.files[0];
         let reader = new FileReader();
@@ -232,12 +239,12 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
     });
 
 
-     // Open File Input Dialog For Logo Picture..
+     // Open file input dialog for logo picture.
      modal.node.querySelector('button.logotype').addEventListener('click', function(e) {
         modal.node.querySelector('input[name="Logo"]').click();
     });
 
-    // Set Picture To Logo Node...
+    // Set picture to logo node.
     modal.node.querySelector('input[name="Logo"]').addEventListener('change', function(e) {
         let file = this.files[0];
         let reader = new FileReader();
@@ -253,13 +260,13 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
             reader.readAsDataURL(file);
 
         else {
-            this.files = []; // Flush Unknown Files..
+            this.files = []; // Flush unknown files.
             modal.node.querySelector('button.logotype > p').innerHTML = 'NO IMAGE';
         }
 
     });
 
-    // Remove Existing Logo..
+    // ~ Remove existing logo.
     modal.node.querySelector('.remove-logo').addEventListener('click', function(e) {
         logoNode.src = '';
         logoNode.style.visibility = 'hidden';
@@ -268,7 +275,7 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
     });
 
 
-    // Submit Data Listener.
+    // ~ Submit data listener.
     modal.node.querySelector("button.add").addEventListener('click', function(e) {
         let subsiteTitle = modal.node.querySelector('.toolbar input').value;
         modal.upload(site, subsiteTitle.toLowerCase());
@@ -276,7 +283,7 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
     });
     
 
-    // Go Back To Websites.php Page...
+    // ~ Go back to websites.php page.
     goBackButton.addEventListener('click', function(e) {
         let url = window.location.toString();
         let questionMark = url.lastIndexOf('?');
@@ -289,11 +296,11 @@ if ( document.querySelector('#New-Children-Website-Modal') ) {
 
 
 
-// Pagination For Website Screens.
+// Pagination for website screens.
 if ( document.querySelector('.screens-wrap')
-     && document.querySelector('.toolbar.pagination')?.childElementCount) {
-
-    // Pagination Function Constructor.
+     && document.querySelector('.toolbar.pagination')?.childElementCount) 
+{
+    // Pagination function constructor.
     let Pagination = function() {};
 
     Pagination.prototype.max = 8;
@@ -370,7 +377,7 @@ if ( document.querySelector('.screens-wrap')
     });
 
 
-    // Set Listener For Pagination Links.
+    // Set listener for pagination links.
     let paginationLinks = document.querySelectorAll('.toolbar.pagination a');
 
     paginationLinks.forEach( (node) => {
@@ -390,7 +397,7 @@ if ( document.querySelector('.screens-wrap')
 
 
 
-// New Website Modal Coding.
+// # New website modal config.
 if ( document.querySelector('#New-Website-Modal') ) 
 {
     let modal = new Modal('New-Website-Modal');
@@ -412,7 +419,7 @@ if ( document.querySelector('#New-Website-Modal') )
 
     let logoFile = null;
 
-    // Text Inputs Variables.
+    // Text inputs variables.
     let siteCodeInput = modal.node.querySelector('.toolbar > input[name="Site Code"]');
     let originalPriceInput = modal.node.querySelector('.toolbar > input[name="Original Price"]');
     let salePriceInput = modal.node.querySelector('.toolbar > input[name="Sale Price"]');
@@ -436,7 +443,7 @@ if ( document.querySelector('#New-Website-Modal') )
     inputCollection.add(siteTitleInput, validationFlag.getFlag('sitetitle/website'));
 
 
-    // Validation Of All 3 Pictures.
+    // Validation of all 3 pictures.
     modal.validatePictures = function() {
         if ( carousel.pictures.length == 3 ) {
             carousel.pictures.forEach( (pictureFile, index) => {
@@ -451,7 +458,7 @@ if ( document.querySelector('#New-Website-Modal') )
         else 
             throw new Error('Incomplete Carousel Files');
     }
-    // Validation Of All Input Elements Within The Collection Variable.
+    // Validation of all input elements within the collection variable.
     modal.validateInputs = function() {
         let collection = inputCollection.getCollection();
         for (let i = 1; i <= inputCollection.internalIndex; i++ ) {
@@ -465,7 +472,7 @@ if ( document.querySelector('#New-Website-Modal') )
         return true;
     }
 
-    // Carousel Mobility Method.
+    // Carousel mobility method.
     carousel.goTo = function(target) {
         let strip = document.querySelector('.carousel .strip');
 
@@ -480,12 +487,12 @@ if ( document.querySelector('#New-Website-Modal') )
         
     }
 
-    // Initial Modal Open...
+    // Initial modal open.
     addWebsiteButton.addEventListener('click', function(){
         modal.open();
     });
 
-    // Open System File Dialog...
+    // Open system file dialog.
     document.querySelectorAll('.carousel button.input').forEach( node => {
         node.addEventListener('click', function(e) {
             input.click();
@@ -496,7 +503,7 @@ if ( document.querySelector('#New-Website-Modal') )
         input.click();
     });
 
-    // General Picture Handler..
+    // General picture handler.
     input.addEventListener('change', function(e) {
         let file = input.files[0];
 
@@ -506,7 +513,7 @@ if ( document.querySelector('#New-Website-Modal') )
             reader.readAsDataURL(file);
             
             reader.onload = function(e) {
-                let actualPicture = carousel.pictureActive - 1; // Begins At 0.
+                let actualPicture = carousel.pictureActive - 1; // Begins at 0.
 
                 let newPicture = new Picture(inputNodes[actualPicture]);
                 newPicture.setPicture( reader.result );
@@ -519,7 +526,7 @@ if ( document.querySelector('#New-Website-Modal') )
             }
         }
 
-        // Logo File PNG
+        // Logo file PNG.
         else if ( file.type == 'image/png' ) {
             let reader = new FileReader();
             
@@ -531,7 +538,7 @@ if ( document.querySelector('#New-Website-Modal') )
         }
     });
 
-    // Set Carousel Controls Functionality.
+    // Set carousel controls functionality.
     carouselControls.forEach( node => {
         node.addEventListener('click', function(e) {
             let target = this.getAttribute('data-display');
@@ -539,7 +546,7 @@ if ( document.querySelector('#New-Website-Modal') )
         });
     });
 
-    // Phases Selection Handler.
+    // Phases selection handler.
     modal.node.querySelectorAll('.phases > figure').forEach( node => {
         node.addEventListener('click', function(e){
             let phasesNodes = modal.node.querySelectorAll('.phases > figure');
@@ -558,7 +565,7 @@ if ( document.querySelector('#New-Website-Modal') )
         });
     });
 
-    // Final Upload Stage.
+    // Final upload stage.
     submitButton.addEventListener('click', function(e) 
     {
         if ( modal.validatePictures() && modal.validateInputs() ) {
@@ -575,13 +582,13 @@ if ( document.querySelector('#New-Website-Modal') )
         }
     });
 
-    // EXTRA: Open Edit Website Modal.
+    // EXTRA: Open edit website modal.
     // editWebsiteButton.addEventListener('click', function(e) {
     //     modal.node.setAttribute('data-display', 'EDIT');
     //     modal.open();
     // });
 
-    // EXTRA: Update Logo File.
+    // EXTRA: Update logo file.
     newLogoButton?.addEventListener('click', function(e) {
         document.querySelector('input[name="New Logo"]').click();
 
@@ -605,11 +612,15 @@ if ( document.querySelector('#New-Website-Modal') )
                     data.append('__NEW_LOGO', file);
 
                     request.open('POST', './hub.php');
-                    setTimeout(function(e) { request.send(data); }, 1250);
+                    // IMAGINARY DELAY.
+                    setTimeout( function(e) { 
+                        request.send(data); 
+                    }, 3000);
 
-                    request.onreadystatechange = function(e) {
+                    request.onreadystatechange = function(e) 
+                    {
                         if ( request.status == 200 ) {
-                            console.log(this.response);
+                            // console.log(this.response);
                         }
                     }
                 }
@@ -631,15 +642,13 @@ if ( document.querySelector('#New-Website-Modal') )
 
 
 
-// accounts.php Coding Part...
-// 
-
-// Fill .toolbar.selection Element With Websites Listing...
+// # accounts.php (landing).
+// # fill .toolbar.selection element with websites listing.
 if ( document.querySelector('#Site-Selection') ) {
     fillSelectionOptions( document.querySelector('.modal #Site-Selection'), '__WEBSITES' );
 }
 
-// Only Executes Within accounts.php...
+// Only executes within accounts.php.
 if ( document.querySelector('article.card-websites-accounts-listing')  ) {
     let websitesCollection = document.querySelectorAll('.website-accounts-row');
     let list = collectionToList(websitesCollection);
@@ -650,8 +659,8 @@ if ( document.querySelector('article.card-websites-accounts-listing')  ) {
         if ( data == 'ASC' ) {
             // let ascendingList = listingASC(list);
             listingASC(list);
-            document.querySelector('article section.content').innerHTML = '' // Flush Content..
-            // Append Children To Container...
+            document.querySelector('article section.content').innerHTML = '' // Flush content.
+            // Append children to container.
             for ( let i = 0; i < list.length; i++ ) {
                 document.querySelector('article section.content').appendChild(list[i].node);
             }
@@ -659,8 +668,8 @@ if ( document.querySelector('article.card-websites-accounts-listing')  ) {
         if ( data == 'DESC' ) {
             // let ascendingList = listingDESC(list);
             listingDESC(list);
-            document.querySelector('article section.content').innerHTML = '' // Flush Content..
-            // Append Children To Container...
+            document.querySelector('article section.content').innerHTML = '' // Flush content.
+            // Append children to container.
             for ( let i = 0; i < list.length; i++ ) {
                 document.querySelector('article section.content').appendChild(list[i].node);
             }
@@ -669,8 +678,8 @@ if ( document.querySelector('article.card-websites-accounts-listing')  ) {
     });
 }
 
-
-// Only Executes Within accounts.php?website=...
+// # websites.php (single).
+// # Only executes within "accounts.php?website=".
 if ( document.querySelector('#Accounts-Card') )
 { 
     let accountsCards = document.querySelectorAll('.active-accounts-listing .account-row');
@@ -708,8 +717,8 @@ if ( document.querySelector('#Accounts-Card') )
 
     let vendorInput = document.querySelector('.toolbar.text-input input');
 
-    // Vendor Text Input Handler(s)..
-    // Avoid Input Of Special Characters..
+    // Vendor text input handler(s).
+    // Avoid input of special characters.
     vendorInput.addEventListener('keydown', function(e) {
         let regEx = /\b/;
         if ( regEx.test(e.key) ) {
@@ -719,22 +728,23 @@ if ( document.querySelector('#Accounts-Card') )
             e.preventDefault();
         }
     });
-    // Update View By Adding Those Cards Whose Vendor Label Math The Query..
+    // Update view by adding those cards whose vendor label math the query.
     vendorInput.addEventListener('keyup', function(e) {
         let input = this.value;
         let activeAccountsWrapper = document.querySelector('.content .active-accounts-listing');
         let inactiveAccountsWrapper = document.querySelector('.content .inactive-accounts-listing');
-        // console.log(this.value)
+        // console.log(this.value);
         activeAccountsWrapper.innerHTML = '';
         inactiveAccountsWrapper.innerHTML = '';
         let activeAccountsFiltered = filterCollection(activeAccountsCollection, input);
         let inactiveAccountsFiltered = filterCollection(inactiveAccountsCollection, input);
         // console.log(filteredCollection);
-        // Append All Filtered Active Cards..
+
+        // Append all filtered active cards.
         for( let i = 0; i < activeAccountsFiltered.length; i++ ) {
             activeAccountsWrapper.appendChild(activeAccountsFiltered[i].node);
         }
-        // Append All Filtered Inactive Cards..
+        // Append all filtered inactive cards.
         for( let i = 0; i < inactiveAccountsFiltered.length; i++ ) {
             inactiveAccountsWrapper.appendChild(inactiveAccountsFiltered[i].node);
         }
@@ -742,7 +752,7 @@ if ( document.querySelector('#Accounts-Card') )
 
     });
 
-    // Activate Active Accounts Tab..
+    // Activate active accounts tab.
     activeAccountsTab.addEventListener('click', function(e) {
         // console.log(e.target);
         if ( !this.classList.contains('active') ) {
@@ -752,7 +762,7 @@ if ( document.querySelector('#Accounts-Card') )
             document.querySelector('section.content').classList.toggle('inactive-accounts');
         }
     });
-    // Activate Inactive Accounts Tab..
+    // Activate inactive accounts tab.
     inactiveAccountsTab.addEventListener('click', function(e) {
         // console.log(e.target);
         if ( !this.classList.contains('active') ) {
@@ -763,7 +773,7 @@ if ( document.querySelector('#Accounts-Card') )
         }
     });
 
-    // Rewrite The Date Of Each Account Card..
+    // Rewrite the date of each account card.
     for(const account of accountsCards ) 
     {
         let dateString = account.querySelector('.expiration-date').innerHTML;
@@ -772,12 +782,15 @@ if ( document.querySelector('#Accounts-Card') )
     }        
 }
 
-// Modals Coding Parts...
-//
-// New Account Modal Code...
+// # Modals config sections.
+// # MODAL INDEX:
+// 1. NEW ACCOUNT.
+// 2. EDIT ACCOUNT.
+// 3. 
+// New account modal code.
 if ( document.querySelector('#New-Account') && document.querySelector('#New-Account-Modal') ) 
 {
-    // Important Modal References...
+    // Important modal references.
     let modal = document.querySelector('#New-Account-Modal');
     let modalOverlay = document.querySelector('#New-Account-Modal + .overlay');
     let modalButton = document.querySelector('#New-Account');
@@ -792,49 +805,49 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
     // console.log(modal);
 
 
-    // Declare Form Elements...
+    // Declare form elements.
     let form = {};
     form.elements = document.querySelectorAll('input[name^=A__]');
     form.isValid = false;
     // console.log(form.elements);
 
-    // Validation Of Each Form Element...
+    // Validation of each form element.
     form.flags = [];
-    form.flags[0] = []; // Define First Phase Validation Expressions..
-    form.flags[0][0] = /\w/; // Website RegEx Validation Expression..
+    form.flags[0] = []; // Define first phase validation expressions.
+    form.flags[0][0] = /\w/; // Website regex validation expression.
     modal.phases[0].controls = [];
     modal.phases[0].controls[0] = form.elements[0];
 
-    form.flags[1] = []; // Define Second Phase Validation Expressions..
-    form.flags[1][0] = /.{3,}/; // Nickname RegEx Validation Expression..
-    form.flags[1][1] = /.{3,}/; // Pass RegEx Validation Expression..
+    form.flags[1] = []; // Define second phase validation expressions.
+    form.flags[1][0] = /.{3,}/; // Nickname regex validation expression.
+    form.flags[1][1] = /.{3,}/; // Pass regex validation expression.
     modal.phases[1].controls = [];
     modal.phases[1].controls[0] = form.elements[1];
     modal.phases[1].controls[1] = form.elements[2];
 
-    form.flags[2] = []; // Define Third Phase Validation Expressions..
-    form.flags[2][0] = /\d{2,}/; // Price Number RegEx Validation Expression..
+    form.flags[2] = []; // Define third phase validation expressions.
+    form.flags[2][0] = /\d{2,}/; // Price number regex validation expression.
     modal.phases[2].controls = [];
     modal.phases[2].controls[0] = form.elements[3];
 
-    form.flags[3] = []; // Define Fourth Phase Validation Expressions..
-    form.flags[3][0] = /\d{1,}/; // Offers Number RegEx Validation Expression..
+    form.flags[3] = []; // Define fourth phase validation expressions.
+    form.flags[3][0] = /\d{1,}/; // Offers number regex validation expression.
     modal.phases[3].controls = [];
     modal.phases[3].controls[0] = form.elements[4];
 
-    form.flags[4] = []; // Define Fifth Phase Validation Expressions..
-    form.flags[4][0] = /[a-zA-Z0-9]{3,}/; // Vendor Input RegEx Validation Expression..
+    form.flags[4] = []; // Define fifth phase validation expressions.
+    form.flags[4][0] = /[a-zA-Z0-9]{3,}/; // Vendor input regex validation expression.
     modal.phases[4].controls = [];
     modal.phases[4].controls[0] = form.elements[5];
 
-    form.flags[5] = []; // Define Sixth Phase Validation Expressions..
-    form.flags[5][0] = /\d{4}-\d{2}-\d{2}/; // Warranty Begins Input RegEx Validation Expression..
-    form.flags[5][1] = /\d{4}-\d{2}-\d{2}/; // Warranty Begins Input RegEx Validation Expression..
+    form.flags[5] = []; // Define sixth phase validation expressions.
+    form.flags[5][0] = /\d{4}-\d{2}-\d{2}/; // Warranty begins input regex validation expression.
+    form.flags[5][1] = /\d{4}-\d{2}-\d{2}/; // Warranty begins input regex validation expression.
     modal.phases[5].controls = [];
     modal.phases[5].controls[0] = form.elements[6];
     modal.phases[5].controls[1] = form.elements[7];
 
-    // Set Modal Methods...
+    // Set modal methods.
     modal.next = function() {
         modalControls[modal.actualPhase].classList.remove('focus');
         modal.phases[modal.actualPhase].classList.add('had-focus');
@@ -916,7 +929,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
                     modal.classList.remove('visible');      
                     console.log(this.responseText);
                     // document.appendChild(this.response);
-                    // Hide & Remove 
+                    // Hide & remove.
                     // setTimeout(function() {
                     //     let toast = document.querySelector('.toast');
 
@@ -940,30 +953,30 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 
     
 
-    // Event Listeners For Form Inputs Elements...
+    // Event listeners for form inputs elements.
 
-    // Website/Selector Picker Element Event Handler...
+    // Website/selector picker element event handler.
     document.getElementById('Site-Selection').addEventListener('click', function(e) {
         let data = this.getAttribute('data-display');
         // console.warn(data)
         form.elements[0].setAttribute('value', data);
     });
 
-        // Nickname Input Element Event Handler...
+        // Nickname input element event handler.
     document.querySelector('.second > input[placeholder="NICKNAME"]').addEventListener('keyup', function(e) {
         let data = this.value;
         
         form.elements[1].setAttribute('value', data);
     });
 
-        // Password Input Element Event Handler...
+        // Password input element event handler.
     document.querySelector('.second > input[placeholder="PASSWORD"]').addEventListener('keyup', function(e) {
         let data = this.value;
         
         form.elements[2].setAttribute('value', data);
     });
 
-    //Price Input Element Events Handler...
+    // Price input element events handler.
     document.querySelector('.third input[name="Price Input"]').addEventListener('keydown', function(e) {
             let regEx = /(\d|Backspace)/;
             let formNode = form.elements[3];
@@ -971,29 +984,32 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             
             e.preventDefault();
 
-            // If The User Doesn't Digit Either A Digit Or Backspace Key..
-            if( regEx.test(e.key) ) 
-            {
+            // If the user doesn't digit either a digit or backspace key.
+            if( regEx.test(e.key) ) {
+
             if ( e.key == 'Backspace' ) {
+
                 if ( formNodeData ) {
+
                     let newData = formNodeData.substring(0, formNodeData.length - 1);
                     let data = `$${newData}.00 MXN`;
                     this.setAttribute('value', data);
                     formNode.setAttribute('value', newData);
                 }
-                else 
+
+                else
                     this.setAttribute('value', '');
             }
-            // If A Digit Is Entered..
+            // If a digit is entered.
             else {
-                // If formNode Isn't Empty
+                // If formNode isn't empty.
                 if ( formNode.getAttribute('value') ) {
                     let data = `$${formNodeData.concat(e.key)}.00 MXN`;
                     this.setAttribute('value', data);
                     formNode.setAttribute('value', formNodeData.concat(e.key) );
-                    // console.log(`Write N COncat`);
+                    // console.log(`Write N' Concat`);
                 }
-                // If formNode Is Empty..
+                // If formNode is empty.
                 else {
                     let data = `$${e.key}.00 MXN`;
                     this.setAttribute('value', data);
@@ -1004,7 +1020,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             }
         });
 
-    // More Button Eventlistener For Offer Counter Element..
+    // More button eventlistener for offer counter element.
     document.querySelector('.fourth button[name="add"]').addEventListener('click', function(e) {
         let counterNode = document.querySelector('.fourth span.counter');
         let actualCounter = Number.parseInt(document.querySelector('.fourth span.counter').innerHTML);
@@ -1016,7 +1032,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         
     });
 
-    // Minus Button Eventlistener For Offer Counter Element..
+    // Minus button eventlistener for offer counter element.
     document.querySelector('.fourth button[name="minus"]').addEventListener('click', function(e) {
         let counterNode = document.querySelector('.fourth span.counter');
         let actualCounter = Number.parseInt(document.querySelector('.fourth span.counter').innerHTML);
@@ -1029,23 +1045,23 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         }
     });
 
-    // Vendor Selection Event Handlers..
+    // Vendor selection event handlers.
     //
-    // Vendor Click Handler..
+    // Vendor click handler.
     document.querySelector('.fifth .toolbar').addEventListener('click', function(e) {
         let vendor = this.getAttribute('data-display');
         vendor = vendor.substring(1);
         form.elements[5].setAttribute('value', vendor);
     });
 
-    // Vendor Input Refresher...
+    // Vendor input refresher.
     document.querySelector('.fifth .toolbar input').addEventListener('keyup', function(e) {
         let data = this.value;
         console.log(data);
         checkVendors(document.querySelector('.vendor-input'), data);
     });
 
-    // Warranty Begins Input Event Handler..
+    // Warranty begins input event handler.
     document.querySelector('.sixth input[name="Warranty Begins"]').addEventListener('keydown', function(e) {
         // console.log(e);
         let reg = /[0-9]|-|Backspace|Tab/;
@@ -1070,7 +1086,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         // console.log(`Form Element Value: ${form.elements[6].getAttribute('value')}`);
     });
 
-    // Warranty Begins Focusout Event Handler...
+    // Warranty begins focusout event handler.
     document.querySelector('.sixth input[name="Warranty Begins"]').addEventListener('focusout', function(e) {
         let data = form.elements[6].getAttribute('value');
         // let month = 2.419e+9;
@@ -1091,7 +1107,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         }
     });
 
-    // Warranty Ends Input Event Handler..
+    // Warranty ends input event handler.
     document.querySelector('.sixth input[name="Warranty Ends"]').addEventListener('keydown', function(e) {
         // console.log(e);
         let reg = /[0-9]|-|Backspace|Tab/;
@@ -1116,9 +1132,8 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         console.log(`Form Element Value: ${form.elements[7].getAttribute('value')}`);
     });
 
-    // Event Listeners For Modal Elements...
-    //
-    // Basics Open/Close Functionality...
+    // # Event listeners for modal elements.
+    // Basics open/close functionality.
     modalButton.addEventListener('click', function() {
         modal.classList.add('visible');
     });
@@ -1127,9 +1142,8 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
     });
 
 
-    // Advance/Return Functionality...
-    //
-    // Advance Funcionality...
+    // Advance/return functionality.
+    // Advance funcionality.
     modalNext.addEventListener('click', function() {
         if ( modal.actualPhase == 0 ) {
             modalPrevious.removeAttribute('disabled');
@@ -1147,7 +1161,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         }
     });
 
-    // Return Functionality...
+    // Return functionality.
     modalPrevious.addEventListener('click', function() {
         modal.prev();
         // modal.validatePhase();
@@ -1158,7 +1172,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 }
 
 
-// Edit Account Modal Coding Part ...
+// # Edit account modal coding part.
 if ( document.querySelector('#Edit-Account-Modal') ) 
 {
     let modal = document.querySelector('#Edit-Account-Modal');
@@ -1169,7 +1183,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     let savedAccount = '';
     // console.log(activeAccountsCards);
 
-    // Validation Flags For Every Editable Input
+    // Validation flags for every editable input.
     let flags = new Map();
     flags.set('Warranty Begins', /\d{4}-\d{2}-\d{2}/);
     flags.set('Warranty Ends', /\d{4}-\d{2}-\d{2}/);
@@ -1178,20 +1192,20 @@ if ( document.querySelector('#Edit-Account-Modal') )
     // flags.set('Link', /^((?!www\.))((?!https\:\/\/).+)((?!http\:\/\/))/i);
     flags.set('Price Paid', /\$\d{2,3}\.00\sMXN/);
 
-    // All Inputs Nodes..
+    // All inputs nodes.
     let inputs = modal.querySelectorAll('.phases input');
 
-    // All Inputs Values...
+    // All inputs values.
     let inputsValues = new Map;
 
-    // All New Values...
+    // All new values.
     let inputsValuesUpdated = new Set;
 
-    // Dicionary For Update Requests..
+    // Dicionary for update requests.
     let dictionary = new Map;
     dictionary.set('Warranty Begins', '__WBEGINS');
     dictionary.set('Warranty Ends', '__WENDS');
-    dictionary.set('Nickname', '__NICKNAME');
+    dictionary.set('nickname', '__NICKNAME');
     dictionary.set('Password', '__PASSWORD');
     dictionary.set('Price Paid', '__PRICE');
     dictionary.set('Available Accounts', '__AVAILABLE_ACCOUNTS');
@@ -1203,24 +1217,24 @@ if ( document.querySelector('#Edit-Account-Modal') )
     
     // console.log(inputs);
     
-    // Open/Close Functionality..
-    // Open Modal..
+    // Open/close functionality.
+    // Open modal..
     modal.open = function() {
         this.classList.add('visible');
     }
-    // Open/Close Functionality..
-    // Close Modal.
+    // Open/close functionality.
+    // Close modal.
     modal.close = function() {
         modal.classList.remove('visible');
     }
 
-    // More Modal Methods..
+    // More modal methods.
 
-    // Move In Between Phases..
+    // Move in between phases.
     modal.goTo = function(target) {
         let focusedTab = modal.querySelector('.navigation .tab--active');
         focusedTab.classList.remove('tab--active');
-        // Remove Focused Class From Active Phase..
+        // Remove focused class from active phase..
         modal.querySelector('.phases .focused').classList.remove('focused');
 
         if ( target.innerHTML == 'STATUS' ) {
@@ -1240,10 +1254,10 @@ if ( document.querySelector('#Edit-Account-Modal') )
         }
     };
 
-    // Clean & Reset Modal..
+    // Clean & reset modal.
     // modal.flush = function() {};
 
-    // Check For Variations On Input Data..
+    // Check for variations on input data.
     modal.isDirty = function(inputLabel) {
         let newData = modal.querySelector(`input[name="${inputLabel}"]`).value;
         let oldData = inputsValues.get(inputLabel);
@@ -1282,7 +1296,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
 
 
     modal.setInfo = function(JSONresponse) {
-        // Create Variables For Every Updateable Node..
+
+        // Create variables for every updateable node.
         let accountID = modal.querySelector('.account-id span');
         let warrantyBegins = modal.querySelector('input[name="Warranty Begins"]');
         let warrantyEnds = modal.querySelector('input[name="Warranty Ends"]');
@@ -1297,7 +1312,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         let daysLeft = modal.querySelector('small.days-left');
 
 
-        // Rewrite Every Input & Extra Nodes..
+        // Rewrite every input & extra nodes.
         accountID.innerHTML = JSONresponse['ACCOUNT_ID'];
         warrantyBegins.setAttribute('value', JSONresponse['WARRANTY_BEGINS']);
         warrantyEnds.setAttribute('value', JSONresponse['WARRANTY_ENDS']);
@@ -1314,7 +1329,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         daysLeft.innerHTML = getDaysLeft(JSONresponse['WARRANTY_BEGINS']);
 
         
-        // Rewrite inputsValue Map Collection..
+        // Rewrite inputs value map collection.
         inputsValues.set('Warranty Begins', JSONresponse['WARRANTY_BEGINS']);
         inputsValues.set('Warranty Ends', JSONresponse['WARRANTY_ENDS']);
         inputsValues.set('Nickname', JSONresponse['ACCOUNT_NICK']);
@@ -1324,7 +1339,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         inputsValues.set('Accounts Sold', JSONresponse['N_SOLD']);
         inputsValues.set('Accounts Available', JSONresponse['N_AVAILABLE']);
 
-        // Extra Code For Setting Initial State Of Plus/Minus Buttons On # Accounts.
+        // Extra code for setting initial state of plus/minus buttons on # accounts.
         if ( Number.parseInt(availableAccounts.innerHTML) > (Number.parseInt(soldAccounts.innerHTML) + 1) ) {
             document.querySelector('button.round.minus').removeAttribute('disabled');
             document.querySelector('button.round.plus').removeAttribute('disabled');
@@ -1336,7 +1351,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         }
     }
 
-    // Reset Important Variables..
+    // Reset important variables.
     modal.flush = function() {
         // inputsValues = new Map;
         inputsValuesUpdated = new Set;
@@ -1345,7 +1360,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         }
     }
 
-    // Update Modified Data..
+    // Update modified data.
     modal.update = function(accountID) {
         let request = new XMLHttpRequest;
         request.data = new FormData;
@@ -1377,16 +1392,16 @@ if ( document.querySelector('#Edit-Account-Modal') )
     }
 
 
-    // Batch Setters For Various Nodes..
+    // Batch setters for various nodes.
 
-    // Attach A Event Handler To Each Edit Button..
+    // Attach a event handler to each edit button.
     activeAccountsCards.forEach( card => {
         let editButton = card.querySelector('.edit');
         let accountID = editButton.getAttribute('data-display');
 
         editButton.addEventListener('click', function(e) 
         {
-            // Disabled Edit Button Momentary..
+            // Disabled edit button momentary.
             this.setAttribute('disabled', ''); 
 
             if ( savedAccount != accountID ) 
@@ -1395,7 +1410,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     
                 let promise = new Promise( (resolve, reject) => 
                 {
-                    // Emulate Server Lag..
+                    // IMAGINARY DELAY.
                     setTimeout( function()
                     { request.send(request.data) }, 3750);
     
@@ -1436,8 +1451,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
     });
 
     
-    // Active Tab Functionality...
-    // Set Event Listener For Each Individual Tab Node..
+    // Active tab functionality.
+    // Set event listener for each individual tab node.
     for (const tab of modalTabs) 
     {
         tab.addEventListener('click', function(e) {
@@ -1447,8 +1462,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
         });
     }
 
-    // Inputs General Functionality..
-    // Set General Event Handlers For All Input Elements..
+    // Inputs general functionality.
+    // Set general event handlers for all input elements.
     for(const input of inputs) 
     {
         let inputName = input.getAttribute('name');
@@ -1490,11 +1505,10 @@ if ( document.querySelector('#Edit-Account-Modal') )
     }
 
 
-    // Individual Input&Nodes Handlers..
-
-    // Total Offers Number Handler(s)..
+    // Individual input & nodes handlers.
+    // Total offers number handler(s).
     //
-    // Minus Button Handler..
+    // Minus button handler.
     document.querySelector('button.round.minus').addEventListener('click', function(e) {
         let soldAccounts = modal.querySelector('.label.sold-accounts').innerHTML;
         let totalAccounts = modal.querySelector('.label.total-accounts').innerHTML;
@@ -1518,8 +1532,8 @@ if ( document.querySelector('#Edit-Account-Modal') )
         }
     });
 
-    // Total Offers Number Handler(s)..
-    // Plus Button Handler.. 
+    // Total offers number handler(s).
+    // Plus button handler.
     document.querySelector('button.round.plus').addEventListener('click', function(e) {
         // let soldAccounts = modal.querySelector('.label.sold-accounts').innerHTML;
         let totalAccounts = modal.querySelector('.label.total-accounts').innerHTML;
@@ -1538,7 +1552,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     });
 
 
-    // Password Input Field Handler(s)..
+    // Password input field handler(s).
     document.querySelector('input[name="Password"]').addEventListener('focusin', function(e) {
         let password = this.getAttribute('data-display');
         this.value = password;
@@ -1569,7 +1583,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
         // console.log('final data:' + data);
     });
 
-    // Add Kill Button Handler(s)...
+    // Add kill button handler(s).
     document.querySelector('.buttons .kill-button').addEventListener('click', function(e) {
         let request = modal.killAccount(savedAccount);
         request.onreadystatechange = function(response) {
@@ -1582,7 +1596,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     });
 
 
-    // Add Save Button Handler..
+    // Add save button handler.
     document.querySelector('.buttons .save-button').addEventListener('click', function(e) {
         // console.log(savedAccount);
         let request = modal.update(savedAccount);
@@ -1609,7 +1623,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     
 }
 
-// Inactive Account Modal Coding Part...
+// Inactive account modal coding part.
 if ( document.querySelector('#Inactive-Account-Modal') ) {
     let modal = document.querySelector('#Inactive-Account-Modal');
     let modalOverlay = document.querySelector('#Inactive-Account-Modal + .overlay');
@@ -1620,20 +1634,21 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
 
-    // Open/Close Functionality..
-    // Open Modal..
+    // Open/close functionality.
+    // Open modal.
     modal.open = function() {
         this.classList.add('visible');
     }
-    // Open/Close Functionality..
-    // Close Modal.
+    // Open/close functionality.
+    // Close modal.
     modal.close = function() {
         modal.classList.remove('visible');
     }
 
-    // Modal Setter(s)...
+    // Modal setter(s).
     modal.setInfo = function(JSONresponse) {
-        // Create Variables For Every Updateable Node..
+
+        // Create variables for every updateable node.
         let daysAgo = modal.querySelector('small.expiration');
         let finalCause = modal.querySelector('.status .badge').innerHTML;
         let accountID = modal.querySelector('.account-label b');
@@ -1649,7 +1664,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
         let vendor = modal.querySelector('a.vendor-link');
 
 
-        // Rewrite Every Input & Extra Nodes..
+        // Rewrite every input & extra nodes.
         accountID.innerHTML = JSONresponse['ACCOUNT_ID'];
         warrantyBegins.setAttribute('value', JSONresponse['WARRANTY_BEGINS']);
         warrantyEnds.setAttribute('value', JSONresponse['WARRANTY_ENDS']);
@@ -1666,7 +1681,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
         daysAgo.innerHTML = `${ finalCause } ${ getDaysAgo(JSONresponse['ACTION_DATE']) }`;
 
         
-        // Rewrite inputsValue Map Collection..
+        // Rewrite inputsvalue map collection.
         // inputsValues.set('Warranty Begins', JSONresponse['WARRANTY_BEGINS']);
         // inputsValues.set('Warranty Ends', JSONresponse['WARRANTY_ENDS']);
         // inputsValues.set('Nickname', JSONresponse['ACCOUNT_NICK']);
@@ -1676,7 +1691,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
         // inputsValues.set('Accounts Sold', JSONresponse['N_SOLD']);
         // inputsValues.set('Accounts Available', JSONresponse['N_AVAILABLE']);
 
-        // Extra Code For Setting Initial State Of Plus/Minus Buttons On # Accounts.
+        // Extra code for setting initial state of plus/minus buttons on # accounts.
         if ( Number.parseInt(availableAccounts.innerHTML) > (Number.parseInt(soldAccounts.innerHTML) + 1) ) {
             document.querySelector('button.round.minus').removeAttribute('disabled');
             document.querySelector('button.round.plus').removeAttribute('disabled');
@@ -1689,8 +1704,8 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
     }
 
 
-    // Modal Getters...
-    modal.getKilledAccount = function(accountID) {
+    // Modal getters.
+    modal.getKilledAccount = function(accountid) {
         let request = new XMLHttpRequest;
         request.data = new FormData;
 
@@ -1708,7 +1723,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
         editButton.addEventListener('click', function(e) 
         {
-            // Disabled Edit Button Momentary..
+            // Disabled edit button momentary.
             this.setAttribute('disabled', ''); 
             
             if ( savedAccount != accountID ) 
@@ -1719,7 +1734,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
     
                 let promise = new Promise( (resolve, reject) => 
                 {
-                    // Emulate Server Lag..
+                    // Emulate server lag..
                     setTimeout( function()
                     { request.send(request.data) }, 1000);
     
@@ -1764,7 +1779,7 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
         modal.close();
     }); 
 
-    // Reactivate Button Handler(s)..
+    // Reactivate button handler(s).
     modal.querySelector('button.reactivate-button').addEventListener('click', function(e) {
         let promise = new Promise( (resolve, reject) => 
         {
@@ -1804,9 +1819,8 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
 
-// vendors.php Coding.
-
-// Listing Vendors Typing Filtering.
+// vendors.php coding.
+// Listing vendors typing filtering.
 if ( document.querySelector('.card-vendors-listing') ) {
     let vendorsCollection = document.querySelectorAll('.vendor-row');
 
@@ -1836,7 +1850,7 @@ if ( document.querySelector('.card-vendors-listing') ) {
         }
 
         else {
-            // Fill With Original Collection.
+            // Fill with original collection.
             for(let originalNode of vendorsCollection ) {
                 let newNode = document.createElement('div');
                 newNode.classList.add('vendor-row');
@@ -1855,7 +1869,7 @@ if ( document.querySelector('.card-vendors-listing') ) {
 
 
 
-// New Vendor Modal.
+// New vendor modal.
 if ( document.querySelector('#New-Vendor-Modal') ) {
     let modal = new Modal('New-Vendor-Modal');
     let addButton = document.querySelector('button.floating.add-vendor');
@@ -1870,7 +1884,7 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
 
     let avatarFile;
 
-    // Validate Modal.
+    // Validate modal.
     // modal.validate = function() {
     //     let inputs = modal.node.querySelectorAll('input[type="text"]');
     //     for (let input of inputs) {
@@ -1894,23 +1908,23 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
     });
 
 
-    // Open Modal.
+    // Open modal.
     addButton.addEventListener('click', function(e) {
         modal.open();
     });
 
 
-    // Open Sys File Dialog.
+    // Open sys file dialog.
     avatarButton.addEventListener('click', function(e) {
         avatarInput.click();
     });
 
-    // Input Validation.
+    // Input validation.
     new validationFlag(vendorInput, 'vendor/id');
     new validationFlag(urlInput, 'vendor/url');
     new validationFlag(vendorEmailInput, 'vendor/email');
 
-    // Avatar File Handler.
+    // Avatar file handler.
     avatarInput.addEventListener('change', function(e) {
         let file = this.files[0];
         if (  /image/i.test(file.type) ) {
@@ -1934,7 +1948,7 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
 
 
 
-// reclaims.php General Coding Part..
+// # reclaims.php.
 if ( document.querySelector('#Reclaim-Modal') ) {
     let modal = new Modal('Reclaim-Modal');
     
@@ -1983,7 +1997,7 @@ if ( document.querySelector('#Reclaim-Modal') ) {
                 account_badge.className = '';
                 account_badge.classList.add('badge', 'badge-innactive');
                 break;
-            // ADD MORE BADGES HANDLERS.!
+            // TO-DO: ADD MORE BADGES HANDLERS.
 
             default:
                 break;
@@ -2037,7 +2051,7 @@ if ( document.querySelector('#Reclaim-Modal') ) {
         modal.flush();
     });
 
-    // Set Opener Of Modal..
+    // Set opener of modal.
     reclaimsCollection.forEach( node => {
         node.addEventListener('dblclick', function(e) 
         {
@@ -2080,13 +2094,13 @@ if ( document.querySelector('#Reclaim-Modal') ) {
     });
 
 
-    // Close Modal When Button Is Activated...
+    // Close modal when button is activated.
     replaceButton.addEventListener('click', function(e) {
         modal.close();
         modal.flush();
     });
 
-    // Close Modal When Button Is Activated...
+    // Close modal when button is activated.
     resolveButton.addEventListener('click', function(e) {
         let request =  new XMLHttpRequest();
         let data = new FormData();
@@ -2116,7 +2130,7 @@ if ( document.querySelector('#Reclaim-Modal') ) {
 
 
 
-// Reclaims Replace Account Modal Functionality...
+// Reclaims replace account modal functionality.
 if ( document.querySelector('#Replace-Account-Modal') ) {
     let modal = new Modal('Replace-Account-Modal');
 
@@ -2131,7 +2145,7 @@ if ( document.querySelector('#Replace-Account-Modal') ) {
     let nicknameInput = modal.node.querySelector('input[name="RPLCM Nick"]');
     let passwordInput = modal.node.querySelector('input[name="RPLCM Pass"]');
 
-    // Open Replacement Modal
+    // Open replacement modal.
     replaceAccountButton.addEventListener('click', function(e) {
         let data = this.getAttribute('data-display') ?? false;
 
@@ -2226,18 +2240,18 @@ if ( document.querySelector('#Replace-Account-Modal') ) {
 
 
 
-// Messages Page Coding...
+// Messages page coding.
 if ( document.querySelector('.card-messages-listing') ) {
     let messagesCollection = {};
     let links = document.querySelectorAll('ul.pagination a');
-    let category = 'ALL'; // Initial Category,
+    let category = 'ALL'; // Initial category.
     let actualPage = 1;
 
     let content = document.querySelector('section.content');
 
     messagesCollection[1] = [];
 
-    // Get Initial Messages Collection:
+    // Get initial messages collection.
     document.querySelectorAll('div.message-row').forEach( (node) => {
         messagesCollection[1].push(node);
     });
@@ -2301,7 +2315,7 @@ if ( document.querySelector('.card-messages-listing') ) {
         });
     });
 
-    // Category Selection Handlers:
+    // Category selection handlers.
     document.querySelector('.toolbar.selection').addEventListener('click', function(e) {
         let cat = this.getAttribute('data-display');
 
@@ -2343,6 +2357,7 @@ if ( document.querySelector('.card-messages-listing') ) {
                 '__CATEGORY': '',
             })
             .onreadystatechange = function(e) {
+                
                 if ( this.readyState == 4 && this.status == 200 ) {
                     let messages = JSON.parse(this.response);
                     Pagination.rewrite(document.querySelector('ul.pagination'), messages['TOTAL'], Pagination.MESSAGES_PER_PAGE);
@@ -2389,12 +2404,8 @@ if ( document.querySelector('.card-messages-listing') ) {
     // };
     
 
-    // Get Initial Messages Collection:
+    // Get initial messages collection.
     // document.querySelectorAll('div.message-row').forEach( (node , index) => {
     //     originalMessagesCollection[index + 1] = node;
     // });
-
-    
-
-    
 }
