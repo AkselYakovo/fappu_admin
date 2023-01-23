@@ -907,8 +907,8 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         let warrantyEnds = form.elements[7].getAttribute('value');
 
         if ( website && nickname && password && pricePaid &&
-                offers && vendor && warrantyBegins && warrantyEnds ) 
-        {
+                offers && vendor && warrantyBegins && warrantyEnds ) {
+
             let form = new FormData();
             form.append('__FUN', 'New Account');
             form.append('__WEBSITE', website);
@@ -926,6 +926,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 
             request.onreadystatechange = function(e) {
                 if (request.readyState == 4 && request.status == 200) {
+
                     modal.classList.remove('visible');      
                     console.log(this.responseText);
                     // document.appendChild(this.response);
@@ -1209,11 +1210,6 @@ if ( document.querySelector('#Edit-Account-Modal') )
     dictionary.set('Password', '__PASSWORD');
     dictionary.set('Price Paid', '__PRICE');
     dictionary.set('Available Accounts', '__AVAILABLE_ACCOUNTS');
-    // dictionary.set('?', '__?');
-    // dictionary.set('?', '__?');
-    // dictionary.set('?', '__?');
-    // dictionary.set('?', '__?');
-    // dictionary.set('?', '__?');
     
     // console.log(inputs);
     
@@ -1232,23 +1228,27 @@ if ( document.querySelector('#Edit-Account-Modal') )
 
     // Move in between phases.
     modal.goTo = function(target) {
+
         let focusedTab = modal.querySelector('.navigation .tab--active');
         focusedTab.classList.remove('tab--active');
+
         // Remove focused class from active phase..
         modal.querySelector('.phases .focused').classList.remove('focused');
 
         if ( target.innerHTML == 'STATUS' ) {
+
             target.classList.add('tab--active');
             modal.querySelector('.phases .status').classList.add('focused');
         }
 
-        if ( target.innerHTML == 'ACCOUNT' ) 
-        {
+        if ( target.innerHTML == 'ACCOUNT' ) {
+
             target.classList.add('tab--active');
             modal.querySelector('.phases .account').classList.add('focused');
         }
 
         if ( target.innerHTML == 'DETAILS' ) {
+
             target.classList.add('tab--active');
             modal.querySelector('.phases .details').classList.add('focused');
         }
@@ -1258,7 +1258,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
     modal.isDirty = function(inputLabel) {
         let newData = modal.querySelector(`input[name="${inputLabel}"]`).value;
         let oldData = inputsValues.get(inputLabel);
-        // console.log( data );
+        // console.log(data);
         if ( newData && oldData && ( newData != oldData ) ) {
             return true;
         }
@@ -1493,7 +1493,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
 
                 else {
                     this.value = inputsValues.get(inputName);
-                    console.log('Dirty But Invalid.');
+                    // console.log('Dirty But Invalid.');
                 }
             }
 
@@ -1561,28 +1561,37 @@ if ( document.querySelector('#Edit-Account-Modal') )
     });
 
     document.querySelector('input[name="Password"]').addEventListener('focusout', function(e) {
-        // console.log();
         this.setAttribute('data-display', this.value);
         let passwordLength = this.getAttribute('data-display').length;
         this.value = '*'.repeat(passwordLength);
     });
 
     document.querySelector('input[name="Password"]').addEventListener('change', function(e) {
-        // console.log('change aboard!');
         inputsValuesUpdated.add('Password');
         console.log(inputsValuesUpdated);
     });
 
+    // # Price paid input field handler.
+    // + Analyze the field's value.
+    // + Remove the '$', '.00' & 'MXN' out of the value.
+    // + Append new value to inputsValue variable.
     document.querySelector('input[name="Price Paid"]').addEventListener('focusout', function() {
-        let regEx = /\$|\.|00|\s|MXN/ig;
+
+        // Check if the raw input is valid.
+        let regEx = /\$\d{1,3}\.00\sMXN/ 
         let data = this.value;
-        data = data.replace(regEx, '');
-        inputsValues.set('Price Paid', data);
-        setTimeout(() => {
-            console.log(inputsValues);
-            
-        }, 3000);
-        // console.log('final data:' + data);
+
+        if ( !regEx.test(data) ) {
+            console.log('Price Input: invalid format');
+            // Set field's initial value.
+            this.value = `$${ inputsValues.get('Price Paid') }.00 MXN`;
+            return
+        }
+
+        // let regEx2 = /\$|\.|00|\s|MXN/ig;
+        data = data.replace(/\$|\.|00|\s|MXN/ig, '');
+        inputsValues.set('Price Paid', Number(data));
+
     });
 
     // Add kill button handler(s).
