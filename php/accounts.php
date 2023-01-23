@@ -2,7 +2,7 @@
 require_once('./resources.php');
 require_once('./_general.php');
 
-// @ Configuration Items Below..
+// # Configuration variables..
 $__ACCOUNTS = "_ACCOUNTS";
 $__WEBSITES = "_WEBSITES";
 $__ACCOUNTS_KILLED = "_ACCOUNTS_KILLED";
@@ -10,15 +10,14 @@ $__ACCOUNTS_KILLED = "_ACCOUNTS_KILLED";
 // const __LEVELS = '../';
 
 
-// @ Important Variables For Single Page Accounts Page..
+// # Important variables for single page accounts page..
 $actual_website = "accounts";
 $active_site = ( isset($_GET['website']) ) 
                ? clean_txt($_GET['website'])
                : FALSE;
 
 
-// @ Important Variables For Websites Listing Page..
-// $websites_listing_query = "SELECT `SITE_CODE` FROM `$__WEBSITES`";
+// # Important variables for websites listing page..
 $websites_listing_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
                            FROM _WEBSITES AS W
                            LEFT OUTER JOIN ( SELECT `SITE_CODE`, COALESCE(COUNT(*), 0) AS `TOTAL_ACCOUNTS`
@@ -26,7 +25,7 @@ $websites_listing_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` A
                                              GROUP BY 1) Q
                            ON W.`SITE_CODE` = Q.`SITE_CODE`
                            GROUP BY 1
-                           ORDER BY 2 DESC ";
+                           ORDER BY 2 ASC ";
 
 $websites_listing = $main_conn->query($websites_listing_query);
 
@@ -49,7 +48,7 @@ $inactive_accounts_query = "SELECT * FROM `$__ACCOUNTS` AS A
                             WHERE `ACCESS_STATE` = '0'
                             AND `SITE_CODE` = '$active_site'";
 
-// @ Special Variables Used On Single Website Accounts Listing.
+// # Special variables used on single website accounts listing.
 $single_website_active_accounts = $main_conn->query("SELECT COUNT(*) AS `TOTAL_ACTIVE` FROM `$__ACCOUNTS` WHERE `SITE_CODE` = '$active_site' AND `ACCESS_STATE` = '1'");
 $single_website_active_accounts = $single_website_active_accounts->fetch_assoc();
 $single_website_active_accounts = $single_website_active_accounts['TOTAL_ACTIVE'];
@@ -58,7 +57,7 @@ $single_website_inactive_accounts = $main_conn->query("SELECT COUNT(*) AS `TOTAL
 $single_website_inactive_accounts = $single_website_inactive_accounts->fetch_assoc();
 $single_website_inactive_accounts = $single_website_inactive_accounts['TOTAL_INACTIVE'];
 
-// @ Final Query Variables Used Later..
+// # Final query variables used later..
 $active_accounts = $main_conn->query($active_accounts_query);
 $inactive_accounts = $main_conn->query($inactive_accounts_query);
 ?>
@@ -70,7 +69,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
-    <title>Accounts</title>
+    <title>Accounts | Admin</title>
 </head>
 <body>
     
@@ -87,14 +86,14 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
             <div class="toolbars">
                 <div class="selection toolbar" data-display="DESC">
                     <div class="main-bar">
-                        <span class="label">CON + CUENTAS</span>
+                        <span class="label">DESCENDING</span>
                         <svg width="18" height="10" viewBox="0 0 18 10" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8.30912 9.33979C8.69565 9.70916 9.30435 9.70916 9.69088 9.33979L16.7233 2.61952C17.3753 1.99643 16.9343 0.896553 16.0324 0.896553H1.9676C1.06571 0.896553 0.62468 1.99643 1.27672 2.61952L8.30912 9.33979Z"/>
                         </svg>
                     </div>
                     <ul class="options-list">
-                        <li class="option option--active" data-display="DESC">CON + CUENTAS</li>
-                        <li class="option" data-display="ASC">CON - CUENTAS</li>
+                        <li class="option option--active" data-display="DESC">DESCENDING</li>
+                        <li class="option" data-display="ASC">ASCENDING</li>
                     </ul>
                 </div>
             </div>
@@ -103,7 +102,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
             <?php foreach($websites_listing as $index => $record): ?>
 
-                <?php // @ Important Code To Calculate # Of Accounts Registered For Each Website..
+                <?php // @ Important code to calculate # of accounts registered for each website.
                     // $website = $record['SITE_CODE'];
                     // $each_website_query = "SELECT `$__WEBSITES`.`SITE_CODE`, `$__WEBSITES`.`SITE_TITLE`,
                     //                         COUNT(`$__ACCOUNTS`.`SITE_CODE`) AS `TOTAL_ACCOUNTS` 
@@ -177,8 +176,9 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
                 <div class="active-accounts-listing">
 
-                <?php if($active_accounts): ?>
+                <?php if($active_accounts->num_rows !== 0): ?>
 
+            
                 <?php foreach($active_accounts as $index => $record): ?>
 
                 <?php                                                 ?>
@@ -213,9 +213,9 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
                 <?php endforeach; ?>
 
-                <?php elseif(!$active_accounts): ?>
+                <?php elseif($active_accounts->num_rows === 0): ?>
 
-                <h2>nothing here shift</h2>
+                <h2>No records found for &apos;<?php echo $active_site;?>&apos;</h2>
                 
                 <?php endif; ?>
                     
