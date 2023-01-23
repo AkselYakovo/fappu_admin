@@ -1,7 +1,7 @@
 # Server config file.
 .htaccess
 
-# "assets" DIR avoid local content being pushed.
+# ~ /assets DIR avoid local content being pushed.
 # Ignore .png files contained by ANY folder.
 assets/**/*.png
 # Ignore .jpg files contained by ANY folder.
@@ -11,5 +11,6 @@ assets/*/**
 # EXCEPT .svg & .tff files.
 !assets/*/*.svg
 !assets/*/*.ttf
+
 # CSS Map.
 *css.map
