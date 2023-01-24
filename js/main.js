@@ -831,7 +831,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
     modal.phases[2].controls[0] = form.elements[3];
 
     form.flags[3] = []; // Define fourth phase validation expressions.
-    form.flags[3][0] = /\d{1,}/; // Offers number regex validation expression.
+    form.flags[3][0] = /^\d{1,}$/; // Offers number regex validation expression.
     modal.phases[3].controls = [];
     modal.phases[3].controls[0] = form.elements[4];
 
@@ -1036,29 +1036,38 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             }
         });
 
-    // More button eventlistener for offer counter element.
+    // # Plus button click event.
     document.querySelector('.fourth button[name="add"]').addEventListener('click', function(e) {
+
         let counterNode = document.querySelector('.fourth span.counter');
-        let actualCounter = Number.parseInt(document.querySelector('.fourth span.counter').innerHTML);
+        let actualCounter = Number.parseInt(counterNode.innerHTML);
+
         if ( actualCounter == 1 )
             document.querySelector('.fourth button[name="minus"]').removeAttribute('disabled');
+
         actualCounter++;
         counterNode.innerHTML = actualCounter;
         form.elements[4].setAttribute('value', actualCounter);
-        
     });
 
-    // Minus button eventlistener for offer counter element.
+    // # Minus button click event.
     document.querySelector('.fourth button[name="minus"]').addEventListener('click', function(e) {
+
         let counterNode = document.querySelector('.fourth span.counter');
         let actualCounter = Number.parseInt(document.querySelector('.fourth span.counter').innerHTML);
-        if ( actualCounter == 1 )
+
+        if ( (actualCounter - 1) <= 1 ) {
             document.querySelector('.fourth button[name="minus"]').setAttribute('disabled', 'true');
-        else { 
-        actualCounter--;
-        counterNode.innerHTML = actualCounter;
-        form.elements[4].setAttribute('value', actualCounter);
         }
+        
+        if ( (actualCounter - 1) > 0 ) { 
+            actualCounter--;
+            counterNode.innerHTML = actualCounter;
+            form.elements[4].setAttribute('value', actualCounter);
+        }
+
+        console.log(form.elements[4].getAttribute('value'))
+        
     });
 
     // Vendor selection event handlers.
