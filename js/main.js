@@ -787,7 +787,8 @@ if ( document.querySelector('#Accounts-Card') )
 // 1. NEW ACCOUNT.
 // 2. EDIT ACCOUNT.
 // 3. 
-// New account modal code.
+
+// # MODAL (NEW ACCOUNT).
 if ( document.querySelector('#New-Account') && document.querySelector('#New-Account-Modal') ) 
 {
     // Important modal references.
@@ -880,18 +881,23 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             let i = 0;
     
             for(const formNode of modal.phases[modal.actualPhase].controls) {
+
                 // let data = form.elements[index].value;
                 let data = formNode.value;
                 let reg = form.flags[modal.actualPhase][i];
+
                 // console.log(`Data Received: '${data}' w/ the RegEx: '${reg}' `);
+
                 if ( !reg.test(data) ) {
-                    modalControls[modal.actualPhase].classList.remove('valid');
                     // console.warn(reg.test(data));
+                    modalControls[modal.actualPhase].classList.remove('valid');
                     return false;
                 }
+
                 // index++;
                 i++;
             }
+
             modalControls[modal.actualPhase].classList.add('valid');
             // console.log(`Phase Is Valid! Hurray!`);
     }
@@ -954,16 +960,17 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 
     
 
-    // Event listeners for form inputs elements.
-
-    // Website/selector picker element event handler.
+    // # MODAL (NEW ACCOUNT).
+    // + Event listeners for form inputs elements.
+    // # Website selector picker event.
     document.getElementById('Site-Selection').addEventListener('click', function(e) {
         let data = this.getAttribute('data-display');
         // console.warn(data)
         form.elements[0].setAttribute('value', data);
     });
 
-    // # Nickname filed typing event.
+    // # MODAL (NEW ACCOUNT).
+    // # Nickname field typing event.
     document.querySelector('.second > input[placeholder="NICKNAME"]').addEventListener('keyup', function(e) {
 
         let data = this.value;
@@ -976,13 +983,15 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
 
     });
 
-    // Password input element event handler.
+    // # MODAL (NEW ACCOUNT).
+    // Password field typing event.
     document.querySelector('.second > input[placeholder="PASSWORD"]').addEventListener('keyup', function(e) {
         let data = this.value;
         
         form.elements[2].setAttribute('value', data);
     });
 
+    // # MODAL (NEW ACCOUNT).
     // # Price input element events handler.
     document.querySelector('.third input[name="Price Input"]').addEventListener('keydown', function(e) {
 
@@ -1036,6 +1045,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             }
         });
 
+    // # MODAL (NEW ACCOUNT).
     // # Plus button click event.
     document.querySelector('.fourth button[name="add"]').addEventListener('click', function(e) {
 
@@ -1050,6 +1060,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         form.elements[4].setAttribute('value', actualCounter);
     });
 
+    // # MODAL (NEW ACCOUNT).
     // # Minus button click event.
     document.querySelector('.fourth button[name="minus"]').addEventListener('click', function(e) {
 
@@ -1066,119 +1077,157 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
             form.elements[4].setAttribute('value', actualCounter);
         }
 
-        console.log(form.elements[4].getAttribute('value'))
-        
     });
 
-    // Vendor selection event handlers.
-    //
-    // Vendor click handler.
+    // # MODAL (NEW ACCOUNT).
+    // # Vendor selection event handlers.
+    // + Click handler.
     document.querySelector('.fifth .toolbar').addEventListener('click', function(e) {
         let vendor = this.getAttribute('data-display');
         vendor = vendor.substring(1);
         form.elements[5].setAttribute('value', vendor);
     });
 
-    // Vendor input refresher.
+    // # MODAL (NEW ACCOUNT).
+    // # Vendor selection event handlers.
+    // + Check vendors list.
+    // + Update recommendation list.
     document.querySelector('.fifth .toolbar input').addEventListener('keyup', function(e) {
         let data = this.value;
-        console.log(data);
         checkVendors(document.querySelector('.vendor-input'), data);
     });
 
-    // Warranty begins input event handler.
+    // # MODAL (NEW ACCOUNT).
+    // # Warranty begins typing event.
+    // + Avoid typing of unwanted keys.
+    // + Update field's logical value.
     document.querySelector('.sixth input[name="Warranty Begins"]').addEventListener('keydown', function(e) {
-        // console.log(e);
-        let reg = /[0-9]|-|Backspace|Tab/;
+        
+        let reg = /[0-9]|-|Backspace|Tab/; // Only accepts the previous keys.
         let data = form.elements[6].getAttribute('value');
-        if ( !reg.test(e.key) ) {
+
+        if ( !reg.test(e.key) ) 
             e.preventDefault();
-        }
-        else 
-        {
+        
+        else {
+
             if ( e.key != 'Backspace' && e.key != 'Tab' ) {
-                if ( data ) 
+
+                if ( data )
                     form.elements[6].setAttribute('value', data.concat(e.key));
+
                 else 
                     form.elements[6].setAttribute('value', e.key);
             }
+
             else if ( e.key == 'Backspace' ) {
+
                 data = data.substring(0, data.length - 1);
                 form.elements[6].setAttribute('value', data);
             }
         }
         
-        // console.log(`Form Element Value: ${form.elements[6].getAttribute('value')}`);
+        // console.log(`Warranty Began value: ${form.elements[6].getAttribute('value')}`);
+        
     });
 
-    // Warranty begins focusout event handler.
+    // # MODAL (NEW ACCOUNT).
+    // # Warranty begins focusout event handler.
+    // + Add 20-odd days to any given date.
+    // + Update field's logical & visible value.
     document.querySelector('.sixth input[name="Warranty Begins"]').addEventListener('focusout', function(e) {
+        
         let data = form.elements[6].getAttribute('value');
+        let warrantyBegan = new Date(data);
         // let month = 2.419e+9;
-        // console.log(data)
-        if ( /\d{4}-\d{2}-\d{2}/.test(data) ) {
-            let warrantyBegan = new Date(data);
+
+        if ( Date.parse(warrantyBegan) ) {
+
             let warrantyEnds = new Date();
             warrantyEnds.setTime( warrantyBegan.valueOf() + (86400000 * 28) );
-            // warrantyEnds.setTime( warrantyBegan.valueOf() + month );
+            // console.log(warrantyEnds.getDate());
 
             warrantyEnds.year = warrantyEnds.getFullYear();
             warrantyEnds.month = ( warrantyEnds.getMonth().toString().length == 1 ) ? `0${warrantyEnds.getMonth() + 1}` : warrantyEnds.getMonth() + 1;
-            warrantyEnds.day = ( warrantyEnds.getDate().toString.length == 1 ) ? warrantyEnds.getDate() : `0${warrantyEnds.getDate()}`;
+            warrantyEnds.day = ( warrantyEnds.getDate() >= 10 ) ? warrantyEnds.getDate() : `0${warrantyEnds.getDate()}`;
             let newDateString = warrantyEnds.year + '-' + warrantyEnds.month + '-' + warrantyEnds.day;
 
             document.querySelector('.sixth input[name="Warranty Ends"]').setAttribute('value', newDateString);
+            document.querySelector('.sixth input[name="Warranty Ends"]').value = newDateString;
             form.elements[7].setAttribute('value', newDateString);
         }
+
+        // Remove input from both fields.
+        else {
+            form.elements[6].setAttribute('value', '');
+            form.elements[7].setAttribute('value', '');
+            document.querySelector('.sixth input[name="Warranty Begins"]').value = '';   
+            document.querySelector('.sixth input[name="Warranty Begins"]').setAttribute('value', '');
+            document.querySelector('.sixth input[name="Warranty Ends"]').value = '';
+            document.querySelector('.sixth input[name="Warranty Ends"]').setAttribute('value', '');
+        }
+
+        // console.log(`Warranty Begins value: ${form.elements[6].getAttribute('value')}`);
+        // console.log(`Warranty Ends value: ${form.elements[7].getAttribute('value')}`);
     });
 
-    // Warranty ends input event handler.
+    // # MODAL (NEW ACCOUNT).
+    // # Warranty ends field event.
+    // + Update field's logical & visible value.
+    // + Validate entered date.
     document.querySelector('.sixth input[name="Warranty Ends"]').addEventListener('keydown', function(e) {
-        // console.log(e);
-        let reg = /[0-9]|-|Backspace|Tab/;
+        
+        let reg = /[0-9]|-|Backspace|Tab/; // Only accepts the previous keys.
         let data = form.elements[7].getAttribute('value');
-        if ( !reg.test(e.key) ) {
+
+        if ( !reg.test(e.key) ) 
             e.preventDefault();
-        }
-        else 
-        {
+        
+        else {
+
             if ( e.key != 'Backspace' && e.key != 'Tab' ) {
+
                 if ( data ) 
                     form.elements[7].setAttribute('value', data.concat(e.key));
+
                 else 
                     form.elements[7].setAttribute('value', e.key);
             }
+
             else if ( e.key == 'Backspace' ) {
                 data = data.substring(0, data.length - 1);
                 form.elements[7].setAttribute('value', data);
             }
         }
         
-        console.log(`Form Element Value: ${form.elements[7].getAttribute('value')}`);
+        // console.log(`Warranty Ends value: ${form.elements[7].getAttribute('value')}`);
     });
 
-    // # Event listeners for modal elements.
-    // Basics open/close functionality.
+    // # MODAL (NEW ACCOUNT).
+    // # Event listeners for modal's control buttons.
+    // + Basics open/close functionality.
     modalButton.addEventListener('click', function() {
         modal.classList.add('visible');
     });
+
     modalOverlay.addEventListener('click', function() {
         modal.classList.remove('visible');
     });
 
-
-    // Advance/return functionality.
-    // Advance funcionality.
+    // # MODAL (NEW ACCOUNT).
+    // + Advance/return functionality.
     modalNext.addEventListener('click', function() {
+
         if ( modal.actualPhase == 0 ) {
+
             modalPrevious.removeAttribute('disabled');
             modal.validatePhase();
             modal.next();
         }
 
-        else if ( modal.actualPhase == modal.phases.length - 1 ) {
+        else if ( modal.actualPhase == modal.phases.length - 1 ) 
             modal.validateForm();
-        }   
+        
 
         else {
             modal.validatePhase();
@@ -1186,18 +1235,17 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         }
     });
 
-    // Return functionality.
+    // # MODAL (NEW ACCOUNT).
+    // + Return functionality.
     modalPrevious.addEventListener('click', function() {
         modal.prev();
         // modal.validatePhase();
     });
 
-        
-    // }
 }
 
 
-// # Edit account modal.
+// # MODAL (EDIT ACCOUNT).
 if ( document.querySelector('#Edit-Account-Modal') ) 
 {
     let modal = document.querySelector('#Edit-Account-Modal');
