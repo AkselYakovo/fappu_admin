@@ -819,8 +819,8 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
     modal.phases[0].controls[0] = form.elements[0];
 
     form.flags[1] = []; // Define second phase validation expressions.
-    form.flags[1][0] = /.{3,}/; // Nickname regex validation expression.
-    form.flags[1][1] = /.{3,}/; // Pass regex validation expression.
+    form.flags[1][0] = /^\w{3,}$/i; // Nickname regex validation expression.
+    form.flags[1][1] = /^[\.$@_a-zA-Z0-9]{3,}$/i; // Pass regex validation expression.
     modal.phases[1].controls = [];
     modal.phases[1].controls[0] = form.elements[1];
     modal.phases[1].controls[1] = form.elements[2];
@@ -963,14 +963,20 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         form.elements[0].setAttribute('value', data);
     });
 
-        // Nickname input element event handler.
+    // # Nickname filed typing event.
     document.querySelector('.second > input[placeholder="NICKNAME"]').addEventListener('keyup', function(e) {
+
         let data = this.value;
+
+        if ( form.elements[1].getAttribute('value') != data ) {
+            form.elements[1].setAttribute('value', data);
+        }
         
-        form.elements[1].setAttribute('value', data);
+        // console.log(form.elements[1].getAttribute('value'));
+
     });
 
-        // Password input element event handler.
+    // Password input element event handler.
     document.querySelector('.second > input[placeholder="PASSWORD"]').addEventListener('keyup', function(e) {
         let data = this.value;
         
@@ -1474,6 +1480,7 @@ if ( document.querySelector('#Edit-Account-Modal') )
             this.removeAttribute('readonly');
             this.setAttribute('focused', '');
         });
+        
         input.addEventListener('focusout', function(e) {
             let inputName = e.target.getAttribute('name');
 
@@ -2342,6 +2349,7 @@ if ( document.querySelector('.card-messages-listing') ) {
         let cat = this.getAttribute('data-display');
 
         if ( category != cat && category != 'ALL' ) {
+            
             category = cat;
             messagesCollection = {};
 
