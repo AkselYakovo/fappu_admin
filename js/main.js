@@ -826,7 +826,7 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
     modal.phases[1].controls[1] = form.elements[2];
 
     form.flags[2] = []; // Define third phase validation expressions.
-    form.flags[2][0] = /\d{2,}/; // Price number regex validation expression.
+    form.flags[2][0] = /^[1-9]+[0-9]+$/; // Price number regex validation expression.
     modal.phases[2].controls = [];
     modal.phases[2].controls[0] = form.elements[3];
 
@@ -983,47 +983,56 @@ if ( document.querySelector('#New-Account') && document.querySelector('#New-Acco
         form.elements[2].setAttribute('value', data);
     });
 
-    // Price input element events handler.
+    // # Price input element events handler.
     document.querySelector('.third input[name="Price Input"]').addEventListener('keydown', function(e) {
+
+            e.preventDefault();
+
             let regEx = /(\d|Backspace)/;
             let formNode = form.elements[3];
             let formNodeData = formNode.getAttribute('value');
-            
-            e.preventDefault();
 
+            console.log(formNodeData);
+            
             // If the user doesn't digit either a digit or backspace key.
             if( regEx.test(e.key) ) {
 
-            if ( e.key == 'Backspace' ) {
+                // If the key Backspace is pressed.
+                if ( e.key == 'Backspace' ) {
 
-                if ( formNodeData ) {
+                    if ( formNodeData ) {
 
-                    let newData = formNodeData.substring(0, formNodeData.length - 1);
-                    let data = `$${newData}.00 MXN`;
-                    this.setAttribute('value', data);
-                    formNode.setAttribute('value', newData);
+                        let newData = formNodeData.substring(0, formNodeData.length - 1);
+                        let data = `$${newData}.00 MXN`;
+                        this.setAttribute('value', data);
+                        formNode.setAttribute('value', newData);
+                    }
+
+                    else
+                        this.setAttribute('value', '');
                 }
-
-                else
-                    this.setAttribute('value', '');
-            }
-            // If a digit is entered.
-            else {
-                // If formNode isn't empty.
-                if ( formNode.getAttribute('value') ) {
-                    let data = `$${formNodeData.concat(e.key)}.00 MXN`;
-                    this.setAttribute('value', data);
-                    formNode.setAttribute('value', formNodeData.concat(e.key) );
-                    // console.log(`Write N' Concat`);
-                }
-                // If formNode is empty.
+                
+                // If a digit is entered.
                 else {
-                    let data = `$${e.key}.00 MXN`;
-                    this.setAttribute('value', data);
-                    formNode.setAttribute('value', e.key);
-                    // console.log(`Write new`);
+
+                    // If formNode isn't empty.
+                    if ( formNode.getAttribute('value') ) {
+
+                        let data = `$${formNodeData.concat(e.key)}.00 MXN`;
+                        this.setAttribute('value', data);
+                        formNode.setAttribute('value', formNodeData.concat(e.key) );
+                        // console.log(`Write N' Concat`);
+                    }
+
+                    // If formNode is empty.
+                    else {
+
+                        let data = `$${e.key}.00 MXN`;
+                        this.setAttribute('value', data);
+                        formNode.setAttribute('value', e.key);
+                         console.log(`Write new`);
+                    }
                 }
-            }
             }
         });
 
