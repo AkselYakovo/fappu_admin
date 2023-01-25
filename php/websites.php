@@ -14,17 +14,34 @@ $actual_website = "websites";
 $single_website_active = (isset($_GET['website']) ? $_GET['website'] : '' );
 $single_website_code = clean_txt($single_website_active);
 
-$single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
-                         W.`ORIGINAL_PRICE` AS `ORIGINAL_PRICE`, W.`OFFER_PRICE` AS `OFFER_PRICE`, COUNT(*) AS `TOTAL_ACCOUNTS`,
-                         SUB.`TOTAL_ACTIVE_ACCOUNTS` AS `TOTAL_ACTIVE_ACCOUNTS`
-                         FROM `$__WEBSITES` AS W 
-                         INNER JOIN `_ACCOUNTS` AS A
-                         ON W.`SITE_CODE` = A.`SITE_CODE`
-                         INNER JOIN ( SELECT COUNT(*) AS `TOTAL_ACTIVE_ACCOUNTS`, `SITE_CODE`
+// $single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
+//                          W.`ORIGINAL_PRICE` AS `ORIGINAL_PRICE`, W.`OFFER_PRICE` AS `OFFER_PRICE`, COUNT(*) AS `TOTAL_ACCOUNTS`,
+//                          SUB.`TOTAL_ACTIVE_ACCOUNTS` AS `TOTAL_ACTIVE_ACCOUNTS`
+//                          FROM `$__WEBSITES` AS W 
+//                          INNER JOIN `_ACCOUNTS` AS A
+//                          ON W.`SITE_CODE` = A.`SITE_CODE`
+//                          INNER JOIN ( SELECT COUNT(*) AS `TOTAL_ACTIVE_ACCOUNTS`, `SITE_CODE`
+//                                       FROM `_ACCOUNTS` 
+//                                       WHERE `SITE_CODE` = '$single_website_code' AND `ACCESS_STATE` = 1 ) AS SUB
+//                          WHERE A.`SITE_CODE` = '$single_website_code' ";
+
+$single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, 
+                         W.`SITE_TITLE` AS `SITE_TITLE`, 
+                         W.`SITE_URL` AS `SITE_URL`, 
+                         W.`ORIGINAL_PRICE` AS `ORIGINAL_PRICE`, 
+                         W.`OFFER_PRICE` AS `OFFER_PRICE`, 
+                         COALESCE(SUB.`TOTAL_ACTIVE_ACCOUNTS`, 0) AS `TOTAL_ACTIVE_ACCOUNTS`,
+                         COALESCE(SUB2.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
+                         FROM `_WEBSITES` AS W 
+                         LEFT JOIN ( SELECT COUNT(*) AS `TOTAL_ACTIVE_ACCOUNTS`, `SITE_CODE`
                                       FROM `_ACCOUNTS` 
-                                      WHERE `SITE_CODE` = '$single_website_code' AND `ACCESS_STATE` = 1
-                                      GROUP BY `SITE_CODE` ) AS SUB
-                         WHERE A.`SITE_CODE` = '$single_website_code' ";
+                                      WHERE `SITE_CODE` = '$single_website_code' AND `ACCESS_STATE` = 1 ) AS SUB
+                         ON W.`SITE_CODE` = SUB.`SITE_CODE`
+                         LEFT JOIN ( SELECT COUNT(*) AS `TOTAL_ACCOUNTS`, `SITE_CODE`
+                                      FROM `_ACCOUNTS`
+                                      WHERE `SITE_CODE` = '$single_website_code' ) AS SUB2
+                         ON W.`SITE_CODE` = SUB2.`SITE_CODE`
+                         WHERE W.`SITE_CODE` = '$single_website_code'";
 
 $single_website = ($single_website_code)
                   ? $main_conn->query($single_website_query) 
