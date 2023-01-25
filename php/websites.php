@@ -56,12 +56,13 @@ $websites_query = " SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE
 					ON W.`SITE_CODE` = Q.`SITE_CODE`
                     LEFT JOIN ( SELECT A.`SITE_CODE` AS `SITE_CODE`, COUNT(`ACCOUNT_ID`) AS `TOTAL_ACTIVE_ACCOUNTS`, A.`ACCESS_STATE`
                                  FROM `_ACCOUNTS` AS A
-                                 GROUP BY A.`SITE_CODE` 
-                                 HAVING `ACCESS_STATE` = 1 ) AS QUERY
+                                 WHERE A.`ACCESS_STATE` = 1
+                                 GROUP BY A.`SITE_CODE` ) AS QUERY
                     ON QUERY.`SITE_CODE` = W.`SITE_CODE`
                     GROUP BY W.`SITE_CODE` ";
 
 $websites = $main_conn->query($websites_query);
+
 ?>
 
 <!DOCTYPE html>
