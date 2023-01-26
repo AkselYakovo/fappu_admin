@@ -397,7 +397,7 @@ if ( document.querySelector('.screens-wrap')
 
 
 
-// # New website modal config.
+// # MODAL (NEW WEBSITE).
 if ( document.querySelector('#New-Website-Modal') ) 
 {
     let modal = new Modal('New-Website-Modal');
@@ -417,66 +417,101 @@ if ( document.querySelector('#New-Website-Modal') )
     }; 
     let carouselControls = document.querySelectorAll('.carousel .controls figure');
 
+    let fileTarget = '';
     let logoFile = null;
 
+    // # MODAL (NEW WEBSITE).
     // Text inputs variables.
     let siteCodeInput = modal.node.querySelector('.toolbar > input[name="Site Code"]');
     let originalPriceInput = modal.node.querySelector('.toolbar > input[name="Original Price"]');
     let salePriceInput = modal.node.querySelector('.toolbar > input[name="Sale Price"]');
     let urlInput = modal.node.querySelector('.toolbar > input[name="URL Input"]');
     let siteTitleInput = modal.node.querySelector('.toolbar > input[name="Site Title"]');
+
+    // Collection of all inputs (for validation).
     let inputCollection = new validationCollection();
 
     new validationFlag(siteCodeInput, 'sitecode/website');
-    inputCollection.add(siteCodeInput, validationFlag.getFlag('sitecode/website') );
+    inputCollection.add('siteCode', siteCodeInput, validationFlag.getFlag('sitecode/website') );
 
     new validationFlag(originalPriceInput, 'price/month');
-    inputCollection.add(originalPriceInput, validationFlag.getFlag('price/month') );
+    inputCollection.add('originalPrice', originalPriceInput, validationFlag.getFlag('price/month') );
 
     new validationFlag(salePriceInput, 'price/month');
-    inputCollection.add(salePriceInput, validationFlag.getFlag('price/month'));
+    inputCollection.add('salePrice', salePriceInput, validationFlag.getFlag('price/month'));
 
     new validationFlag(urlInput, 'url/website');
-    inputCollection.add(urlInput, validationFlag.getFlag('url/website'));
+    inputCollection.add('url', urlInput, validationFlag.getFlag('url/website'));
 
     new validationFlag(siteTitleInput, 'sitetitle/website');
-    inputCollection.add(siteTitleInput, validationFlag.getFlag('sitetitle/website'));
+    inputCollection.add('siteTitle', siteTitleInput, validationFlag.getFlag('sitetitle/website'));
 
 
+    // # MODAL (NEW WEBSITE).
     // Validation of all 3 pictures.
     modal.validatePictures = function() {
+
         if ( carousel.pictures.length == 3 ) {
+
             carousel.pictures.forEach( (pictureFile, index) => {
-                if (!pictureFile.getFile())
+
+                let i = index + 1;
+
+                if ( !pictureFile.getFile() )
                     throw new Error('Invalid Enough Picture Obj For Uploading');
-                modal.add(`__PICTURE_${index + 1}`, pictureFile.getFile());
-                modal.add(`__PICTURE_${index + 1}_COORDS`, pictureFile.getCoords());
-                modal.add(`__PICTURE_${index + 1}_SCALE`, pictureFile.getScale());
+
+                if ( pictureFile.getFile().type != 'image/jpeg')
+                    throw new Error(`Picture #${i} is not a jpeg file.`);
+
+                modal.add(`__PICTURE_${i}`, pictureFile.getFile());
+                modal.add(`__PICTURE_${i}_COORDS`, pictureFile.getCoords());
+                modal.add(`__PICTURE_${i}_SCALE`, pictureFile.getScale());
             });
+
+            // return true;
+        }
+        
+        else {
+            // return false;
+            throw new Error('Incomplete carousel files');
+        }
+
+        if ( logoFile.type == 'image/png' ) {
             return true;
         }
-        else 
-            throw new Error('Incomplete Carousel Files');
+
     }
+
+    // # MODAL (NEW WEBSITE).
     // Validation of all input elements within the collection variable.
     modal.validateInputs = function() {
+
         let collection = inputCollection.getCollection();
+
         for (let i = 1; i <= inputCollection.internalIndex; i++ ) {
+
             let reg = collection[i].regex;
             let data = collection[i].node.value;  
-            // console.log(data)
+            let label = collection[i].label;
             
-            if ( !reg.test(data) ) 
-                throw new Error(`Invalid Inputs: ${collection[i].data} ${collection[i].regex}`);
+            if ( !reg.test(data) )
+                throw new Error(`Invalid Input: ${label} - '${data}' -> '${reg}'`);
         }
+
+        // Validate images.
         return true;
     }
 
-    // Carousel mobility method.
+    
+
+    // # MODAL (NEW WEBSITE).
+    // + Carousel mobility.
     carousel.goTo = function(target) {
+
         let strip = document.querySelector('.carousel .strip');
 
         if ( target <= 3 && target != carousel.pictureActive ) {
+
             let index = target - 1;
             let pictureActive = carousel.pictureActive - 1;
             carouselControls[ pictureActive ].classList.remove('active');
@@ -484,30 +519,47 @@ if ( document.querySelector('#New-Website-Modal') )
             carouselControls[ index ].classList.add('active');
             carousel.pictureActive = target;
         }
-        
     }
 
+    // # MODAL (NEW WEBSITE).
     // Initial modal open.
     addWebsiteButton.addEventListener('click', function(){
         modal.open();
     });
 
-    // Open system file dialog.
+    // # MODAL (NEW WEBSITE).
+    // # Click listener for every button input.
+    // + Open system file dialog.
     document.querySelectorAll('.carousel button.input').forEach( node => {
         node.addEventListener('click', function(e) {
+
+            if ( input.getAttribute('accept') != 'image/jpeg' )
+                input.setAttribute('accept', 'image/jpeg')
+            
+            fileTarget = 'jpeg';            
             input.click();
         });
     });
 
+    // # Listener for logo button.
     logoInputButton.addEventListener('click', function() {
+
+        if ( input.getAttribute('accept') != 'image/png' )
+            input.setAttribute('accept', 'image/png');
+
+        fileTarget = 'png';
         input.click();
     });
 
+    // # MODAL (NEW WEBSITE).
     // General picture handler.
     input.addEventListener('change', function(e) {
-        let file = input.files[0];
 
-        if ( file.type == 'image/jpeg') {
+        let file = input.files[0]; // Only read the first file.
+
+        // 'jpeg' image submitted.
+        if ( file.type == 'image/jpeg' && fileTarget == 'jpeg' ) {
+
             let reader = new FileReader();
             
             reader.readAsDataURL(file);
@@ -526,28 +578,40 @@ if ( document.querySelector('#New-Website-Modal') )
             }
         }
 
-        // Logo file PNG.
-        else if ( file.type == 'image/png' ) {
+        // 'png' logo file submitted.
+        else if ( file.type == 'image/png' && fileTarget == 'png' ) {
             let reader = new FileReader();
             
             reader.readAsDataURL(file);
             
-            reader.onload = function(e) {
+            reader.onload  = function(e) {
                 logoFile = file;
             }
+
+            reader.onloadend = function(e) {
+                console.log(logoFile);
+            }
         }
+
+        else 
+            throw new Error('Invalid format. ('+ file.type +')');
+
     });
 
+    // # MODAL (NEW WEBSITE).
     // Set carousel controls functionality.
     carouselControls.forEach( node => {
+
         node.addEventListener('click', function(e) {
             let target = this.getAttribute('data-display');
             carousel.goTo(target);
         });
     });
 
+    // # MODAL (NEW WEBSITE).
     // Phases selection handler.
     modal.node.querySelectorAll('.phases > figure').forEach( node => {
+
         node.addEventListener('click', function(e){
             let phasesNodes = modal.node.querySelectorAll('.phases > figure');
             let contentNode = modal.node.querySelector('div.content > .strip');
@@ -565,6 +629,7 @@ if ( document.querySelector('#New-Website-Modal') )
         });
     });
 
+    // # MODAL (NEW WEBSITE).
     // Final upload stage.
     submitButton.addEventListener('click', function(e) 
     {
@@ -582,12 +647,14 @@ if ( document.querySelector('#New-Website-Modal') )
         }
     });
 
+    // # MODAL (NEW WEBSITE).
     // EXTRA: Open edit website modal.
     // editWebsiteButton.addEventListener('click', function(e) {
     //     modal.node.setAttribute('data-display', 'EDIT');
     //     modal.open();
     // });
 
+    // # MODAL (NEW WEBSITE).
     // EXTRA: Update logo file.
     newLogoButton?.addEventListener('click', function(e) {
         document.querySelector('input[name="New Logo"]').click();
