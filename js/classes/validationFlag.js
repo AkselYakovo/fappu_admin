@@ -40,13 +40,13 @@ export class validationFlag {
                             if ( inputNode.getAttribute('value') ) {
 
                                 let price = inputVal.substring(1, inputVal.indexOf('.'));
-                                let data = `$${price.concat(e.key)}.00 MXN/MES`;
+                                let data = `$${price.concat(e.key)}.00 MXN/MONTH`;
                                 this.setAttribute('value', data);
                             }
 
                             // If input node is initially empty.
                             else {
-                                let data = `$${e.key}.00 MXN/MES`;
+                                let data = `$${e.key}.00 MXN/MONTH`;
                                 this.setAttribute('value', data);
                             }
                         }
@@ -145,14 +145,14 @@ export class validationFlag {
 
 
     static getFlag(flag) {
-        
+
         switch (flag) {
 
             case 'sitecode/website':
                 return /^[A-Za-z]{2,7}$/;
         
             case 'price/month':
-                return /^\$\d{2,3}\.00\sMXN\/MES$/i;
+                return /^\$((?!(0))\d{1,3})\.(?=(0))00\sMXN\/MONTH$/i;
 
             case 'url/website':
                 return /^\w{2,}\.\w{2,4}$/i;
