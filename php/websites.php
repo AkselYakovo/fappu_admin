@@ -76,7 +76,7 @@ $websites_query = " SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE
                                  WHERE A.`ACCESS_STATE` = 1
                                  GROUP BY A.`SITE_CODE` ) AS QUERY
                     ON QUERY.`SITE_CODE` = W.`SITE_CODE`
-                    GROUP BY W.`SITE_CODE` ";
+                    ORDER BY `TOTAL_ACCOUNTS` DESC";
 
 $websites = $main_conn->query($websites_query);
 
