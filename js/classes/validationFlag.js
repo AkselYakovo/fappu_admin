@@ -145,27 +145,23 @@ export class validationFlag {
 
 
     static getFlag(flag) {
+        
         switch (flag) {
 
             case 'sitecode/website':
-                return /[A-Za-z]{4,}/;
-                break;
+                return /^[A-Za-z]{2,7}$/;
         
             case 'price/month':
-                return /^\$\d{2,3}\.00\sMXN\/MES/i;
-                break;
+                return /^\$\d{2,3}\.00\sMXN\/MES$/i;
 
             case 'url/website':
-                return /\w{3,}\.\w{2,4}/i;
-                break;
+                return /^\w{2,}\.\w{2,4}$/i;
             
             case 'sitetitle/website':
-                return /[A-Za-z]{3,}/i
-                break;
+                return /^[A-Z]{3,}$/i
 
             case 'vendor/id':
-                return /@\d{3,15}/i
-                break;
+                return /^@\d{3,15}$/i
 
             default:
                 console.log('Invalid/Inexistent Flag. Found');
