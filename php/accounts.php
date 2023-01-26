@@ -24,8 +24,7 @@ $websites_listing_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` A
                                              FROM _ACCOUNTS
                                              GROUP BY 1) Q
                            ON W.`SITE_CODE` = Q.`SITE_CODE`
-                           GROUP BY 1
-                           ORDER BY 2 ASC ";
+                           ORDER BY `TOTAL_ACCOUNTS` DESC";
 
 $websites_listing = $main_conn->query($websites_listing_query);
 
