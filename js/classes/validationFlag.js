@@ -1,50 +1,57 @@
 export class validationFlag {
 
     constructor(inputNode, option) {
+
         this.collection = [];
-        switch (option) 
-        {
+        switch (option) {
+
             case 'price/month':
 
-                inputNode.addEventListener('keydown', function(e) 
-                {
+                inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /(\d|Backspace)|Tab/;
                     let inputVal = inputNode.getAttribute('value');
             
                     e.preventDefault();
 
-                    if( regEx.test(e.key) ) 
-                    {
-                        // If The User Doesn't Digit Either A Digit Or Backspace Key..
+                    if( regEx.test(e.key) ) {
+
+                        // If the user doesn't digit either a digit or backspace key.
                         if ( e.key == 'Backspace' ) {
+
                             let price = inputVal.substring(1, inputVal.indexOf('.'));
-                            // If Price Quantity Isn't Empty.
+                            // If price quantity isn't empty.
                             if ( price ) {
+
                                 let newData = price.substring(0, price.length - 1);
                                 let data = `$${newData}.00 MXN/MES`;
                                 this.setAttribute('value', data);
                             }
-                            else {
+                            else 
                                 this.setAttribute('value', '');
-                            }
+                            
 
                         }
-                        // If A Digit Is Entered..
+
+                        // If a digit is entered.
                         else if ( e.key != 'Backspace' && e.key != 'Tab' ) {
-                            // If Input Node Isn't Empty
+
+                            // If input node isn't empty.
                             if ( inputNode.getAttribute('value') ) {
+
                                 let price = inputVal.substring(1, inputVal.indexOf('.'));
                                 let data = `$${price.concat(e.key)}.00 MXN/MES`;
                                 this.setAttribute('value', data);
                             }
-                            // If Input Node Is Initially Empty..
+
+                            // If input node is initially empty.
                             else {
                                 let data = `$${e.key}.00 MXN/MES`;
                                 this.setAttribute('value', data);
                             }
                         }
                         else {
-                            // Do A Tabulation.
+                            // Do a tabulation.
                         }
                     }
                 });
@@ -53,15 +60,15 @@ export class validationFlag {
 
             case 'url/website':
 
-                inputNode.addEventListener('keydown', function(e) 
-                {
+                inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /(\b|\.|\d|Backspace|\/)/;
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) ) 
                         e.preventDefault();                    
-                    }
                 });
 
                 inputNode.addEventListener('focusout', function(e) {
+
                     let data = this.value;
                     data = data.replace(/^www\./i, '');
                     this.value = data;
@@ -72,44 +79,44 @@ export class validationFlag {
             case 'sitecode/website':
 
                 inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /\b|\d|Backspace|Tab/i;
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) ) 
                         e.preventDefault();
-                    }
                 });
 
                 inputNode.addEventListener('focusout', function(e) {
+
                     let regEx = /.{2,10}/;
                     let data = inputNode.value;
-                    if ( !regEx.test( data ) ) {
+                    if ( !regEx.test( data ) ) 
                         inputNode.value = '';
-                    }
                 });
                 break;
 
             case 'sitetitle/website':
 
                 inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /[A-Z]|Backspace|Tab/i;
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) ) 
                         e.preventDefault();
-                    }
                 });
                 break;
 
             case 'vendor/id':
 
                 inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /[A-Z0-9]|Backspace|Tab/i
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) ) 
                         e.preventDefault();
-                    }
                 });
 
                 inputNode.addEventListener('focusout', function(e) {
-                    if ( !/@/.test(this.value) ) {
+                    
+                    if ( !/@/.test(this.value) ) 
                         this.value = '@' + this.value;
-                    }
                 });
                 break;
         
@@ -119,19 +126,19 @@ export class validationFlag {
 
             case 'vendor/url':
                 inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /[A-Z0-9]|\.|\/|@|Backspace|Tab/i
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) ) 
                         e.preventDefault();
-                    }
                 });
                 break;
             
             case 'vendor/email':
                 inputNode.addEventListener('keydown', function(e) {
+
                     let regEx = /[A-Z0-9]|@|\.|_|-|Backspace|Tab/i
-                    if ( !regEx.test( e.key ) ) {
+                    if ( !regEx.test( e.key ) )
                         e.preventDefault();
-                    }
                 });
         }
     }
@@ -139,6 +146,7 @@ export class validationFlag {
 
     static getFlag(flag) {
         switch (flag) {
+
             case 'sitecode/website':
                 return /[A-Za-z]{4,}/;
                 break;
@@ -160,7 +168,7 @@ export class validationFlag {
                 break;
 
             default:
-                console.log('Invalid/Inexistent Flag.');
+                console.log('Invalid/Inexistent Flag. Found');
                 break;
         }
     }
