@@ -451,6 +451,9 @@ if ( document.querySelector('#New-Website-Modal') )
     // Validation of all 3 pictures.
     modal.validatePictures = function() {
 
+        console.log(carousel.pictures)
+        console.log(logoFile)
+
         if ( carousel.pictures.length == 3 ) {
 
             carousel.pictures.forEach( (pictureFile, index) => {
@@ -589,7 +592,9 @@ if ( document.querySelector('#New-Website-Modal') )
             }
 
             reader.onloadend = function(e) {
-                console.log(logoFile);
+                let label = logoInputButton.querySelector('p');
+                label.innerHTML = file.name.substr(0, 4).concat('.png');
+                // console.log(logoFile);
             }
         }
 
