@@ -451,9 +451,6 @@ if ( document.querySelector('#New-Website-Modal') )
     // Validation of all 3 pictures.
     modal.validatePictures = function() {
 
-        console.log(carousel.pictures)
-        console.log(logoFile)
-
         if ( carousel.pictures.length == 3 ) {
 
             carousel.pictures.forEach( (pictureFile, index) => {
@@ -471,7 +468,6 @@ if ( document.querySelector('#New-Website-Modal') )
                 modal.add(`__PICTURE_${i}_SCALE`, pictureFile.getScale());
             });
 
-            // return true;
         }
         
         else {
@@ -483,6 +479,10 @@ if ( document.querySelector('#New-Website-Modal') )
             return true;
         }
 
+        else {
+            // return false;
+            throw new Error('No logotype file found.');
+        }
     }
 
     // # MODAL (NEW WEBSITE).
@@ -494,7 +494,7 @@ if ( document.querySelector('#New-Website-Modal') )
         for (let i = 1; i <= inputCollection.internalIndex; i++ ) {
 
             let reg = collection[i].regex;
-            let data = collection[i].node.value;  
+            let data = collection[i].node.value;
             let label = collection[i].label;
             
             if ( !reg.test(data) )
@@ -636,9 +636,10 @@ if ( document.querySelector('#New-Website-Modal') )
 
     // # MODAL (NEW WEBSITE).
     // Final upload stage.
-    submitButton.addEventListener('click', function(e) 
-    {
+    submitButton.addEventListener('click', function(e) {
+
         if ( modal.validatePictures() && modal.validateInputs() ) {
+
             modal.add('__PUT', '1');
             modal.add('__WEBSITE', '1');
             modal.add('__SITE_CODE', siteCodeInput.value);
@@ -648,7 +649,11 @@ if ( document.querySelector('#New-Website-Modal') )
             modal.add('__SALE_PRICE', cleanPriceInput(salePriceInput.value));
             modal.add('__LOGO', logoFile);
             modal.add('__PICTURES', false);
-            setTimeout(function(){ modal.upload() }, 1250);
+
+            // IMAGINARY DELAY.
+            setTimeout( function() { 
+                modal.upload()
+            }, 3000);
         }
     });
 
@@ -720,6 +725,7 @@ if ( document.querySelector('#Site-Selection') ) {
     fillSelectionOptions( document.querySelector('.modal #Site-Selection'), '__WEBSITES' );
 }
 
+// # accounts.php (landing).
 // Only executes within accounts.php.
 if ( document.querySelector('article.card-websites-accounts-listing')  ) {
     let websitesCollection = document.querySelectorAll('.website-accounts-row');
