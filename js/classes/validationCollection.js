@@ -9,11 +9,18 @@ export class validationCollection {
         return this.collection;
     }
 
-    add(inputNode, regEx) {
+    add(label, inputNode, regEx) {
+
         this.internalIndex++;
         this.collection[this.internalIndex] = {
             node: inputNode,
-            regex: regEx
+            regex: regEx,
+            label: label
+        };
+
+        this.collection[label] = {
+            node: inputNode,
+            regex: regEx    
         }
     }
 
