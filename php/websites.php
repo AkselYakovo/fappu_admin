@@ -14,17 +14,6 @@ $actual_website = "websites";
 $single_website_active = (isset($_GET['website']) ? $_GET['website'] : '' );
 $single_website_code = clean_txt($single_website_active);
 
-// $single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
-//                          W.`ORIGINAL_PRICE` AS `ORIGINAL_PRICE`, W.`OFFER_PRICE` AS `OFFER_PRICE`, COUNT(*) AS `TOTAL_ACCOUNTS`,
-//                          SUB.`TOTAL_ACTIVE_ACCOUNTS` AS `TOTAL_ACTIVE_ACCOUNTS`
-//                          FROM `$__WEBSITES` AS W 
-//                          INNER JOIN `_ACCOUNTS` AS A
-//                          ON W.`SITE_CODE` = A.`SITE_CODE`
-//                          INNER JOIN ( SELECT COUNT(*) AS `TOTAL_ACTIVE_ACCOUNTS`, `SITE_CODE`
-//                                       FROM `_ACCOUNTS` 
-//                                       WHERE `SITE_CODE` = '$single_website_code' AND `ACCESS_STATE` = 1 ) AS SUB
-//                          WHERE A.`SITE_CODE` = '$single_website_code' ";
-
 $single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, 
                          W.`SITE_TITLE` AS `SITE_TITLE`, 
                          W.`SITE_URL` AS `SITE_URL`, 
@@ -52,17 +41,6 @@ $single_website = ($single_website_code)
 //                       : FALSE;
 
 // Important For Listing Websites Page.. //
-// $websites_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL` ,
-//                     COUNT(*) AS `TOTAL_ACCOUNTS`, QUERY.`TOTAL_ACTIVE_ACCOUNTS` AS `TOTAL_ACTIVE_ACCOUNTS`
-//                     FROM `$__WEBSITES` AS W
-//                     INNER JOIN `$__ACCOUNTS` AS A
-//                     ON W.`SITE_CODE` = A.`SITE_CODE`
-//                     INNER JOIN ( SELECT A.`SITE_CODE` AS `SITE_CODE`, COUNT(A.`ACCOUNT_ID`) AS `TOTAL_ACTIVE_ACCOUNTS`, A.`ACCESS_STATE`
-//                                  FROM `$__ACCOUNTS` AS A
-//                                  GROUP BY A.`SITE_CODE` 
-//                                  HAVING `ACCESS_STATE` = 1 ) AS QUERY
-//                     ON QUERY.`SITE_CODE` = W.`SITE_CODE`
-//                     GROUP BY W.`SITE_CODE`";
 $websites_query = " SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
                     COALESCE(QUERY.`TOTAL_ACTIVE_ACCOUNTS`, 0) AS `TOTAL_ACTIVE_ACCOUNTS`,
                     COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
@@ -194,7 +172,7 @@ $websites = $main_conn->query($websites_query);
 
         <?php                                                    ?>
         
-        <?php elseif($single_website_active && $single_website): ?>
+        <?php elseif($single_website_active && $single_website->num_rows): ?>
             
         <?php $single_website = $single_website->fetch_assoc();  ?>
 
@@ -308,6 +286,10 @@ $websites = $main_conn->query($websites_query);
 
                 <?php else: ?>
 
+                    <div class="screen" style="background-image: url('../assets/screens/<?php echo $single_website['SITE_CODE']. '/' . $screen; ?>.jpg')">
+                        <p class="title">No screens found for: <?php echo $single_website['SITE_TITLE']; ?></p>
+                    </div>
+
                 <?php break; ?>
 
                 <?php endif; ?>
@@ -353,6 +335,70 @@ $websites = $main_conn->query($websites_query);
         </article>
 
         <?php        ?>
+
+        <?php else: ?>
+
+        <article class="card card-main card-website">
+
+            <header class="header">
+                <button class="round button-secondary go-back">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"/>
+                    </svg>
+                </button>
+                <figure class="site-logo">
+                </figure>
+                <div class="options">
+                    <button class="button button-secondary button-small" name="Edit Website" disabled="true">EDIT SITE</button>
+                    <button class="button button-secondary button-small" name="New Logo" disabled="true">NEW LOGO</button>
+                </div>
+            </header>
+
+            <section class="site-info">
+
+                <div class="accounts">
+                    <div class="total-accounts">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"-/>
+                        </svg>  
+                        <p class="counter">0</p>
+                    </div>
+
+                    <div class="available-accounts no-accounts">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/>
+                        </svg>  
+                        <p class="counter">0</p>
+                    </div>
+
+                </div>
+
+                <div class="info-row">
+                    <span class="label">SITE'S TITLE:</span>
+                    <h2 class="site-title">INVALID WEBSITE</h2>
+                </div>
+                <div class="info-row">
+                    <span class="label">SITE'S CODE:</span>
+                    <h2 class="site-code"><?php echo $single_website_active; ?></h2>
+                </div>
+                <div class="info-row">
+                    <div class="col">
+                        <span class="label">ORIGINAL PRICE:</span>
+                        <span class="price original-price">$0<sup>.00</sup> MXN</span>
+                    </div>
+                    <div class="col">
+                        <span class="label">SALE PRICE:</span>
+                        <span class="price new-price">$0<sup>.00</sup> MXN</span>
+                    </div>
+                    
+                    <input style="display: none;" type="file" name="New Logo">
+                </div>
+                
+            </section>            
+
+        </article>
+
+        <?php        ?>      
 
         <?php endif; ?>
 
@@ -489,7 +535,7 @@ $websites = $main_conn->query($websites_query);
                     <div class="row">
                         <span class="label">NORMAL PRICE:</span>
                         <div class="toolbar price-input">
-                            <input type="text" placeholder="$800.00 MXN/MES" name="Original Price">
+                            <input type="text" placeholder="$800.00 MXN/MONTH" name="Original Price">
                             <figure class="underline"></figure>
                         </div>
                     </div>
@@ -497,7 +543,7 @@ $websites = $main_conn->query($websites_query);
                     <div class="row">
                         <span class="label">SALE PRICE:</span>
                         <div class="toolbar price-input">
-                            <input type="text" placeholder="$129.00 MXN/MES" name="Sale Price">
+                            <input type="text" placeholder="$129.00 MXN/MONTH" name="Sale Price">
                             <figure class="underline"></figure>
                         </div>
                     </div>
