@@ -13,6 +13,9 @@ import { Factory } from './factory.js';
 import { Pagination } from './pagination.js';
 // import { nodeItem } from "./classes/nodeItem.js";
 
+// @ General use functions.
+// cleanPriceInput()
+// Request()
 
 function cleanPriceInput(str) {
     let start = str.indexOf('$');
@@ -21,16 +24,14 @@ function cleanPriceInput(str) {
 }
 
 function Request(data) {
-    if ( typeof data != 'object' ) {
+    if (typeof data != 'object')
         return false;
-    }
 
     let request = new XMLHttpRequest();
     let d = new FormData();
 
-    for ( let key in data ) {
-        d.append(key, data[key] );
-    }
+    for (let key in data) 
+        d.append(key, data[key]);
 
     request.open('POST', 'hub.php');
     request.send(d);
@@ -55,6 +56,12 @@ if ( document.querySelector('.toolbar.selection') ) {
 if ( document.querySelector('.toolbar.vendor-input') ) {
     setEarsForVendorSelection();
 }
+
+// # Modals config sections.
+// # MODAL INDEX:
+// 1. NEW ACCOUNT.
+// 2. EDIT ACCOUNT.
+// 3. 
 
 
 // # SECTIONING BEGINS.
@@ -658,25 +665,21 @@ if ( document.querySelector('#New-Website-Modal') )
     });
 
     // # MODAL (NEW WEBSITE).
-    // EXTRA: Open edit website modal.
-    // editWebsiteButton.addEventListener('click', function(e) {
-    //     modal.node.setAttribute('data-display', 'EDIT');
-    //     modal.open();
-    // });
-
-    // # MODAL (NEW WEBSITE).
     // EXTRA: Update logo file.
     newLogoButton?.addEventListener('click', function(e) {
-        document.querySelector('input[name="New Logo"]').click();
 
+        document.querySelector('input[name="New Logo"]').click();
         document.querySelector('input[name="New Logo"]').addEventListener('change', function(e) {
-            let file = this.files[0];
+
+        let file = this.files[0];
             
-            if (file.type == 'image/png') {
+            if ( file.type == 'image/png' ) {
+                
                 let reader = new FileReader();
-                reader.readAsDataURL(file);
+                let img = reader.readAsDataURL(file);
 
                 reader.onload = function(e) {
+
                     let site = document.querySelector('h2.site-code').innerHTML;
                     document.querySelector('figure.site-logo img').src = reader.result;
 
@@ -689,28 +692,27 @@ if ( document.querySelector('#New-Website-Modal') )
                     data.append('__NEW_LOGO', file);
 
                     request.open('POST', './hub.php');
+
                     // IMAGINARY DELAY.
                     setTimeout( function(e) { 
                         request.send(data); 
                     }, 3000);
 
-                    request.onreadystatechange = function(e) 
-                    {
-                        if ( request.status == 200 ) {
+                    request.onreadystatechange = function(e) {
+                        if ( request.status == 200 ) 
                             // console.log(this.response);
-                        }
                     }
                 }
             }
+
             else {
-                // console.error('Invalid Picture Typre');
+                console.error('Invalid file format.');
             }
         });
 
     });
 
 }
-
 
 
 
@@ -728,38 +730,42 @@ if ( document.querySelector('#Site-Selection') ) {
 // # accounts.php (landing).
 // Only executes within accounts.php.
 if ( document.querySelector('article.card-websites-accounts-listing')  ) {
+
     let websitesCollection = document.querySelectorAll('.website-accounts-row');
     let list = collectionToList(websitesCollection);
     // console.log(list);
 
     document.querySelector('.toolbar.selection').addEventListener('click', function(e) {
+
         let data = this.getAttribute('data-display');
+
         if ( data == 'ASC' ) {
+
             // let ascendingList = listingASC(list);
             listingASC(list);
             document.querySelector('article section.content').innerHTML = '' // Flush content.
             // Append children to container.
-            for ( let i = 0; i < list.length; i++ ) {
+            for ( let i = 0; i < list.length; i++ )
                 document.querySelector('article section.content').appendChild(list[i].node);
-            }
         }
-        if ( data == 'DESC' ) {
+
+        else if ( data == 'DESC' ) {
+
             // let ascendingList = listingDESC(list);
             listingDESC(list);
             document.querySelector('article section.content').innerHTML = '' // Flush content.
             // Append children to container.
-            for ( let i = 0; i < list.length; i++ ) {
+            for ( let i = 0; i < list.length; i++ )
                 document.querySelector('article section.content').appendChild(list[i].node);
-            }
         }
 
     });
 }
 
-// # websites.php (single).
+// # accounts.php (single).
 // # Only executes within "accounts.php?website=".
-if ( document.querySelector('#Accounts-Card') )
-{ 
+if ( document.querySelector('#Accounts-Card') ) {
+    
     let accountsCards = document.querySelectorAll('.active-accounts-listing .account-row');
     let inactiveAccountsCards = document.querySelectorAll('.inactive-accounts-listing .account-row');
     let closeButton = document.querySelector('.close-button');
@@ -795,8 +801,9 @@ if ( document.querySelector('#Accounts-Card') )
 
     let vendorInput = document.querySelector('.toolbar.text-input input');
 
-    // Vendor text input handler(s).
-    // Avoid input of special characters.
+    // # accounts.php (single).
+    // # Vendor text input handler(s).
+    // + Avoid input of special characters.
     vendorInput.addEventListener('keydown', function(e) {
         let regEx = /\b/;
         if ( regEx.test(e.key) ) {
@@ -806,8 +813,12 @@ if ( document.querySelector('#Accounts-Card') )
             e.preventDefault();
         }
     });
-    // Update view by adding those cards whose vendor label math the query.
+
+    // # accounts.php (single).
+    // # Vendor input typing handler.
+    // + Update view by adding those cards whose vendor label math the query.
     vendorInput.addEventListener('keyup', function(e) {
+
         let input = this.value;
         let activeAccountsWrapper = document.querySelector('.content .active-accounts-listing');
         let inactiveAccountsWrapper = document.querySelector('.content .inactive-accounts-listing');
@@ -819,20 +830,20 @@ if ( document.querySelector('#Accounts-Card') )
         // console.log(filteredCollection);
 
         // Append all filtered active cards.
-        for( let i = 0; i < activeAccountsFiltered.length; i++ ) {
+        for( let i = 0; i < activeAccountsFiltered.length; i++ )
             activeAccountsWrapper.appendChild(activeAccountsFiltered[i].node);
-        }
+            
         // Append all filtered inactive cards.
-        for( let i = 0; i < inactiveAccountsFiltered.length; i++ ) {
+        for( let i = 0; i < inactiveAccountsFiltered.length; i++ )
             inactiveAccountsWrapper.appendChild(inactiveAccountsFiltered[i].node);
-        }
-
 
     });
 
-    // Activate active accounts tab.
+    // # accounts.php (single).
+    // # Active tab node.
+    // + Activate active accounts tab.
     activeAccountsTab.addEventListener('click', function(e) {
-        // console.log(e.target);
+
         if ( !this.classList.contains('active') ) {
             this.classList.add('active');
             inactiveAccountsTab.classList.remove('active');
@@ -840,9 +851,12 @@ if ( document.querySelector('#Accounts-Card') )
             document.querySelector('section.content').classList.toggle('inactive-accounts');
         }
     });
-    // Activate inactive accounts tab.
+
+    // # accounts.php (single).
+    // # Inactive tab node.
+    // + Activate inactive accounts tab.
     inactiveAccountsTab.addEventListener('click', function(e) {
-        // console.log(e.target);
+
         if ( !this.classList.contains('active') ) {
             this.classList.add('active');
             activeAccountsTab.classList.remove('active');
@@ -851,20 +865,16 @@ if ( document.querySelector('#Accounts-Card') )
         }
     });
 
-    // Rewrite the date of each account card.
+    // # accounts.php (single).
+    // # Collection of active accounts cards.
+    // + Rewrite the date of each account card.
     for(const account of accountsCards ) 
     {
         let dateString = account.querySelector('.expiration-date').innerHTML;
         let daysLeft = getDaysLeft(dateString);
         account.querySelector('.expiration-date').innerHTML = daysLeft;
-    }        
+    }
 }
-
-// # Modals config sections.
-// # MODAL INDEX:
-// 1. NEW ACCOUNT.
-// 2. EDIT ACCOUNT.
-// 3. 
 
 // # MODAL (NEW ACCOUNT).
 if ( document.querySelector('#New-Account') && document.querySelector('#New-Account-Modal') ) 
