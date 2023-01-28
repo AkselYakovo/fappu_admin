@@ -4,16 +4,18 @@ require_once"./resources.php";
 $actual_website = "sales";
 $actual_site = $_GET['website'] ?? false;
 
-$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`,
-                        S.`SALE_DATE` AS `SALE_DATE`, S.`PRICE_PAID` AS `PRICE_PAID`, 
-                        WEB.`SITE_TITLE`, WEB.`SITE_CODE`
+$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`, S.`SALE_DATE` AS `SALE_DATE`, S.`ACCOUNT_ID` AS `ACCOUNT_ID`,
+                        A.`PRICE_PAID` AS `PRICE_PAID`, A.`SITE_CODE` AS `SITE_CODE`,
+                        WEB.`SITE_TITLE` AS `SITE_TITLE`
                         FROM _SALES AS S
+                        INNER JOIN _ACCOUNTS AS A
+                        ON S.`ACCOUNT_ID` = A.`ACCOUNT_ID`
                         INNER JOIN _WEBSITES AS WEB
-                        ON WEB.`SITE_CODE` = S.`SITE_CODE`
+                        ON WEB.`SITE_CODE` = A.`SITE_CODE`
+                        ORDER BY `SALE_DATE` DESC
                         LIMIT 0, 10";
 
 $sales_listing = $main_conn->query($sales_listing_query);
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +25,7 @@ $sales_listing = $main_conn->query($sales_listing_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
-    <title>SALES &lg;&lg;Fappu</title>
+    <title>Sales | Admin</title>
 </head>
 <body>
     
