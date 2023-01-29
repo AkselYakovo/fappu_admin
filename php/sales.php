@@ -1,10 +1,13 @@
 <?php
 require_once"./resources.php";
 
+
+
 $actual_website = "sales";
 $actual_site = $_GET['website'] ?? false;
 
-$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`, S.`SALE_DATE` AS `SALE_DATE`, S.`ACCOUNT_ID` AS `ACCOUNT_ID`,
+$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`, S.`SALE_DATE` AS `SALE_DATE`, 
+                        S.`ACCOUNT_ID` AS `ACCOUNT_ID`, S.`SALE_STATUS` AS `SALE_STATUS`,
                         A.`PRICE_PAID` AS `PRICE_PAID`, A.`SITE_CODE` AS `SITE_CODE`,
                         WEB.`SITE_TITLE` AS `SITE_TITLE`
                         FROM _SALES AS S
@@ -16,6 +19,19 @@ $sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER
                         LIMIT 0, 10";
 
 $sales_listing = $main_conn->query($sales_listing_query);
+
+$sales_overall_info_query = "SELECT COUNT(*) AS `TOTAL_SALES`,
+                             A.`TOTAL_COMPLETED` AS `TOTAL_COMPLETED`,
+                             B.`TOTAL_PENDING` AS `TOTAL_PENDING`
+                             FROM `_SALES`
+                             JOIN ( SELECT COUNT(*) AS `TOTAL_COMPLETED` 
+                                    FROM `_SALES`
+                                    WHERE `SALE_STATUS` = 1 ) AS A
+                             JOIN ( SELECT COUNT(*) AS `TOTAL_PENDING`
+                                    FROM `_SALES`
+                                    WHERE `SALE_STATUS` = 0 ) AS B";
+
+$sales_overall_info = $main_conn->query($sales_overall_info_query);
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +62,24 @@ $sales_listing = $main_conn->query($sales_listing_query);
                         <td>PAYMENT:</td>
                     </tr></thead>
                     <tbody>
+                        
                     <?php foreach($sales_listing as $sale): ?>
+
+                        <?php if( $sale['SALE_STATUS'] ): ?>
+
+                        <tr class="sale-row paid">
+                            <td class="sale__id"><?php echo $sale['SALE_ID'] ?></td>
+                            <td class="sale__email">
+                                <?php echo $sale['USER_EMAIL'] ?>
+                            </td>
+                            <td class="sale__website">
+                                <a href="<?php echo "./websites.php?website=" . $sale['SITE_CODE'] ?>" class="page-link"><?php echo $sale['SITE_TITLE'] ?></a>
+                            </td>
+                            <td class="sale__date"><?php echo $sale['SALE_DATE'] ?></td>
+                            <td class="sale__payment">$<?php echo $sale['PRICE_PAID'] ?>.00 MXN</td>
+                        </tr>
+
+                        <?php else: ?>
 
                         <tr class="sale-row">
                             <td class="sale__id"><?php echo $sale['SALE_ID'] ?></td>
@@ -59,6 +92,8 @@ $sales_listing = $main_conn->query($sales_listing_query);
                             <td class="sale__date"><?php echo $sale['SALE_DATE'] ?></td>
                             <td class="sale__payment">$<?php echo $sale['PRICE_PAID'] ?>.00 MXN</td>
                         </tr>
+
+                        <?php endif; ?>
 
                     <?php endforeach; ?>
                         
@@ -75,19 +110,21 @@ $sales_listing = $main_conn->query($sales_listing_query);
 
         </article>
 
+        <?php $sales_info = ($sales_overall_info) ? $sales_overall_info->fetch_assoc() : FALSE; ?>
+
         <article class="card card-data card-data-emphasized">
             <h2 class="card-heading">SALES DATA:</h2>
             <section class="fact">
                 <h2 class="subtitle">SALES:</h2>
-                <span class="total-messages number number-important">3</span>
+                <span class="total-messages number number-important"><?php echo $sales_info['TOTAL_COMPLETED']; ?></span>
             </section>
             <section class="fact">
                 <h2 class="subtitle">PENDING SALES:</h2>
-                <span class="total-unique-emails number number-err">3</span>
+                <span class="total-unique-emails number number-err"><?php echo $sales_info['TOTAL_PENDING']; ?></span>
             </section>
             <section class="fact">
                 <h2 class="subtitle">TOTAL SALES:</h2>
-                <span class="total-unique-emails number number-important">3</span>
+                <span class="total-unique-emails number number-important"><?php echo $sales_info['TOTAL_SALES']; ?></span>
             </section>
             <div class="toolbar month-option">
                 <span class="active">THIS MONTH</span>
