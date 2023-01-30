@@ -4,13 +4,13 @@ require_once('./_general.php');
 require_once('./fun/websites.php');
 // require_once('./websites.php');
 
-// @ Configuration Items Below..
+// @ Configuration items below..
 $__WEBSITES = '_WEBSITES';
 $__ACCOUNTS = '_ACCOUNTS';
 
 $actual_website = "websites";
 
-// Important For Single Page Data Retrivement.. //
+// Important for single page data retrivement.. //
 $single_website_active = (isset($_GET['website']) ? $_GET['website'] : '' );
 $single_website_code = clean_txt($single_website_active);
 
@@ -36,11 +36,7 @@ $single_website = ($single_website_code)
                   ? $main_conn->query($single_website_query) 
                   : FALSE;
 
-// $screens_collection = ($single_website)
-//                       ? getScreensCollection($main_conn, $single_website['SITE_CODE'])
-//                       : FALSE;
-
-// Important For Listing Websites Page.. //
+// Important for listing websites page.. //
 $websites_query = " SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
                     COALESCE(QUERY.`TOTAL_ACTIVE_ACCOUNTS`, 0) AS `TOTAL_ACTIVE_ACCOUNTS`,
                     COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
