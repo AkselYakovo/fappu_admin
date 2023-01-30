@@ -47,7 +47,7 @@ $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
-    <title>Reclaims</title>
+    <title>Reclaims | Admin</title>
 </head>
 <body>
 
@@ -80,7 +80,7 @@ $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per
         <div class="toolbars">
             <div class="toolbar text-input">
                 <p class="at-icon">@</p>
-                <input type="text" placeholder="EMAIL">
+                <input type="text" placeholder="EMAIL" value="<?php echo $email; ?>">
             </div>
         </div>
         <section class="content">
@@ -91,7 +91,7 @@ $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per
 
             <div class="reclaim-row solved" data-display="<?php echo $reclaim['RECLAIM_ID'] ?>">
 
-            <?php elseif ( $reclaim['STATUS'] == 0 ): ?>
+            <?php else: ?>
 
             <div class="reclaim-row not-solved" data-display="<?php echo $reclaim['RECLAIM_ID'] ?>">
 
@@ -99,11 +99,11 @@ $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per
 
                 <div class="reclaim__status"></div>
                 <div class="reclaim__email-wrapper">
-                    <p class="reclaim__email"><?php echo $reclaim['USER_EMAIL'] ?></p>
+                    <p class="reclaim__email"><?php echo $reclaim['USER_EMAIL']; ?></p>
                     <span class="overlay"></span>
                 </div>
-                <a href="<?php echo "./websites.php?website=" . $reclaim['SITE_CODE'] ?>" class="page-link"><?php echo $reclaim['SITE_TITLE'] ?></a>
-                <p class="reclaim__date">HACE <?php echo get_date_diff($reclaim['DATE']) ?> DIAS</p>
+                <a href="<?php echo "./websites.php?website=" . $reclaim['SITE_CODE'] ?>" class="page-link"><?php echo $reclaim['SITE_TITLE']; ?></a>
+                <p class="reclaim__date"><?php echo get_date_diff($reclaim['DATE']); ?> DAYS AGO</p>
             </div>
 
         <?php endforeach; ?>
