@@ -25,6 +25,14 @@ $vendor_mfamous_query = "SELECT `V`.`ID` AS `ID`
 
 $vendor_mfamous = $main_conn->query($vendor_mfamous_query);
 $most_famous_vendor = $vendor_mfamous->fetch_assoc()['ID'];
+
+
+$diff_vendors_query = "SELECT DISTINCT COUNT(*) AS `TOTAL_DIFF_VENDORS`
+                       FROM `_VENDORS`";
+
+$diff_vendors = $main_conn->query($diff_vendors_query);
+$unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +54,7 @@ $most_famous_vendor = $vendor_mfamous->fetch_assoc()['ID'];
             <h2 class="card-heading">VENDORS DATA:</h2>
             <section class="fact">
                 <h2 class="subtitle">TOTAL VENDORS</h2>
-                <span class="total-vendors number">3</span>
+                <span class="total-vendors number"><?php echo $unique_vendors; ?></span>
             </section>
             <section class="fact">
                 <h2 class="subtitle">TOTAL ACCOUNTS</h2>
