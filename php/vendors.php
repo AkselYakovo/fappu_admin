@@ -1,5 +1,6 @@
 <?php
-require'./resources.php';
+include './resources.php';
+include './_general.php';
 $actual_website = "vendors";
 
 $vendors_query = "SELECT `V`.`ID`, IFNULL(`A`.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
@@ -10,6 +11,20 @@ $vendors_query = "SELECT `V`.`ID`, IFNULL(`A`.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACC
                   ON `V`.`ID` = `A`.`VENDOR_ID`";
 
 $vendors = $main_conn->query($vendors_query);
+
+
+$vendor_mfamous_query = "SELECT `V`.`ID` AS `ID`
+                         FROM `_VENDORS` AS `V`
+                         JOIN ( SELECT COUNT(*) AS `TOTAL_ACCOUNTS`, `VENDOR_ID`
+                                FROM _ACCOUNTS
+                                GROUP BY `VENDOR_ID`
+                                ORDER BY `TOTAL_ACCOUNTS` DESC
+                                LIMIT 1 ) AS `A`
+                         ON `V`.`ID` = `A`.`VENDOR_ID`
+                         LIMIT 1";
+
+$vendor_mfamous = $main_conn->query($vendor_mfamous_query);
+$most_famous_vendor = $vendor_mfamous->fetch_assoc()['ID'];
 ?>
 
 <!DOCTYPE html>
@@ -35,13 +50,13 @@ $vendors = $main_conn->query($vendors_query);
             </section>
             <section class="fact">
                 <h2 class="subtitle">TOTAL ACCOUNTS</h2>
-                <span class="total-accounts number number-important">23</span>
+                <span class="total-accounts number number-important"><?php printTotalAccounts($main_conn); ?></span>
             </section>
             <section class="fact">
                 <h2 class="subtitle">MOST POPULAR:</h2>
                 <a href="#" class="vendor-link">
-                    <figure class="vendor__avatar" style="background-image: url('../assets/vendors/self.png');"></figure>
-                    <span class="vendor__label">@THENAKEDTURTLE</span>
+                    <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $most_famous_vendor; ?>.png');"></figure>
+                    <span class="vendor__label">@<?php echo $most_famous_vendor; ?></span>
                 </a>
             </section>
         </article>
@@ -104,7 +119,7 @@ $vendors = $main_conn->query($vendors_query);
         <button class="button button-primary buttom-medium submit">ADD</button>
 
         <form class="no-display">
-            <input type="file" name="Avatar" multiple="false" accept="image/png,image/jpeg,image/gif" autocomplete="off">
+            <input type="file" name="Avatar" multiple="false" accept="image/png" autocomplete="off">
         </form>
     </div>
     <div class="overlay"></div>
@@ -129,11 +144,11 @@ $vendors = $main_conn->query($vendors_query);
             </div>
             <div class="row">
                 <span class="label">EMAIL:</span>
-                <span class="label-info email">jdelat.casas@gmail.com</span>
+                <span class="label-info email">example@mail.com</span>
             </div>
             <div class="row">
                 <span class="label">WEBSITE:</span>
-                <!-- <span class="label-info email">jdelat.casas@gmail.com</span>-->
+                <!-- <span class="label-info email">example@mail.com</span>-->
                 <a href="" class="page-link">GO TO WEBSITE</a>
 
             </div>
