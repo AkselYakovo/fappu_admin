@@ -2072,6 +2072,7 @@ ul.pagination.loading .link--active {
   border: 1px solid #BABABA;
   border-radius: 100px;
   background-color: #FCFCFC;
+  overflow: hidden;
   cursor: pointer;
   transition: background-color 125ms linear;
 }
@@ -2084,6 +2085,12 @@ ul.pagination.loading .link--active {
   transform: translate(-50%, -50%);
   position: absolute;
   fill: #BABABA;
+}
+.new-vendor-modal .vendor__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 95%;
 }
 .new-vendor-modal .submit {
   left: 50%;
