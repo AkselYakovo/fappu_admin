@@ -1339,6 +1339,8 @@ ul.pagination.loading .link--active {
 }
 .vendor-row .vendor__picture img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .vendor-row .vendor__name {
   font-family: "Roboto Condensed Regular";
