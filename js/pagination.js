@@ -19,7 +19,7 @@ export class Pagination {
         }
 
         else {
-            throw new Error('OMG, Zero Links.')
+            throw new Error('OMG, Zero Links.');
         }
 
     }

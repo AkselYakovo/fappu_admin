@@ -1,4 +1,5 @@
 export function checkVendors(vendorNode, vendorID)  {
+    
     let request = new XMLHttpRequest();
     let data = new FormData();
     data.append('__PULL', '1');
@@ -9,13 +10,13 @@ export function checkVendors(vendorNode, vendorID)  {
     request.send(data);
 
     request.onreadystatechange = function(e) {
-        if (request.readyState == 4 && request.status == 200) 
-        {
+        if (request.readyState == 4 && request.status == 200) {
+
             vendorNode.querySelector('.options-list').innerHTML = '';
             let rows = JSON.parse(request.response);
 
-            for(const row of rows ) 
-            {
+            for(const row of rows ) {
+
                 let listItem = document.createElement('li');
                 listItem.setAttribute('data-display', `@${row['ID']}`);
                 listItem.classList.add('option');
@@ -27,7 +28,6 @@ export function checkVendors(vendorNode, vendorID)  {
                                     `;
                 vendorNode.querySelector('.options-list').appendChild(listItem);
             }
-            // console.log(rows);
         }
     }
 }
