@@ -4,7 +4,6 @@ include_once("./resources.php");
 include_once("./fun/messages.php");
 
 $actual_website = "messages";
-// $actual_site = $_GET['website'] ?? false;
 
 $messages_per_page = 1;
 
@@ -12,7 +11,7 @@ $total_pages = round( count_rows_from_table("_MESSAGES") / $messages_per_page );
 
 $messages_list_query = "SELECT DISTINCT `USER_EMAIL`, `MESSAGE_ID`, `MESSAGE`, `CATEGORY`, `DATE` 
                         FROM _MESSAGES 
-                        ORDER BY DATE DESC 
+                        ORDER BY `DATE` DESC 
                         LIMIT 0, $messages_per_page";
 
 
