@@ -26,7 +26,7 @@ $messages_list = $main_conn->query($messages_list_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
-    <title>MESSAGES</title>
+    <title>Messages | Admin</title>
 </head>
 <body>
     
@@ -80,7 +80,7 @@ $messages_list = $main_conn->query($messages_list_query);
                 <div class="message-row" data-display="<?php echo $message['MESSAGE_ID'] ?>">
                     <div class="message-info">
                         <h2 class="regard"><?php echo $message['CATEGORY'] . ' ISSUES' ?></h2>
-                        <small class="date"><?php echo 'HACE ' . get_date_diff( $message['DATE'] ) . ' DIAS' ?></small>
+                        <small class="date"><?php echo get_date_diff( $message['DATE'] ) . ' DAYS AGO'; ?></small>
                         <span class="email"><?php echo $message['USER_EMAIL'] ?></span>
                     </div>
                     <p class="message"><?php echo $message['MESSAGE'] ?></p>
