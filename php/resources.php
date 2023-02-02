@@ -13,8 +13,8 @@ function get_date_diff(string $str)
     $past = new DateTime($str);
 
     $diff = $now->diff($past);
-    return $diff->format('%d');
-    // date('Y-m-d');
+    return $diff->format('%a');
+    // date('YYYY-mm-dd');
 }
 
 
