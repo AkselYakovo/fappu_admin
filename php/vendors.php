@@ -42,7 +42,7 @@ $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
-    <title>Vendors</title>
+    <title>Vendors | Admin</title>
 </head>
 <body>
     
