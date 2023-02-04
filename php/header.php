@@ -1,3 +1,10 @@
+<?php 
+    $inactives = array(
+        'STATISTICS' => true,
+        'OTHER' => true
+    );
+?>
+
 <header id="header">
     <h1 class="site-title">FAPPU</h1>
     <h2 class="current-site"><?php echo $actual_website; ?></h2>
@@ -7,16 +14,21 @@
     </svg>
     <ul class="pop-over">
     <?php
-        foreach(__LINKS as $link) 
-        {
+        foreach(__LINKS as $link) {
+
             if ( $link == $actual_website ) 
             {
                 echo "<li class='nav-item nav-item--active'><a href='./$link.php'>$link</a></li>";
+            }
+            else if ( array_key_exists( strtoupper($link), $inactives ) ) 
+            {
+                echo "<li class='nav-item nav-item--disabled'><a href='#'>$link</a></li>";
             }
             else 
             {
                 echo "<li class='nav-item'><a href='./$link.php'>$link</a></li>";
             }
+
         }
     ?>
     </ul>
