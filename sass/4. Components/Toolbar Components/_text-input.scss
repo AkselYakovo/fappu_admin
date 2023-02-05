@@ -14,18 +14,13 @@
     overflow: hidden;
 
     .at-icon {
-        display: inline-flex;
-        flex: 0 0 auto;
-        align-self: center;
-
         font-family: 'Work Sans Light';
         font-size: 24px;
-        
-        line-height: 1;
 
         color: $outlines-gray;
 
         margin-right: 5px;
+        margin-top: -4px;
     }
 
     input {
