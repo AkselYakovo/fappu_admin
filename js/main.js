@@ -2015,8 +2015,9 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
 
 
 // vendors.php coding.
-// Listing vendors typing filtering.
+// List vendors while typing.
 if ( document.querySelector('.card-vendors-listing') ) {
+
     let vendorsCollection = document.querySelectorAll('.vendor-row');
 
 
@@ -2064,8 +2065,9 @@ if ( document.querySelector('.card-vendors-listing') ) {
 
 
 
-// New vendor modal.
+// # NEW VENDOR MODAL.
 if ( document.querySelector('#New-Vendor-Modal') ) {
+
     let modal = new Modal('New-Vendor-Modal');
     let addButton = document.querySelector('button.floating.add-vendor');
     let submitButton = modal.node.querySelector('button.submit');
@@ -2121,18 +2123,28 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
 
     // Avatar file handler.
     avatarInput.addEventListener('change', function(e) {
+
         let file = this.files[0];
-        if (  /image/i.test(file.type) ) {
+
+        if (  file.type == 'image/png' ) {
+
             let reader = new FileReader();
 
             reader.readAsDataURL(file);
 
             reader.onload = function() {
-                avatarFile = file;
                 document.querySelector('.vendor__avatar img').src = reader.result;
                 document.querySelector('.vendor__avatar img').style.display = 'block';
                 document.querySelector('.vendor__avatar svg').style.display = 'none';
             }
+
+            reader.onloadend = function() {
+                avatarFile = file;
+            }
+        }
+
+        else {
+            throw new Error("Wrong file format submitted");
         }
     });
 
