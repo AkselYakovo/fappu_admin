@@ -2116,7 +2116,7 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
         avatarInput.click();
     });
 
-    // Input validation.
+    // + Input validation.
     new validationFlag(vendorInput, 'vendor/id');
     new validationFlag(urlInput, 'vendor/url');
     new validationFlag(vendorEmailInput, 'vendor/email');
@@ -2149,18 +2149,20 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
         }
     });
 
-    // + Vendor field allowed keys.
+    // + Vendor field allowed keystrokes.
     vendorInput.addEventListener('keydown', function(e) {
-
-        let regex = /[a-z0-9]|\d/|Backspace/i;
         
-        if ( !regex.test(this.value) ) {
+        let regex = /[a-z0-9]|\d/i;
+        let value = this.value;
+        
+        if ( !regex.test(value) && e.ctrlKey ) {
             e.preventDefault();
             return;
         }
 
 
     });
+
 
 }
 
