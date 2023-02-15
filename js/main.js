@@ -2081,27 +2081,40 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
 
     let avatarFile;
 
-    // Validate modal.
-    // modal.validate = function() {
-    //     let inputs = modal.node.querySelectorAll('input[type="text"]');
-    //     for (let input of inputs) {
+    // + Validate modal.
+    modal.validate = function() {
 
-    //     }
-    // }
+        let inputs = modal.node.querySelectorAll('input[type="text"]');
 
-    // modal.flush = function(e) {
-    //     location.reload();
-    // }
+        for (let input of inputs) {
 
+            if ( !input.value )
+                return false;
+        }
+
+        if ( !avatarFile ) 
+            return false;
+
+        return true;
+    }
+
+    // + Submit modal's data.
     submitButton.addEventListener('click', function() {
-        modal.add('__PUT', '1');
-        modal.add('__VENDOR', '1');
-        modal.add('__VENDOR_ID', vendorInput.value.replace('@', ''));
-        modal.add('__VENDOR_EMAIL', vendorEmailInput.value);
-        modal.add('__VENDOR_URL', urlInput.value);
-        modal.add('__AVATAR', avatarFile || false);
 
-        modal.upload();
+        if ( modal.validate() ) {
+
+            modal.add('__PUT', '1');
+            modal.add('__VENDOR', '1');
+            modal.add('__VENDOR_ID', vendorInput.value.replace('@', ''));
+            modal.add('__VENDOR_EMAIL', vendorEmailInput.value);
+            modal.add('__VENDOR_URL', urlInput.value);
+            modal.add('__AVATAR', avatarFile);
+            
+            modal.upload();
+        }
+
+        else 
+            throw new Error('Invalid form!');
     });
 
 
@@ -2160,9 +2173,7 @@ if ( document.querySelector('#New-Vendor-Modal') ) {
             return;
         }
 
-
     });
-
 
 }
 
