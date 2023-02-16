@@ -530,6 +530,10 @@ form .label {
 #header .menu .pop-over .nav-item--active {
   color: #B208FA;
 }
+#header .menu .pop-over .nav-item--inactive {
+  color: #838383;
+  background-color: #E3E3E3;
+}
 #header .menu .pop-over::before {
   content: "";
   position: absolute;
