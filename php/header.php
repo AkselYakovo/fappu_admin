@@ -22,7 +22,7 @@
             }
             else if ( array_key_exists( strtoupper($link), $inactives ) ) 
             {
-                echo "<li class='nav-item nav-item--disabled'><a href='#'>$link</a></li>";
+                echo "<li class='nav-item nav-item--inactive'><a href='#'>$link</a></li>";
             }
             else 
             {
