@@ -85,6 +85,11 @@
                 color: $fappu-purple;
             }
 
+            .nav-item--inactive {
+                color: $deactivated-gray;
+                background-color: $outlines-gray;
+            }
+
 
             // Arrow CSS Code...
             
@@ -110,4 +115,6 @@
             animation: show_pop_up 100ms linear;
         }
     }
+
+    
 }
