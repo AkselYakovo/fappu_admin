@@ -2510,6 +2510,7 @@ if ( document.querySelector('.card-messages-listing') ) {
                         setTimeout( function() {
                             
                             messagesCollection[page] = [];
+                            let res = JSON.parse(request.response);
 
                             document.querySelector('ul.pagination').classList.remove('loading');
                             document.querySelector('ul.pagination li.link--active ').classList.remove('link--active');
@@ -2517,13 +2518,12 @@ if ( document.querySelector('.card-messages-listing') ) {
                             document.querySelector('section.content').innerHTML = '';
 
 
-                            for(let message of JSON.parse(request.response)) {
+                            for(let message of res) {
                                 let node = Factory.createMessageRow(message);
                                 Factory.setMessageRow(node);
                                 document.querySelector('section.content').appendChild(node);
                                 messagesCollection[page].push(node);
                             }
-
 
                         }, 2500);
                     }
