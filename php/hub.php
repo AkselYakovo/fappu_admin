@@ -415,7 +415,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__MESSAGES_PAGE']) ) {
     $page *= $post_per_page;
     $category = null;
 
-    if ( $_POST['__CATEGORY'] !== '' ) {
+    if ( $_POST['__CATEGORY'] !== '' && $_POST['__CATEGORY'] !== 'ALL' ) {
         $category = clean_txt($_POST['__CATEGORY']);
     }
 
@@ -428,19 +428,18 @@ if( isset($_POST['__PULL']) && isset($_POST['__MESSAGES_PAGE']) ) {
                                            LIMIT $page, $post_per_page";
 
     $messages_list = $main_conn->query($messages_list_query);
-    
 
     if ( $messages_list ) {
         $messages = array();
         
-        foreach($messages_list as $message)
+        foreach($messages_list as $message) 
             array_push($messages, $message);
         
         echo json_encode($messages);
     }
 
-    elseif ( !$messages_list ) {
-        throw new Exception("Invalid Query Generated");
+    else {
+        throw new Exception("No messages found for '$category' category.");
     }
 
 }

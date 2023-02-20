@@ -2478,6 +2478,7 @@ if ( document.querySelector('#Replace-Account-Modal') ) {
 if ( document.querySelector('.card-messages-listing') ) {
     let messagesCollection = {};
     let links = document.querySelectorAll('ul.pagination a');
+    let linksContainer = document.querySelector('ul.pagination');
     let category = 'ALL'; // Initial category.
     let actualPage = 1;
 
@@ -2491,25 +2492,25 @@ if ( document.querySelector('.card-messages-listing') ) {
     });
 
 
+    // + Add event handler for links container.
+    linksContainer.addEventListener('click', function(e) {
+        
+        if ( e.target.tagName === 'A' ) {
+            let page = e.target.innerHTML;
 
-    links.forEach( link => {
-        link.addEventListener('click', function(e) 
-        {
-            let page = this.innerHTML;
+            if ( !( page in messagesCollection ) ) {
 
-            if ( !( page in messagesCollection )  ) 
-            {
                 let request = Request({ '__PULL': '1',  
                                         '__MESSAGES_PAGE': page,
                                         '__CATEGORY': category });
 
-
                 request.onreadystatechange = function(ev) {
-                    if ( this.readyState == 4 && this.status == 200 ) 
-                    {
+                    if ( this.readyState == 4 && this.status == 200 ) {
+
                         setTimeout( function() {
                             
                             messagesCollection[page] = [];
+                            let res = JSON.parse(request.response);
 
                             document.querySelector('ul.pagination').classList.remove('loading');
                             document.querySelector('ul.pagination li.link--active ').classList.remove('link--active');
@@ -2517,13 +2518,13 @@ if ( document.querySelector('.card-messages-listing') ) {
                             document.querySelector('section.content').innerHTML = '';
 
 
-                            for(let message of JSON.parse(request.response)) {
+                            for (let message of res) {
+                                
                                 let node = Factory.createMessageRow(message);
                                 Factory.setMessageRow(node);
                                 document.querySelector('section.content').appendChild(node);
                                 messagesCollection[page].push(node);
                             }
-
 
                         }, 2500);
                     }
@@ -2536,7 +2537,7 @@ if ( document.querySelector('.card-messages-listing') ) {
 
             }
 
-            else if ( page in messagesCollection ) {
+            else {
                 document.querySelector('section.content').innerHTML = '';
                 document.querySelector('ul.pagination li.link--active ').classList.remove('link--active');
                 e.target.parentElement.classList.add('link--active');
@@ -2545,9 +2546,65 @@ if ( document.querySelector('.card-messages-listing') ) {
                     document.querySelector('section.content').append(message);
                 }
             }
-
+            }
         });
-    });
+
+    // links.forEach( link => {
+    //     link.addEventListener('click', function(e) 
+    //     {
+    //         let page = this.innerHTML;
+
+    //         if ( !( page in messagesCollection )  ) 
+    //         {
+    //             let request = Request({ '__PULL': '1',  
+    //                                     '__MESSAGES_PAGE': page,
+    //                                     '__CATEGORY': category });
+
+
+    //             request.onreadystatechange = function(ev) {
+    //                 if ( this.readyState == 4 && this.status == 200 ) 
+    //                 {
+    //                     setTimeout( function() {
+                            
+    //                         messagesCollection[page] = [];
+    //                         let res = JSON.parse(request.response);
+
+    //                         document.querySelector('ul.pagination').classList.remove('loading');
+    //                         document.querySelector('ul.pagination li.link--active ').classList.remove('link--active');
+    //                         e.target.parentElement.classList.add('link--active');
+    //                         document.querySelector('section.content').innerHTML = '';
+
+
+    //                         for(let message of res) {
+    //                             let node = Factory.createMessageRow(message);
+    //                             Factory.setMessageRow(node);
+    //                             document.querySelector('section.content').appendChild(node);
+    //                             messagesCollection[page].push(node);
+    //                         }
+
+    //                     }, 2500);
+    //                 }
+    //             }
+    
+    //             request.onload = function(e) {
+    //                 actualPage = page;
+    //                 document.querySelector('ul.pagination').classList.add('loading');
+    //             }
+
+    //         }
+
+    //         else if ( page in messagesCollection ) {
+    //             document.querySelector('section.content').innerHTML = '';
+    //             document.querySelector('ul.pagination li.link--active ').classList.remove('link--active');
+    //             e.target.parentElement.classList.add('link--active');
+
+    //             for ( let message of messagesCollection[page]  ) {
+    //                 document.querySelector('section.content').append(message);
+    //             }
+    //         }
+
+    //     });
+    // });
 
     // Category selection handlers.
     document.querySelector('.toolbar.selection').addEventListener('click', function(e) {
