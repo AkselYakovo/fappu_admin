@@ -10,7 +10,7 @@ export class Factory {
         messageNode.innerHTML = 
         `
             <div class="message-info">
-                <h2 class="regard">${data['CATEGORY']} ISSUES</h2>
+                <h2 class="regard">${data['CATEGORY_LABEL']} ISSUES</h2>
                 <small class="date">HACE ${getDaysAgo(data['DATE'])}</small>
                 <span class="email">${data['USER_EMAIL']}</span>
             </div>
