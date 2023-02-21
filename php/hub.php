@@ -420,9 +420,9 @@ if( isset($_POST['__PULL']) && isset($_POST['__MESSAGES_PAGE']) ) {
     }
 
     $messages_list_query = ($category) ? "SELECT * FROM _MESSAGES 
-                                          WHERE `CATEGORY` = '$category'
-                                          LIMIT $page, $post_per_page
-                                          ORDER BY `DATE` DESC"
+                                          WHERE `CATEGORY_LABEL` = '$category'
+                                          ORDER BY `DATE` DESC
+                                          LIMIT $page, $post_per_page"
                                         : "SELECT * FROM _MESSAGES
                                            ORDER BY `DATE` DESC
                                            LIMIT $page, $post_per_page";
@@ -452,12 +452,12 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
 
     $total_messages_query = ($category AND $category != 'ALL') 
                             ? "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES 
-                               WHERE `CATEGORY` = '$category'"
+                               WHERE `CATEGORY_LABEL` = '$category'"
                             : "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES";
 
     $category_messages_query = ($category AND $category != 'ALL') 
                                 ? "SELECT * FROM _MESSAGES 
-                                   WHERE `CATEGORY` = '$category' 
+                                   WHERE `CATEGORY_LABEL` = '$category' 
                                    ORDER BY `DATE` 
                                    DESC LIMIT " . __MESSAGES_PER_PAGE
                                 : "SELECT * FROM _MESSAGES
