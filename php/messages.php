@@ -9,7 +9,7 @@ $messages_per_page = 1;
 
 $total_pages = round( count_rows_from_table("_MESSAGES") / $messages_per_page );
 
-$messages_list_query = "SELECT DISTINCT `USER_EMAIL`, `MESSAGE_ID`, `MESSAGE`, `CATEGORY`, `DATE` 
+$messages_list_query = "SELECT DISTINCT `USER_EMAIL`, `MESSAGE_ID`, `MESSAGE`, `CATEGORY_LABEL`, `DATE` 
                         FROM _MESSAGES 
                         ORDER BY `DATE` DESC 
                         LIMIT 0, $messages_per_page";
@@ -78,7 +78,7 @@ $messages_list = $main_conn->query($messages_list_query);
 
                 <div class="message-row" data-display="<?php echo $message['MESSAGE_ID'] ?>">
                     <div class="message-info">
-                        <h2 class="regard"><?php echo $message['CATEGORY'] . ' ISSUES' ?></h2>
+                        <h2 class="regard"><?php echo $message['CATEGORY_LABEL'] . ' ISSUES' ?></h2>
                         <small class="date"><?php echo get_date_diff( $message['DATE'] ) . ' DAYS AGO'; ?></small>
                         <span class="email"><?php echo $message['USER_EMAIL'] ?></span>
                     </div>
