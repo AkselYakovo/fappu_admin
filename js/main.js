@@ -2608,10 +2608,13 @@ if ( document.querySelector('.card-messages-listing') ) {
 
     // Category selection handlers.
     document.querySelector('.toolbar.selection').addEventListener('click', function(e) {
+
+        if ( e.target.tagName !== 'LI' ) return; // Target ONLY list items.
+        
         let cat = this.getAttribute('data-display');
 
-        if ( category != cat && category != 'ALL' ) {
-            
+        if ( category !== cat ) {
+
             category = cat;
             messagesCollection = {};
 
