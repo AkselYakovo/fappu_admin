@@ -415,32 +415,31 @@ if( isset($_POST['__PULL']) && isset($_POST['__MESSAGES_PAGE']) ) {
     $page *= $post_per_page;
     $category = null;
 
-    if ( $_POST['__CATEGORY'] !== '' ) {
+    if ( $_POST['__CATEGORY'] !== '' && $_POST['__CATEGORY'] !== 'ALL' ) {
         $category = clean_txt($_POST['__CATEGORY']);
     }
 
     $messages_list_query = ($category) ? "SELECT * FROM _MESSAGES 
-                                          WHERE `CATEGORY` = '$category'
-                                          LIMIT $page, $post_per_page
-                                          ORDER BY `DATE` DESC"
+                                          WHERE `CATEGORY_LABEL` = '$category'
+                                          ORDER BY `DATE` DESC
+                                          LIMIT $page, $post_per_page"
                                         : "SELECT * FROM _MESSAGES
                                            ORDER BY `DATE` DESC
                                            LIMIT $page, $post_per_page";
 
     $messages_list = $main_conn->query($messages_list_query);
-    
 
     if ( $messages_list ) {
         $messages = array();
         
-        foreach($messages_list as $message)
+        foreach($messages_list as $message) 
             array_push($messages, $message);
         
         echo json_encode($messages);
     }
 
-    elseif ( !$messages_list ) {
-        throw new Exception("Invalid Query Generated");
+    else {
+        throw new Exception("No messages found for '$category' category.");
     }
 
 }
@@ -453,12 +452,12 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
 
     $total_messages_query = ($category AND $category != 'ALL') 
                             ? "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES 
-                               WHERE `CATEGORY` = '$category'"
+                               WHERE `CATEGORY_LABEL` = '$category'"
                             : "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES";
 
     $category_messages_query = ($category AND $category != 'ALL') 
                                 ? "SELECT * FROM _MESSAGES 
-                                   WHERE `CATEGORY` = '$category' 
+                                   WHERE `CATEGORY_LABEL` = '$category' 
                                    ORDER BY `DATE` 
                                    DESC LIMIT " . __MESSAGES_PER_PAGE
                                 : "SELECT * FROM _MESSAGES
