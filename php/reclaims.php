@@ -14,10 +14,10 @@ $email = ( isset($_GET['email']) && $_GET['email'] !== "" ) ? clean_txt($_GET['e
 $reclaim_list_query = "SELECT R.`RECLAIM_ID` AS `RECLAIM_ID`, R.`USER_EMAIL` AS `USER_EMAIL`, R.`ACCOUNT_ID` AS `ACCOUNT_ID`, 
                        R.`DATE` AS `DATE`, R.`STATUS` AS `STATUS`, A.`SITE_CODE` AS `SITE_CODE`,
                        WEB.`SITE_TITLE` AS `SITE_TITLE`
-                       FROM _RECLAIMS AS R 
-                       INNER JOIN `_ACCOUNTS` AS A
+                       FROM `$__RECLAIMS` AS R 
+                       INNER JOIN `$__ACCOUNTS` AS A
                        ON R.`ACCOUNT_ID` = A.`ACCOUNT_ID`
-                       INNER JOIN `_WEBSITES` AS WEB
+                       INNER JOIN `$__WEBSITES` AS WEB
                        ON A.`SITE_CODE` = WEB.`SITE_CODE`
                        ORDER BY R.`DATE` DESC
                        LIMIT $post_index, $post_per_page";
@@ -25,10 +25,10 @@ $reclaim_list_query = "SELECT R.`RECLAIM_ID` AS `RECLAIM_ID`, R.`USER_EMAIL` AS 
 $reclaim_list_w_email_query = "SELECT R.`RECLAIM_ID` AS `RECLAIM_ID`, R.`USER_EMAIL` AS `USER_EMAIL`, R.`ACCOUNT_ID` AS `ACCOUNT_ID`, 
                        R.`DATE` AS `DATE`, R.`STATUS` AS `STATUS`, A.`SITE_CODE` AS `SITE_CODE`,
                        WEB.`SITE_TITLE` AS `SITE_TITLE`
-                       FROM _RECLAIMS AS R 
-                       INNER JOIN `_ACCOUNTS` AS A
+                       FROM `$__RECLAIMS` AS R 
+                       INNER JOIN `$__ACCOUNTS` AS A
                        ON R.`ACCOUNT_ID` = A.`ACCOUNT_ID`
-                       INNER JOIN `_WEBSITES` AS WEB
+                       INNER JOIN `$__WEBSITES` AS WEB
                        ON A.`SITE_CODE` = WEB.`SITE_CODE`
                        WHERE R.`USER_EMAIL` LIKE '%$email%'
                        ORDER BY R.`DATE` DESC

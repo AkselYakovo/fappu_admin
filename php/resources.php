@@ -7,6 +7,14 @@ define('__MESSAGES_PER_PAGE', 1);
 define('__SALES_PER_PAGE', 10);
 define('__RECLAIMS_PER_PAGE', 10);
 
+// Tables References:
+$__WEBSITES = '_websites';
+$__WEBSITES_CHILDREN = '_websites';
+$__ACCOUNTS = '_accounts';
+$__ACCOUNTS_KILLED = '_accounts_killed';
+$__RECLAIMS = '_reclaims';
+$__SALES = '_sales';
+
 function get_date_diff(string $str) 
 {
     $now = new DateTime();

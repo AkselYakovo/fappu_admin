@@ -7,10 +7,10 @@ $actual_website = "messages";
 
 $messages_per_page = 1;
 
-$total_pages = round( count_rows_from_table("_MESSAGES") / $messages_per_page );
+$total_pages = round( count_rows_from_table($__MESSAGES) / $messages_per_page );
 
 $messages_list_query = "SELECT DISTINCT `USER_EMAIL`, `MESSAGE_ID`, `MESSAGE`, `CATEGORY_LABEL`, `DATE` 
-                        FROM _MESSAGES 
+                        FROM `$__MESSAGES`
                         ORDER BY `DATE` DESC 
                         LIMIT 0, $messages_per_page";
 

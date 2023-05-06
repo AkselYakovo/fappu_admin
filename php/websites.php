@@ -5,8 +5,8 @@ require_once('./fun/websites.php');
 // require_once('./websites.php');
 
 // @ Configuration items below..
-$__WEBSITES = '_WEBSITES';
-$__ACCOUNTS = '_ACCOUNTS';
+// $__WEBSITES = '_websites';
+// $__ACCOUNTS = '_accounts';
 
 $actual_website = "websites";
 
@@ -21,13 +21,13 @@ $single_website_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`,
                          W.`OFFER_PRICE` AS `OFFER_PRICE`, 
                          COALESCE(SUB.`TOTAL_ACTIVE_ACCOUNTS`, 0) AS `TOTAL_ACTIVE_ACCOUNTS`,
                          COALESCE(SUB2.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                         FROM `_WEBSITES` AS W 
+                         FROM `$__WEBSITES` AS W 
                          LEFT JOIN ( SELECT COUNT(*) AS `TOTAL_ACTIVE_ACCOUNTS`, `SITE_CODE`
-                                      FROM `_ACCOUNTS` 
+                                      FROM `$__ACCOUNTS` 
                                       WHERE `SITE_CODE` = '$single_website_code' AND `ACCESS_STATE` = 1 ) AS SUB
                          ON W.`SITE_CODE` = SUB.`SITE_CODE`
                          LEFT JOIN ( SELECT COUNT(*) AS `TOTAL_ACCOUNTS`, `SITE_CODE`
-                                      FROM `_ACCOUNTS`
+                                      FROM `$__ACCOUNTS`
                                       WHERE `SITE_CODE` = '$single_website_code' ) AS SUB2
                          ON W.`SITE_CODE` = SUB2.`SITE_CODE`
                          WHERE W.`SITE_CODE` = '$single_website_code'";
@@ -40,13 +40,13 @@ $single_website = ($single_website_code)
 $websites_query = " SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, W.`SITE_URL` AS `SITE_URL`, 
                     COALESCE(QUERY.`TOTAL_ACTIVE_ACCOUNTS`, 0) AS `TOTAL_ACTIVE_ACCOUNTS`,
                     COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                    FROM `_WEBSITES` AS W
+                    FROM `$__WEBSITES` AS W
                     LEFT JOIN ( SELECT `SITE_CODE`, COUNT(`ACCOUNT_ID`) AS `TOTAL_ACCOUNTS` 
-                                 FROM `_ACCOUNTS` AS A
+                                 FROM `$__ACCOUNTS` AS A
                                  GROUP BY `SITE_CODE` ) AS Q
 					ON W.`SITE_CODE` = Q.`SITE_CODE`
                     LEFT JOIN ( SELECT A.`SITE_CODE` AS `SITE_CODE`, COUNT(`ACCOUNT_ID`) AS `TOTAL_ACTIVE_ACCOUNTS`, A.`ACCESS_STATE`
-                                 FROM `_ACCOUNTS` AS A
+                                 FROM `$__ACCOUNTS` AS A
                                  WHERE A.`ACCESS_STATE` = 1
                                  GROUP BY A.`SITE_CODE` ) AS QUERY
                     ON QUERY.`SITE_CODE` = W.`SITE_CODE`

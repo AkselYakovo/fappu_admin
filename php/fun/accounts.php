@@ -69,7 +69,7 @@ function new_id() {
 
     $new_id = "X$year$month-$trailing_digits";
 
-    $q = "SELECT * FROM `_ACCOUNTS` WHERE `ACCOUNT_ID` = '$new_id'";
+    $q = "SELECT * FROM `$__ACCOUNTS` WHERE `ACCOUNT_ID` = '$new_id'";
     $results = $conn->query($q);
 
     // print_r($results);
