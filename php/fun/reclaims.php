@@ -9,7 +9,7 @@ define('RECLAIM_YEAR', 12);
 
 
 function get_total_reclaims(int $option) {
-    global $conn;
+    global $conn, $__RECLAIMS;
     $today = date('Y-m-d');
     $interval = '';
     
@@ -43,7 +43,7 @@ function get_total_reclaims(int $option) {
 
 
 function get_total_solved_reclaims(int $option) {
-    global $conn;
+    global $conn, $__RECLAIMS;
     $today = date('Y-m-d');
     $interval = '';
     
@@ -78,7 +78,7 @@ function get_total_solved_reclaims(int $option) {
 
 
 function get_total_unsolved_reclaims(int $option) {
-    global $conn;
+    global $conn, $__RECLAIMS;
     $today = date('Y-m-d');
     $interval = '';
     
@@ -112,7 +112,7 @@ function get_total_unsolved_reclaims(int $option) {
 
 
 function solveReclaim(string $reclaim_id) {
-    global $conn;
+    global $conn, $__RECLAIMS;
     $conn->query(" UPDATE `$__RECLAIMS` 
                    SET `STATUS` = 1 
                    WHERE `RECLAIM_ID` = '$reclaim_id'");

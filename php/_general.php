@@ -1,7 +1,6 @@
 <?php
 
-$__ACCOUNTS = '_accounts';
-$__WEBSITES = '_websites';
+require_once(dirname(__FILE__) . '/resources.php');
 
 function clean_txt(string $txt) {
     $txt = trim($txt);
