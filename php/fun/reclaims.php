@@ -1,5 +1,7 @@
 <?php
-$conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
+// $conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
+require_once(dirname(dirname( __FILE__ )) . "/resources.php");
+$conn = $main_conn;
 
 define('RECLAIM_MONTH', 1);
 define('RECLAIM_MONTHS', 6);
@@ -33,7 +35,7 @@ function get_total_reclaims(int $option) {
         $interval = $last_month->format('Y-m-d');
     }
 
-    $q = "SELECT COUNT(*) AS `RESULT` FROM _RECLAIMS WHERE `DATE` BETWEEN '$interval' AND '$today'";
+    $q = "SELECT COUNT(*) AS `RESULT` FROM `$__RECLAIMS` WHERE `DATE` BETWEEN '$interval' AND '$today'";
     $results = $conn->query($q);
 
     return $results->fetch_assoc()['RESULT'];
@@ -67,7 +69,7 @@ function get_total_solved_reclaims(int $option) {
         $interval = $last_month->format('Y-m-d');
     }
 
-    $q = "SELECT COUNT(*) AS `RESULT` FROM _RECLAIMS WHERE `DATE` BETWEEN '$interval' AND '$today' AND `STATUS` = 1";
+    $q = "SELECT COUNT(*) AS `RESULT` FROM `$__RECLAIMS` WHERE `DATE` BETWEEN '$interval' AND '$today' AND `STATUS` = 1";
     $results = $conn->query($q);
 
     return $results->fetch_assoc()['RESULT'];
@@ -102,7 +104,7 @@ function get_total_unsolved_reclaims(int $option) {
         $interval = $last_month->format('Y-m-d');
     }
 
-    $q = "SELECT COUNT(*) AS `RESULT` FROM _RECLAIMS WHERE `DATE` BETWEEN '$interval' AND '$today' AND `STATUS` = 0";
+    $q = "SELECT COUNT(*) AS `RESULT` FROM `$__RECLAIMS` WHERE `DATE` BETWEEN '$interval' AND '$today' AND `STATUS` = 0";
     $results = $conn->query($q);
 
     return $results->fetch_assoc()['RESULT'];
@@ -111,7 +113,7 @@ function get_total_unsolved_reclaims(int $option) {
 
 function solveReclaim(string $reclaim_id) {
     global $conn;
-    $conn->query(" UPDATE _RECLAIMS 
+    $conn->query(" UPDATE `$__RECLAIMS` 
                    SET `STATUS` = 1 
                    WHERE `RECLAIM_ID` = '$reclaim_id'");
 }

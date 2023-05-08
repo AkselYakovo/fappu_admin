@@ -1,12 +1,13 @@
 <?php
-include './resources.php';
-include './_general.php';
+include(dirname(__FILE__) . '/resources.php');
+include (dirname(__FILE__) .'/_general.php');
+
 $actual_website = "vendors";
 
 $vendors_query = "SELECT `V`.`ID`, IFNULL(`A`.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                  FROM `_VENDORS` AS `V`
+                  FROM `$__VENDORS` AS `V`
                   LEFT OUTER JOIN (SELECT `VENDOR_ID`, COUNT(*) AS `TOTAL_ACCOUNTS` 
-                                   FROM `_ACCOUNTS`
+                                   FROM `$__ACCOUNTS`
                                    GROUP BY `VENDOR_ID`) AS `A`
                   ON `V`.`ID` = `A`.`VENDOR_ID`";
 
@@ -14,9 +15,9 @@ $vendors = $main_conn->query($vendors_query);
 
 
 $vendor_mfamous_query = "SELECT `V`.`ID` AS `ID`
-                         FROM `_VENDORS` AS `V`
+                         FROM `$__VENDORS` AS `V`
                          JOIN ( SELECT COUNT(*) AS `TOTAL_ACCOUNTS`, `VENDOR_ID`
-                                FROM _ACCOUNTS
+                                FROM `$__ACCOUNTS`
                                 GROUP BY `VENDOR_ID`
                                 ORDER BY `TOTAL_ACCOUNTS` DESC
                                 LIMIT 1 ) AS `A`
@@ -28,7 +29,7 @@ $most_famous_vendor = $vendor_mfamous->fetch_assoc()['ID'];
 
 
 $diff_vendors_query = "SELECT DISTINCT COUNT(*) AS `TOTAL_DIFF_VENDORS`
-                       FROM `_VENDORS`";
+                       FROM `$__VENDORS`";
 
 $diff_vendors = $main_conn->query($diff_vendors_query);
 $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];

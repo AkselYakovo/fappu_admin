@@ -1,11 +1,11 @@
 <?php
-require_once('./resources.php');
-require_once('./_general.php');
+require_once(dirname(__FILE__) . '/resources.php');
+require_once(dirname(__FILE__) . '/_general.php');
 
 // # Configuration variables..
-$__ACCOUNTS = "_ACCOUNTS";
-$__WEBSITES = "_WEBSITES";
-$__ACCOUNTS_KILLED = "_ACCOUNTS_KILLED";
+// $__ACCOUNTS = "_accounts";
+// $__WEBSITES = "_websites";
+// $__ACCOUNTS_KILLED = "_accounts_killed";
 
 // const __LEVELS = '../';
 
@@ -19,9 +19,9 @@ $active_site = ( isset($_GET['website']) )
 
 // # Important variables for websites listing page..
 $websites_listing_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                           FROM _WEBSITES AS W
+                           FROM `$__WEBSITES` AS W
                            LEFT OUTER JOIN ( SELECT `SITE_CODE`, COALESCE(COUNT(*), 0) AS `TOTAL_ACCOUNTS`
-                                             FROM _ACCOUNTS
+                                             FROM `$__ACCOUNTS`
                                              GROUP BY 1) Q
                            ON W.`SITE_CODE` = Q.`SITE_CODE`
                            ORDER BY `TOTAL_ACCOUNTS` DESC";

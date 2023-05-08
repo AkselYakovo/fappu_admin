@@ -1,8 +1,8 @@
 <?php
-require_once('./fun/accounts.php');
-require_once('./fun/reclaims.php');
-require_once'./_general.php';
-require_once'./resources.php';
+require_once(dirname(__FILE__) . '/fun/accounts.php');
+require_once(dirname(__FILE__) . '/fun/reclaims.php');
+require_once(dirname(__FILE__) . '/_general.php');
+require_once(dirname(__FILE__) . '/resources.php');
 
 // print_r($_POST);
 
@@ -35,7 +35,7 @@ if ( isset($_POST['__FUN']) && $_POST['__FUN'] == 'New Account' ) {
 
     if ( $id && $nickname && $password && $website && $offers && $price && $vendor && $warranty_begins && $warranty_ends ) 
     {
-        $new_account_query = "INSERT INTO `_ACCOUNTS` (`ACCOUNT_ID`, `SITE_CODE`, `ACCOUNT_NICK`, `ACCOUNT_PASS`, `PRICE_PAID`,
+        $new_account_query = "INSERT INTO `$__ACCOUNTS` (`ACCOUNT_ID`, `SITE_CODE`, `ACCOUNT_NICK`, `ACCOUNT_PASS`, `PRICE_PAID`,
                                           `VENDOR_ID`, `WARRANTY_BEGINS`, `WARRANTY_ENDS`, `ACCESS_STATE`, `N_AVAILABLE`, `N_SOLD`)
                               VALUES('$id', '$website', '$nickname', '$password', '$price', '$vendor', 
                                      '$warranty_begins', '$warranty_ends', 1 /*ACCESS_STATE**/, '$offers', 0/**SOLD ACCOUNTS**/)";
@@ -88,13 +88,13 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
     move_uploaded_file($_FILES['__LOGO']['tmp_name'], "../assets/websites_logos/" . strtolower($site_code) . ".png");
 
     // Create New Website Record.
-    $new_website_query = "INSERT INTO `_WEBSITES` VALUES('$site_code', '$site_title', '$site_url', $original_price, $offer_price)";
+    $new_website_query = "INSERT INTO `$__WEBSITES` VALUES('$site_code', '$site_title', '$site_url', $original_price, $offer_price)";
 
     try { $new_website = $main_conn->query($new_website_query); } 
     catch(Exception $error) { echo $error; }
 
     // Create New Children Website Record.
-    $new_children_website_query = "INSERT INTO _WEBSITES_CHILDREN VALUES('$site_code', '')";
+    $new_children_website_query = "INSERT INTO `$__WEBSITES_CHILDREN` VALUES('$site_code', '')";
 
     try { $new_children_website = $main_conn->query($new_children_website_query); } 
     catch(Exception $error) { echo $error; }
@@ -181,7 +181,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
     
 
     // Get All Children Subsites First..
-    $children_query = "SELECT `CHILDREN` FROM `_WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
+    $children_query = "SELECT `CHILDREN` FROM `$__WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
     $children_results = $main_conn->query($children_query);
     $children = $children_results->fetch_array();
 
@@ -193,7 +193,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
     else {
         $new_children = $subtitle;
     }
-    $new_children_query = "UPDATE `_WEBSITES_CHILDREN` SET `CHILDREN` = '$new_children' WHERE `SITE_CODE` = '$site_code'";
+    $new_children_query = "UPDATE `$__WEBSITES_CHILDREN` SET `CHILDREN` = '$new_children' WHERE `SITE_CODE` = '$site_code'";
     $new_children_results = $main_conn->query($new_children_query);
     
 }
@@ -234,7 +234,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__REPLACE_ACCOUNT']) && isset($_POS
     $replace_created = false;
 
     $account_information_query = "SELECT * 
-                                  FROM _ACCOUNTS 
+                                  FROM `$__ACCOUNTS` 
                                   WHERE `ACCOUNT_ID` = '$account_id'";
 
     $account_information = $main_conn->query($account_information_query);
@@ -247,14 +247,14 @@ if ( isset($_POST['__PUT']) && isset($_POST['__REPLACE_ACCOUNT']) && isset($_POS
         $total_offers = $information['N_AVAILABLE'];
         $warranty_begins = date('Y-m-d');
         $warranty_ends = date('Y-m-d', time() + ( 28 * 24 * 60 * 60 ));
-        $new_replacement_account_query = "INSERT INTO _ACCOUNTS 
+        $new_replacement_account_query = "INSERT INTO `$__ACCOUNTS` 
                                           VALUES('$new_id', '$site_code', '$nickname', '$password', 
                                           'SELF',  '$price', '$warranty_begins', '$warranty_ends',  0, $total_offers, $total_offers)";
         $results = $main_conn->query($new_replacement_account_query);
 
         if ( $results ) {
             $today = $warranty_begins;
-            $new_killed_account_query = "INSERT INTO _ACCOUNTS_KILLED VALUES('$new_id', 'REPLACEMENT', '$today')";
+            $new_killed_account_query = "INSERT INTO `$__ACCOUNTS_KILLED` VALUES('$new_id', 'REPLACEMENT', '$today')";
             $res = $main_conn->query($new_killed_account_query);
 
             if ( $res ) {
@@ -280,7 +280,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__REPLACE_ACCOUNT']) && isset($_POS
     if ( $replace_created ) 
     {
         $get_emails_query = "SELECT `USER_EMAIL` 
-                             FROM _SALES 
+                             FROM `$__SALES`
                              WHERE `ACCOUNT_ID` = '$account_id'"; 
         $results = $main_conn->query($get_emails_query);
         
@@ -303,7 +303,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__REPLACE_ACCOUNT']) && isset($_POS
 // READ: Pull Websites List...
 if ( isset($_POST['__PULL']) && isset($_POST['__WEBSITES']) ) 
 {
-    $websites_query = "SELECT `SITE_CODE`, `SITE_TITLE` FROM `_WEBSITES`";
+    $websites_query = "SELECT `SITE_CODE`, `SITE_TITLE` FROM `$__WEBSITES`";
     $websites = $main_conn->query($websites_query);
     
     $final_list = array();
@@ -340,7 +340,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__ACCOUNT']) )
                               A.`ACCOUNT_PASS` AS `ACCOUNT_PASS`, A.`VENDOR_ID` AS `VENDOR_ID`, A.`PRICE_PAID` AS `PRICE_PAID`, 
                               A.`WARRANTY_BEGINS` AS `WARRANTY_BEGINS`, A.`WARRANTY_ENDS` AS `WARRANTY_ENDS`, A.`N_AVAILABLE` AS `N_AVAILABLE`, 
                               A.`N_SOLD` AS `N_SOLD`, W.`SITE_URL` AS `SITE_URL` 
-                              FROM `_ACCOUNTS` AS A 
+                              FROM `$__ACCOUNTS` AS A 
                               INNER JOIN `_WEBSITES` AS W
                               ON A.`SITE_CODE` = W.`SITE_CODE`
                               WHERE `ACCOUNT_ID` = '$account_id'";
@@ -356,8 +356,8 @@ if( isset($_POST['__PULL']) && isset($_POST['__KILLED_ACCOUNT']) ) {
                              A.`ACCOUNT_PASS` AS `ACCOUNT_PASS`, A.`VENDOR_ID` AS `VENDOR_ID`, A.`PRICE_PAID` AS `PRICE_PAID`, 
                              A.`WARRANTY_BEGINS` AS `WARRANTY_BEGINS`, A.`WARRANTY_ENDS` AS `WARRANTY_ENDS`, A.`N_AVAILABLE` AS `N_AVAILABLE`, 
                              A.`N_SOLD` AS `N_SOLD`, KA.`MOTIVE` AS `MOTIVE`, KA.`ACTION_DATE` AS 'ACTION_DATE'
-                             FROM `_ACCOUNTS` AS A
-                             INNER JOIN `_ACCOUNTS_KILLED` AS KA 
+                             FROM `$__ACCOUNTS` AS A
+                             INNER JOIN `$__ACCOUNTS_KILLED` AS KA 
                              ON A.`ACCOUNT_ID` = KA.`ACCOUNT_ID` 
                              WHERE A.`ACCOUNT_ID` = '$account_id'";
     $results = $main_conn->query($killed_account_query);
@@ -369,7 +369,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__KILLED_ACCOUNT']) ) {
 if( isset($_POST['__PULL']) && isset($_POST['__SCREENS']) ) {
     $site_code = clean_txt($_POST['__SITE_CODE']);
 
-    $screens_query = "SELECT `children` FROM `_WEBSITES_CHILDREN` 
+    $screens_query = "SELECT `children` FROM `$__WEBSITES_CHILDREN` 
                       WHERE `SITE_CODE` = '$site_code'";
     $screens = $main_conn->query($screens_query);
     $screens = $screens->fetch_array();
@@ -392,10 +392,10 @@ if( isset($_POST['__PULL']) && isset($_POST['__RECLAIM']) ) {
                         ELSE A.`ACCESS_STATE`
                         END) AS `ACCOUNT_STATUS`
                   
-                      FROM _RECLAIMS AS R 
-                      INNER JOIN _ACCOUNTS AS A
+                      FROM `$__RECLAIMS` AS R 
+                      INNER JOIN `$__ACCOUNTS` AS A
                       ON R.`ACCOUNT_ID` = A.`ACCOUNT_ID`
-                      LEFT OUTER JOIN _ACCOUNTS_KILLED AS A_K
+                      LEFT OUTER JOIN `$__ACCOUNTS_KILLED` AS A_K
                       ON R.`ACCOUNT_ID` = A_K.`ACCOUNT_ID`
                       WHERE R.`RECLAIM_ID` = '$reclaim_id'
                       ORDER BY R.`RECLAIM_ID` DESC
@@ -419,11 +419,11 @@ if( isset($_POST['__PULL']) && isset($_POST['__MESSAGES_PAGE']) ) {
         $category = clean_txt($_POST['__CATEGORY']);
     }
 
-    $messages_list_query = ($category) ? "SELECT * FROM _MESSAGES 
+    $messages_list_query = ($category) ? "SELECT * FROM `$__MESSAGES` 
                                           WHERE `CATEGORY_LABEL` = '$category'
                                           ORDER BY `DATE` DESC
                                           LIMIT $page, $post_per_page"
-                                        : "SELECT * FROM _MESSAGES
+                                        : "SELECT * FROM `$__MESSAGES`
                                            ORDER BY `DATE` DESC
                                            LIMIT $page, $post_per_page";
 
@@ -451,16 +451,16 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
     $post_per_page = __MESSAGES_PER_PAGE;
 
     $total_messages_query = ($category AND $category != 'ALL') 
-                            ? "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES 
+                            ? "SELECT COUNT(*) AS `TOTAL` FROM `$__MESSAGES` 
                                WHERE `CATEGORY_LABEL` = '$category'"
-                            : "SELECT COUNT(*) AS `TOTAL` FROM _MESSAGES";
+                            : "SELECT COUNT(*) AS `TOTAL` FROM `$__MESSAGES`";
 
     $category_messages_query = ($category AND $category != 'ALL') 
-                                ? "SELECT * FROM _MESSAGES 
+                                ? "SELECT * FROM `$__MESSAGES` 
                                    WHERE `CATEGORY_LABEL` = '$category' 
                                    ORDER BY `DATE` 
                                    DESC LIMIT " . __MESSAGES_PER_PAGE
-                                : "SELECT * FROM _MESSAGES
+                                : "SELECT * FROM `$__MESSAGES`
                                    LIMIT " . __MESSAGES_PER_PAGE;
 
 
@@ -503,7 +503,7 @@ if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
         }
     }
 
-    $update_account_query = "UPDATE `_ACCOUNTS` 
+    $update_account_query = "UPDATE `$__ACCOUNTS` 
                              SET $updated_columns 
                              WHERE `ACCOUNT_ID` = '$account_id'";
 
@@ -516,11 +516,11 @@ if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
 if( isset($_POST['__PUT']) && isset($_POST['__KILL']) ) { // ACTION SHOULD BE PERFOMED W/ TRANSACTIONS... (!)
     $account_id = clean_txt($_POST['__ACCOUNT_ID']);
     $action_date = date('Y-m-d');
-    $killed_account_query = "INSERT INTO `_ACCOUNTS_KILLED` VALUES('$account_id', 'KILLED', '$action_date')";
+    $killed_account_query = "INSERT INTO `$__ACCOUNTS_KILLED` VALUES('$account_id', 'KILLED', '$action_date')";
     $killed_account_results = $main_conn->query($killed_account_query);
 
 
-    $disabled_account_query = "UPDATE `_ACCOUNTS` SET `ACCESS_STATE` = 0 WHERE `ACCOUNT_ID` = '$account_id'";
+    $disabled_account_query = "UPDATE `$__ACCOUNTS` SET `ACCESS_STATE` = 0 WHERE `ACCOUNT_ID` = '$account_id'";
     $disabled_account_results = $main_conn->query($disabled_account_query);
 
     if ( !is_int($killed_account_results) && !is_int($disabled_account_results) ) {
@@ -534,12 +534,12 @@ if( isset($_POST['__PUT']) && isset($_POST['__KILL']) ) { // ACTION SHOULD BE PE
 // UPDATE: Revive Account (Revive)..
 if( isset($_POST['__PUT']) && isset($_POST['__REVIVE_ACCOUNT']) ) {
     $account_id = clean_txt($_POST['__ACCOUNT_REVIVED']);
-    $revive_account_query = "UPDATE `_ACCOUNTS` SET `ACCESS_STATE` = 1 WHERE `ACCOUNT_ID` = '$account_id'";
+    $revive_account_query = "UPDATE `$__ACCOUNTS` SET `ACCESS_STATE` = 1 WHERE `ACCOUNT_ID` = '$account_id'";
     $results = $main_conn->query($revive_account_query);
     
     if ( $results ) {
         echo "Account Updated Successfully";
-        $main_conn->query("DELETE FROM `_ACCOUNTS_KILLED` WHERE `ACCOUNT_ID` = '$account_id'");
+        $main_conn->query("DELETE FROM `$__ACCOUNTS_KILLED` WHERE `ACCOUNT_ID` = '$account_id'");
     }
     else {
         echo "Error! ";

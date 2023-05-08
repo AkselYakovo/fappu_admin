@@ -1,19 +1,20 @@
 <?php
-require_once"./resources.php";
+require_once(dirname(__FILE__) . "/resources.php");
 
-
+// $__SALES = '_sales';
+// $__ACCOUNTS = ''
 
 $actual_website = "sales";
 $actual_site = $_GET['website'] ?? false;
 
-$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`, S.`SALE_DATE` AS `SALE_DATE`, 
+$sales_listing_query = "SELECT S.`SALE_ID` AS `SALE_ID`, S.`USER_EMAIL` AS `USER_EMAIL`, S.`SALE_DATE` AS `SALE_DATE`,
                         S.`ACCOUNT_ID` AS `ACCOUNT_ID`, S.`SALE_STATUS` AS `SALE_STATUS`,
                         A.`PRICE_PAID` AS `PRICE_PAID`, A.`SITE_CODE` AS `SITE_CODE`,
                         WEB.`SITE_TITLE` AS `SITE_TITLE`
-                        FROM _SALES AS S
-                        INNER JOIN _ACCOUNTS AS A
+                        FROM `$__SALES` AS S
+                        INNER JOIN `$__ACCOUNTS` AS A
                         ON S.`ACCOUNT_ID` = A.`ACCOUNT_ID`
-                        INNER JOIN _WEBSITES AS WEB
+                        INNER JOIN `$__WEBSITES` AS WEB
                         ON WEB.`SITE_CODE` = A.`SITE_CODE`
                         ORDER BY `SALE_DATE` DESC
                         LIMIT 0, 10";
@@ -23,12 +24,12 @@ $sales_listing = $main_conn->query($sales_listing_query);
 $sales_overall_info_query = "SELECT COUNT(*) AS `TOTAL_SALES`,
                              A.`TOTAL_COMPLETED` AS `TOTAL_COMPLETED`,
                              B.`TOTAL_PENDING` AS `TOTAL_PENDING`
-                             FROM `_SALES`
+                             FROM `$__SALES`
                              JOIN ( SELECT COUNT(*) AS `TOTAL_COMPLETED` 
-                                    FROM `_SALES`
+                                    FROM `$__SALES`
                                     WHERE `SALE_STATUS` = 1 ) AS A
                              JOIN ( SELECT COUNT(*) AS `TOTAL_PENDING`
-                                    FROM `_SALES`
+                                    FROM `$__SALES`
                                     WHERE `SALE_STATUS` = 0 ) AS B";
 
 $sales_overall_info = $main_conn->query($sales_overall_info_query);
