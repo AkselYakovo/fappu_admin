@@ -1,6 +1,7 @@
 <?php
-include './resources.php';
-include './_general.php';
+include(dirname(__FILE__) . '/resources.php');
+include (dirname(__FILE__) .'/_general.php');
+
 $actual_website = "vendors";
 
 $vendors_query = "SELECT `V`.`ID`, IFNULL(`A`.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`

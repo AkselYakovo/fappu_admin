@@ -1,5 +1,8 @@
 <?php
-include_once( __DIR__ . "./../_general.php");
+// $p = dirname( dirname(__FILE__) ) . '/_general.php';
+// echo $p;
+// include_once( __DIR__ . "./../_general.php");
+require_once(dirname( dirname(__FILE__) ) . '/_general.php');
 
 function count_rows_from_table(string $table) {
     global $main_conn;

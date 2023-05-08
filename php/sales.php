@@ -1,5 +1,5 @@
 <?php
-require_once("./resources.php");
+require_once(dirname(__FILE__) . "/resources.php");
 
 // $__SALES = '_sales';
 // $__ACCOUNTS = ''

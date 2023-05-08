@@ -1,7 +1,7 @@
 <?php
-require_once('./resources.php');
-require_once('./_general.php');
-require_once('./fun/websites.php');
+require_once(dirname(__FILE__) . '/resources.php');
+require_once(dirname(__FILE__) . '/_general.php');
+require_once(dirname(__FILE__) . '/fun/websites.php');
 // require_once('./websites.php');
 
 // @ Configuration items below..

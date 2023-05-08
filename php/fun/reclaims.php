@@ -1,5 +1,7 @@
 <?php
-$conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
+// $conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
+require_once(dirname(dirname( __FILE__ )) . "/resources.php");
+$conn = $main_conn;
 
 define('RECLAIM_MONTH', 1);
 define('RECLAIM_MONTHS', 6);

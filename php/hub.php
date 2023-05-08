@@ -1,8 +1,8 @@
 <?php
-require_once('./fun/accounts.php');
-require_once('./fun/reclaims.php');
-require_once'./_general.php';
-require_once'./resources.php';
+require_once(dirname(__FILE__) . '/fun/accounts.php');
+require_once(dirname(__FILE__) . '/fun/reclaims.php');
+require_once(dirname(__FILE__) . '/_general.php');
+require_once(dirname(__FILE__) . '/resources.php');
 
 // print_r($_POST);
 

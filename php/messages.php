@@ -1,7 +1,7 @@
 <?php
-include_once("./_general.php");
-include_once("./resources.php");
-include_once("./fun/messages.php");
+require_once(dirname(__FILE__) . "/_general.php");
+require_once(dirname(__FILE__) . "/resources.php");
+require_once(dirname(__FILE__) . "/fun/messages.php");
 
 $actual_website = "messages";
 
