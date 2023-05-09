@@ -320,7 +320,7 @@ if ( isset($_POST['__PULL']) && isset($_POST['__WEBSITES']) )
 if ( isset($_POST['__PULL']) && isset($_POST['__VENDORS']) ) 
 {
     $data = clean_txt($_POST['__QUERY']);
-    $vendors_query = "SELECT `ID` FROM `_VENDORS` WHERE `ID` LIKE '%$data%' LIMIT 3";
+    $vendors_query = "SELECT `ID` FROM `$__VENDORS` WHERE `ID` LIKE '%$data%' LIMIT 3";
     $vendors = $main_conn->query($vendors_query);
 
     $vendors_list = array();
@@ -341,7 +341,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__ACCOUNT']) )
                               A.`WARRANTY_BEGINS` AS `WARRANTY_BEGINS`, A.`WARRANTY_ENDS` AS `WARRANTY_ENDS`, A.`N_AVAILABLE` AS `N_AVAILABLE`, 
                               A.`N_SOLD` AS `N_SOLD`, W.`SITE_URL` AS `SITE_URL` 
                               FROM `$__ACCOUNTS` AS A 
-                              INNER JOIN `_WEBSITES` AS W
+                              INNER JOIN `$__WEBSITES` AS W
                               ON A.`SITE_CODE` = W.`SITE_CODE`
                               WHERE `ACCOUNT_ID` = '$account_id'";
     $results = $main_conn->query($single_account_query);
