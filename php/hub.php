@@ -136,7 +136,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
         
         // $blurred_picture = new Imagick($_FILES["__PICTURE_$i"]['tmp_name']);
         $blurred_picture = clone $picture;
-        $blurred_picture_final_path = $assets_dir . "/thumbs/$site_code/" . strtolower($site_title) . "_$i.jpg";
+        $blurred_picture_final_path = $assets_dir . "/thumbs/$site_code/blur/" . strtolower($site_title) . "_$i.jpg";
         $blurred_picture->blurImage(4,4);
         $blurred_picture->scaleImage($blurred_picture->getImageWidth() / 2, 0);
         $blurred_picture->setImageCompressionQuality(50);
@@ -149,6 +149,8 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
 // CREATE: New Subsite Screen... 
 if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) ) 
 {
+    define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
+
     $logo_file = $_FILES['__LOGO'];
     $picture_file = $_FILES['__PICTURE'];
 
@@ -173,13 +175,13 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
     // Crop Picture With Origin Point.
     $original_picture->cropImage(310, 500, $x, $y);
     // Save Original Picture.
-    $original_picture->writeImage(realpath("./../assets/screens/$site_code/") . "/$subtitle.jpg");
+    $original_picture->writeImage( _ASSETS . "/screens/$site_code/" . "$subtitle.jpg");
     // Config Blurred Image.
     $blurred_picture->scaleImage(0, $blurred_picture->getImageHeight() / 2 );
     $blurred_picture->cropImage(310, 500, $x, $y);
     $blurred_picture->blurImage(16,16);
     // Save Blurred Image.
-    $blurred_picture->writeImage(realpath("./../assets/screens/$site_code/blur/") . "/$subtitle.jpg");
+    $blurred_picture->writeImage( _ASSETS . "/screens/$site_code/blur/" . "$subtitle.jpg");
     
     // Create New Logo Pictures.
     $logo_picture = new Imagick($logo_file['tmp_name']);
@@ -196,8 +198,9 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
         $logo_picture_reduced->scaleImage(150, 0);
     
     // Upload Logo Files...
-    $logo_picture->writeImage(realpath("./../assets/subsites_logos/$site_code/") . "/$subtitle.png");
-    $logo_picture_blurred->writeImage(realpath("./../assets/subsites_logos/$site_code/blur/") . "/$subtitle.png");
+    $logo_picture->writeImage(_ASSETS . "/subsites_logos/$site_code/" . "$subtitle.png");
+
+    $logo_picture_blurred->writeImage(_ASSETS . "/subsites_logos/$site_code/blur/" . "$subtitle.png");
     // $logo_picture_reduced->writeImage(realpath("./../assets/subsites_logos/$site_code/reduced/") . "/$subtitle.png");
     
 
