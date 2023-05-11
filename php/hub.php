@@ -6,6 +6,8 @@ require_once(dirname(__FILE__) . '/resources.php');
 
 // print_r($_POST);
 
+define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
+
 $dictionary = array(
     '__WBEGINS' => 'WARRANTY_BEGINS',
     '__WENDS' => 'WARRANTY_ENDS',
@@ -63,6 +65,8 @@ if ( isset($_POST['__FUN']) && $_POST['__FUN'] == 'New Account' ) {
 // CREATE: New Website...
 if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )  
 {
+    $assets_dir = dirname(dirname(__FILE__)) . "/assets";
+
     $original_price = clean_txt($_POST['__ORIGINAL_PRICE']);
     $offer_price = clean_txt($_POST['__SALE_PRICE']);
 
@@ -70,22 +74,39 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
     $site_title = strtoupper(clean_txt($_POST['__SITE_TITLE']));
     $site_url = strtolower(clean_txt($_POST['__SITE_URL']));
 
-    // Check If Website Exists Already.
-    if ( is_dir("../assets/thumbs/$site_code") ) {
-        throw new Exception('Website Already Exists..');
+    // $logo_file_path = $assets_dir . "/websites_logos/" . strtolower($site_code) . ".png";
+    $logo_file_path = _ASSETS . "/websites_logos/" . strtolower($site_code) . ".png";
+
+    // Check if directories related to the website already exists
+    if ( is_dir(_ASSETS . "/thumbs/$site_code") || 
+         is_dir(_ASSETS . "/screens/$site_code") ||
+         is_dir(_ASSETS . "/subsites_logos/$site_code") ||
+         is_file(_ASSETS . '/websites_logos/' . strtolower($site_code) . '.png')
+        ) 
+    {
+        throw new Exception("Website ($site_title) already exists..");
     }
 
-    // Make Thumbs Dir & Sub Dir "blur".
-    mkdir("../assets/thumbs/$site_code/");
-    mkdir("../assets/thumbs/$site_code/blur/");
-    // Make Screens Dir.
-    mkdir("../assets/screens/$site_code/");
-    mkdir("../assets/screens/$site_code/blur/");
-    // Make Subsites Dir.
-    mkdir("../assets/subsites_logos/$site_code/");
-    mkdir("../assets/subsites_logos/$site_code/blur/");
-    // Upload Logo.
-    move_uploaded_file($_FILES['__LOGO']['tmp_name'], "../assets/websites_logos/" . strtolower($site_code) . ".png");
+    // Check whether thumbs/, screens/, subsites_logos/ & websites_logos/ exist
+    if ( !is_dir(_ASSETS . "/thumbs") )  mkdir(_ASSETS . "/thumbs");
+    if ( !is_dir(_ASSETS . "/screens") )  mkdir(_ASSETS . "/screens");
+    if ( !is_dir(_ASSETS . "/subsites_logos") )  mkdir(_ASSETS . "/subsites_logos");
+    if ( !is_dir(_ASSETS . "/websites_logos") )  mkdir(_ASSETS . "/websites_logos");
+
+
+    // Create thumbs/ & thumbs/blur/
+    mkdir(_ASSETS . "/thumbs/$site_code");
+    mkdir(_ASSETS . "/thumbs/$site_code/blur");
+    // Create screens/ & screens/blur/
+    mkdir(_ASSETS . "/screens/$site_code");
+    mkdir(_ASSETS . "/screens/$site_code/blur");
+    // Create subsites_logos/ & subsites_logos/blur
+    mkdir(_ASSETS . "/subsites_logos/$site_code/");
+    mkdir(_ASSETS . "/subsites_logos/$site_code/blur/");
+    // Upload logo
+    move_uploaded_file($_FILES['__LOGO']['tmp_name'], $logo_file_path);
+    // move_uploaded_file($_FILES['__LOGO']['tmp_name'], "../assets/websites_logos/" . strtolower($site_code) . ".png");
+
 
     // Create New Website Record.
     $new_website_query = "INSERT INTO `$__WEBSITES` VALUES('$site_code', '$site_title', '$site_url', $original_price, $offer_price)";
@@ -99,7 +120,6 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
     try { $new_children_website = $main_conn->query($new_children_website_query); } 
     catch(Exception $error) { echo $error; }
 
-
     // Upload Edited Pictures.
     for($i = 1; $i <= 3; $i++) {
         $picture = new Imagick($_FILES["__PICTURE_$i"]['tmp_name']);
@@ -109,19 +129,23 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
         $new_width = (int) ( ($picture->getImageWidth() / $picture->getImageHeight() ) * 500) * $picture_scale;
         $new_height = (int) 500 * $picture_scale;
 
+        $picture_final_path = _ASSETS . "/thumbs/$site_code/" . '/' . strtolower($site_title) . "_$i.jpg";
         $picture->resizeImage($new_width, $new_height, Imagick::FILTER_UNDEFINED, 0);
         $picture->cropImage(510,510, $origin_arr[0], $origin_arr[1]);
         $picture->setImageCompressionQuality(80);
-        $blurred_picture = clone $picture;
-        $picture->writeImage(realpath("./../assets/thumbs/$site_code/") . "/" . strtolower($site_title) . "_$i.jpg");
+        $picture->writeImage($picture_final_path);
 
+        // $picture->writeImage(realpath("./../assets/thumbs/$site_code/") . "/" . strtolower($site_title) . "_$i.jpg");
+        
         // $blurred_picture = new Imagick($_FILES["__PICTURE_$i"]['tmp_name']);
+        $blurred_picture = clone $picture;
+        $blurred_picture_final_path = _ASSETS . "/thumbs/$site_code/blur/" . strtolower($site_title) . "_$i.jpg";
         $blurred_picture->blurImage(4,4);
         $blurred_picture->scaleImage($blurred_picture->getImageWidth() / 2, 0);
         $blurred_picture->setImageCompressionQuality(50);
-        $blurred_picture->writeImage(realpath("./../assets/thumbs/$site_code/") . "/blur/" . strtolower($site_title) . "_$i.jpg");
+        $blurred_picture->writeImage($blurred_picture_final_path);
+        // $blurred_picture->writeImage(realpath("./../assets/thumbs/$site_code/") . "/blur/" . strtolower($site_title) . "_$i.jpg");
     }
-    
 }
 
 
@@ -152,13 +176,13 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
     // Crop Picture With Origin Point.
     $original_picture->cropImage(310, 500, $x, $y);
     // Save Original Picture.
-    $original_picture->writeImage(realpath("./../assets/screens/$site_code/") . "/$subtitle.jpg");
+    $original_picture->writeImage( _ASSETS . "/screens/$site_code/" . "$subtitle.jpg");
     // Config Blurred Image.
     $blurred_picture->scaleImage(0, $blurred_picture->getImageHeight() / 2 );
     $blurred_picture->cropImage(310, 500, $x, $y);
     $blurred_picture->blurImage(16,16);
     // Save Blurred Image.
-    $blurred_picture->writeImage(realpath("./../assets/screens/$site_code/blur/") . "/$subtitle.jpg");
+    $blurred_picture->writeImage( _ASSETS . "/screens/$site_code/blur/" . "$subtitle.jpg");
     
     // Create New Logo Pictures.
     $logo_picture = new Imagick($logo_file['tmp_name']);
@@ -175,9 +199,10 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
         $logo_picture_reduced->scaleImage(150, 0);
     
     // Upload Logo Files...
-    $logo_picture->writeImage(realpath("./../assets/subsites_logos/$site_code/") . "/$subtitle.png");
-    $logo_picture_blurred->writeImage(realpath("./../assets/subsites_logos/$site_code/blur/") . "/$subtitle.png");
-    $logo_picture_reduced->writeImage(realpath("./../assets/subsites_logos/$site_code/reduced/") . "/$subtitle.png");
+    $logo_picture->writeImage(_ASSETS . "/subsites_logos/$site_code/" . "$subtitle.png");
+
+    $logo_picture_blurred->writeImage(_ASSETS . "/subsites_logos/$site_code/blur/" . "$subtitle.png");
+    // $logo_picture_reduced->writeImage(realpath("./../assets/subsites_logos/$site_code/reduced/") . "/$subtitle.png");
     
 
     // Get All Children Subsites First..
@@ -201,6 +226,12 @@ if ( isset($_POST['__PUT']) && isset($_POST['__SUBTITLE']) && isset($_FILES) )
 
 // CREATE: New Vendor.
 if ( isset($_POST['__PUT']) && isset($_POST['__VENDOR']) && isset($_FILES) ) {
+
+    // Create vendors/ if it does not exist already
+    if ( !is_dir(_ASSETS . '/vendors') ) {
+        mkdir(_ASSETS . '/vendors');
+    }
+
     $vendor_id = strtoupper(clean_txt($_POST['__VENDOR_ID']));
     $vendor_email = strtolower(clean_txt($_POST['__VENDOR_EMAIL']));
     $vendor_url = strtolower(clean_txt($_POST['__VENDOR_URL']));
@@ -216,7 +247,8 @@ if ( isset($_POST['__PUT']) && isset($_POST['__VENDOR']) && isset($_FILES) ) {
     if ( $vendor ) {
         $vendor_avatar = new Imagick($_FILES['__AVATAR']['tmp_name']);
         $vendor_avatar->scaleImage(98, 0);
-        $vendor_avatar->writeImage(realpath('./../assets/vendors/') . '/' . $image_uri);
+        // $vendor_avatar->writeImage(realpath('./../assets/vendors/') . '/' . $image_uri);
+        $vendor_avatar->writeImage(_ASSETS . '/vendors/' . $image_uri);
     }
 
     else {
@@ -556,8 +588,8 @@ if( isset($_POST['__UPDATE']) && isset($_POST['__SOLVE_RECLAIM']) && isset($_POS
 if( isset($_POST['__PUT']) && isset($_POST['__WEBSITE_LOGO']) && $_FILES ) {
     $site_code = strtolower(clean_txt($_POST['__SITE_CODE']));
 
-    if ( file_exists("../assets/websites_logos/$site_code.png") )  {
-        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], "../assets/websites_logos/$site_code.png");
+    if ( file_exists(_ASSETS . "/websites_logos/$site_code.png") )  {
+        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "websites_logos/$site_code.png");
     } else {
         throw new Exception('Invalid Site Logo Upload.');
     }
