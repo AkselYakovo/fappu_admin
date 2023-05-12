@@ -2,6 +2,10 @@
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
 $main_conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
 
+// Link to assets/
+define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
+define('__URL_ROOT', '/projects/fappu_admin/');
+
 // Pagination Constants:
 define('__MESSAGES_PER_PAGE', 1);
 define('__SALES_PER_PAGE', 10);
