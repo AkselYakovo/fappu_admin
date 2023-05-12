@@ -2,7 +2,6 @@
 require_once(dirname(__FILE__) . '/resources.php');
 require_once(dirname(__FILE__) . '/_general.php');
 require_once(dirname(__FILE__) . '/fun/websites.php');
-// require_once('./websites.php');
 
 // @ Configuration items below..
 // $__WEBSITES = '_websites';
@@ -119,7 +118,7 @@ $websites = $main_conn->query($websites_query);
                 <div class="website-row">
                     <a href="?website=<?php echo $record['SITE_CODE']; ?>">
                         <div class="site-logo">
-                            <img src="../assets/websites_logos/<?php echo $record['SITE_CODE']; ?>.png" alt="<?php echo $record['SITE_TITLE']; ?> LOGO">
+                            <img src="<?php echo __URL_ROOT . "assets/websites_logos/" . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO">
                         </div>
                         <div class="site-info">
                             <h4 class="title"><?php echo $record['SITE_TITLE']; ?></h4>
@@ -182,7 +181,7 @@ $websites = $main_conn->query($websites_query);
                     </svg>
                 </button>
                 <figure class="site-logo">
-                    <img src="../assets/websites_logos/<?php echo $single_website['SITE_CODE']; ?>.png" alt="Site Logo" draggable="false">
+                    <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($single_website['SITE_CODE']) . '.png'; ?>" alt="Site Logo" draggable="false">
                 </figure>
                 <div class="options">
                     <button class="button button-secondary button-small" name="Edit Website" disabled="true">EDIT SITE</button>
@@ -275,14 +274,14 @@ $websites = $main_conn->query($websites_query);
 
                 <?php if( $index < 8 ): ?>
 
-                    <div class="screen" style="background-image: url('../assets/screens/<?php echo $single_website['SITE_CODE']. '/' . $screen; ?>.jpg')">
-                        <img src="../assets/subsites_logos/<?php echo $single_website['SITE_CODE']. '/' . $screen; ?>.png" alt="<?php echo $screen; ?> logo" class="subsite-logo" draggable="false">
+                    <div class="screen" style="background-image: url('<?php echo __URL_ROOT . 'assets/screens/' . $single_website['SITE_CODE'] . '/' . $screen . '.jpg'; ?>')">
+                        <img src="<?php echo __URL_ROOT . "assets/subsites_logos/" . $single_website['SITE_CODE'] . '/' . $screen . '.png'; ?>" alt="<?php echo "'$screen'"; ?> logo" class="subsite-logo" draggable="false">
                         <p class="title"><?php echo $screen; ?></p>
                     </div>
 
                 <?php else: ?>
 
-                    <div class="screen" style="background-image: url('../assets/screens/<?php echo $single_website['SITE_CODE']. '/' . $screen; ?>.jpg')">
+                    <div class="screen" style="background-image: url('<?php echo '/assets/screens/' . $single_website['SITE_CODE']. '/' . $screen . '.jpg'; ?>')">
                         <p class="title">No screens found for: <?php echo $single_website['SITE_TITLE']; ?></p>
                     </div>
 
