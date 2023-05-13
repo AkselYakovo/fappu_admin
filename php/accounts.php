@@ -118,7 +118,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                 <div class="website-accounts-row">
                     <a href="?website=<?php echo $record['SITE_CODE']; ?>">
                         <figure class="site-logo">
-                            <img src="../assets/websites_logos/<?php echo $record['SITE_CODE']; ?>.png" alt="<?php echo $record['SITE_TITLE']; ?> LOGO" draggable="false">
+                            <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO" draggable="false">
                         </figure>
                         <h2 class="site-code"><?php echo $record['SITE_CODE']; ?></h2>
                         <small class="site-total-accounts"><?php echo $record['TOTAL_ACCOUNTS']; ?> ACCOUNTS</small>
@@ -148,7 +148,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                         </svg>
                 </button>
                 <figure class="site-logo">
-                    <img src="../assets/websites_logos/<?php echo $single_website['SITE_CODE']; ?>.png" alt="<?php echo $single_website['SITE_TITLE']; ?> LOGO" draggable="false">
+                    <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($single_website['SITE_CODE']) . '.png'; ?>" alt="<?php echo $single_website['SITE_TITLE']; ?> LOGO" draggable="false">
                 </figure>
                 <div class="site-info">
                     <h3 class="title"><?php echo $single_website['SITE_TITLE']; ?></h3>
@@ -193,7 +193,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                             <input type="text" value="********" readonly>
                         </div>
                         <a href="" class="vendor-link">
-                            <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $record['VENDOR_ID']; ?>.png');"></figure>
+                            <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($record['VENDOR_ID']) . '.png'; ?>');"></figure>
                             <span class="vendor__label">@<?php echo $record['VENDOR_ID']; ?></span>
                         </a>
                         <div class="account-offers">
@@ -240,7 +240,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                             <input type="text" value="**********" readonly>
                         </div>
                         <a href="" class="vendor-link">
-                            <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $record['VENDOR_ID']; ?>.png');"></figure>
+                        <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($record['VENDOR_ID']) . '.png'; ?>');"></figure>
                             <span class="vendor__label">@<?php echo $record['VENDOR_ID']; ?></span>
                         </a>
                         <div class="account-offers">

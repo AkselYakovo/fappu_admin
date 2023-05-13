@@ -64,7 +64,7 @@ $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
             <section class="fact">
                 <h2 class="subtitle">MOST POPULAR:</h2>
                 <a href="#" class="vendor-link">
-                    <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $most_famous_vendor; ?>.png');"></figure>
+                    <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($most_famous_vendor) . '.png'; ?>');"></figure>
                     <span class="vendor__label">@<?php echo $most_famous_vendor; ?></span>
                 </a>
             </section>
@@ -87,7 +87,7 @@ $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
 
                 <div class="vendor-row" data-display="@<?php echo $vendor['ID']; ?>">
                     <figure class="vendor__picture">
-                        <img src="../assets/vendors/<?php echo $vendor['ID']; ?>.png" alt="<?php echo $vendor['ID']; ?> AVATAR" draggable="false">
+                        <img src="<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($vendor['ID']) . '.png'; ?>" alt="<?php echo $vendor['ID']; ?> AVATAR" draggable="false">
                     </figure>
                     <h2 class="vendor__name">@<?php echo $vendor['ID']; ?></h2>
                     <small class="vendor__accounts"><?php echo $vendor['TOTAL_ACCOUNTS'] . ' ACCOUNTS'; ?></small>
