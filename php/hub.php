@@ -6,8 +6,6 @@ require_once(dirname(__FILE__) . '/resources.php');
 
 // print_r($_POST);
 
-define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
-
 $dictionary = array(
     '__WBEGINS' => 'WARRANTY_BEGINS',
     '__WENDS' => 'WARRANTY_ENDS',
