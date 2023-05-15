@@ -36,6 +36,7 @@ TOAST;
 
 
 function new_id() {
+    global $__ACCOUNTS;
     $conn = $GLOBALS['conn'];
     $dictionary = array(
     0 => '0',
