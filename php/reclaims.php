@@ -35,8 +35,10 @@ $reclaim_list_w_email_query = "SELECT R.`RECLAIM_ID` AS `RECLAIM_ID`, R.`USER_EM
                        ORDER BY R.`DATE` DESC
                        LIMIT $post_index, $post_per_page";
 
-$reclaim_list = ( $email ) ? $main_conn->query($reclaim_list_w_email_query, MYSQLI_ASSOC) 
-                           : $main_conn->query($reclaim_list_query, MYSQLI_ASSOC);
+if ( $email )
+    $main_conn->query($reclaim_list_w_email_query);
+else 
+$reclaim_list = $main_conn->query($reclaim_list_query);
 
 $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per_page) : 0;
 ?>
