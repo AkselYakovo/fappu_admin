@@ -1,12 +1,13 @@
 <?php
-include './resources.php';
-include './_general.php';
+include(dirname(__FILE__) . '/resources.php');
+include (dirname(__FILE__) .'/_general.php');
+
 $actual_website = "vendors";
 
 $vendors_query = "SELECT `V`.`ID`, IFNULL(`A`.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                  FROM `_VENDORS` AS `V`
+                  FROM `$__VENDORS` AS `V`
                   LEFT OUTER JOIN (SELECT `VENDOR_ID`, COUNT(*) AS `TOTAL_ACCOUNTS` 
-                                   FROM `_ACCOUNTS`
+                                   FROM `$__ACCOUNTS`
                                    GROUP BY `VENDOR_ID`) AS `A`
                   ON `V`.`ID` = `A`.`VENDOR_ID`";
 
@@ -14,9 +15,9 @@ $vendors = $main_conn->query($vendors_query);
 
 
 $vendor_mfamous_query = "SELECT `V`.`ID` AS `ID`
-                         FROM `_VENDORS` AS `V`
+                         FROM `$__VENDORS` AS `V`
                          JOIN ( SELECT COUNT(*) AS `TOTAL_ACCOUNTS`, `VENDOR_ID`
-                                FROM _ACCOUNTS
+                                FROM `$__ACCOUNTS`
                                 GROUP BY `VENDOR_ID`
                                 ORDER BY `TOTAL_ACCOUNTS` DESC
                                 LIMIT 1 ) AS `A`
@@ -28,7 +29,7 @@ $most_famous_vendor = $vendor_mfamous->fetch_assoc()['ID'];
 
 
 $diff_vendors_query = "SELECT DISTINCT COUNT(*) AS `TOTAL_DIFF_VENDORS`
-                       FROM `_VENDORS`";
+                       FROM `$__VENDORS`";
 
 $diff_vendors = $main_conn->query($diff_vendors_query);
 $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
@@ -63,7 +64,7 @@ $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
             <section class="fact">
                 <h2 class="subtitle">MOST POPULAR:</h2>
                 <a href="#" class="vendor-link">
-                    <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $most_famous_vendor; ?>.png');"></figure>
+                    <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($most_famous_vendor) . '.png'; ?>');"></figure>
                     <span class="vendor__label">@<?php echo $most_famous_vendor; ?></span>
                 </a>
             </section>
@@ -86,7 +87,7 @@ $unique_vendors = $diff_vendors->fetch_assoc()['TOTAL_DIFF_VENDORS'];
 
                 <div class="vendor-row" data-display="@<?php echo $vendor['ID']; ?>">
                     <figure class="vendor__picture">
-                        <img src="../assets/vendors/<?php echo $vendor['ID']; ?>.png" alt="<?php echo $vendor['ID']; ?> AVATAR" draggable="false">
+                        <img src="<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($vendor['ID']) . '.png'; ?>" alt="<?php echo $vendor['ID']; ?> AVATAR" draggable="false">
                     </figure>
                     <h2 class="vendor__name">@<?php echo $vendor['ID']; ?></h2>
                     <small class="vendor__accounts"><?php echo $vendor['TOTAL_ACCOUNTS'] . ' ACCOUNTS'; ?></small>

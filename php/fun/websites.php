@@ -1,6 +1,9 @@
 <?php
+require_once(dirname( dirname(__FILE__) ) . '/resources.php');
+
 function getScreensCollection(mysqli $conn, string $site_code) {
-    $q = "SELECT `CHILDREN` FROM `_WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
+    global $__WEBSITES_CHILDREN;
+    $q = "SELECT `CHILDREN` FROM `$__WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
     $result = $conn->query($q);
 
     if ( $result ) {
@@ -16,9 +19,10 @@ function getScreensCollection(mysqli $conn, string $site_code) {
 }
 
 function getScreensInt(mysqli $conn, string $site_code) {
+    global $__WEBSITES_CHILDREN;
     $screens_per_page = 8;
 
-    $q = "SELECT `CHILDREN` FROM `_WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
+    $q = "SELECT `CHILDREN` FROM `$__WEBSITES_CHILDREN` WHERE `SITE_CODE` = '$site_code'";
     $result = $conn->query($q);
 
     if ( $result ) {

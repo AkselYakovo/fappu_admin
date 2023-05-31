@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__) . '/resources.php');
+
 function clean_txt(string $txt) {
     $txt = trim($txt);
     $txt = htmlentities($txt);
@@ -9,7 +11,9 @@ function clean_txt(string $txt) {
 
 function printTotalAccounts(mysqli $conn) 
 {
-    $q = "SELECT COUNT(*) AS 'TOTAL_ACCOUNTS' FROM  `_ACCOUNTS`";
+    global $__ACCOUNTS; 
+
+    $q = "SELECT COUNT(*) AS 'TOTAL_ACCOUNTS' FROM  `$__ACCOUNTS`";
     $results = $conn->query($q);
 
     foreach($results as $result) {
@@ -20,7 +24,9 @@ function printTotalAccounts(mysqli $conn)
 
 function printTotalActiveAccounts(mysqli $conn) 
 {
-    $q = "SELECT COUNT(*) AS 'TOTAL_ACTIVE_ACCOUNTS' FROM  `_ACCOUNTS` WHERE `ACCESS_STATE` = '1'";
+    global $__ACCOUNTS; 
+    
+    $q = "SELECT COUNT(*) AS 'TOTAL_ACTIVE_ACCOUNTS' FROM  `$__ACCOUNTS` WHERE `ACCESS_STATE` = '1'";
     $results = $conn->query($q);
 
     foreach($results as $result) {

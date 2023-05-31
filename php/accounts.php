@@ -1,11 +1,11 @@
 <?php
-require_once('./resources.php');
-require_once('./_general.php');
+require_once(dirname(__FILE__) . '/resources.php');
+require_once(dirname(__FILE__) . '/_general.php');
 
 // # Configuration variables..
-$__ACCOUNTS = "_ACCOUNTS";
-$__WEBSITES = "_WEBSITES";
-$__ACCOUNTS_KILLED = "_ACCOUNTS_KILLED";
+// $__ACCOUNTS = "_accounts";
+// $__WEBSITES = "_websites";
+// $__ACCOUNTS_KILLED = "_accounts_killed";
 
 // const __LEVELS = '../';
 
@@ -19,9 +19,9 @@ $active_site = ( isset($_GET['website']) )
 
 // # Important variables for websites listing page..
 $websites_listing_query = "SELECT W.`SITE_CODE` AS `SITE_CODE`, W.`SITE_TITLE` AS `SITE_TITLE`, COALESCE(Q.`TOTAL_ACCOUNTS`, 0) AS `TOTAL_ACCOUNTS`
-                           FROM _WEBSITES AS W
+                           FROM `$__WEBSITES` AS W
                            LEFT OUTER JOIN ( SELECT `SITE_CODE`, COALESCE(COUNT(*), 0) AS `TOTAL_ACCOUNTS`
-                                             FROM _ACCOUNTS
+                                             FROM `$__ACCOUNTS`
                                              GROUP BY 1) Q
                            ON W.`SITE_CODE` = Q.`SITE_CODE`
                            ORDER BY `TOTAL_ACCOUNTS` DESC";
@@ -118,7 +118,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                 <div class="website-accounts-row">
                     <a href="?website=<?php echo $record['SITE_CODE']; ?>">
                         <figure class="site-logo">
-                            <img src="../assets/websites_logos/<?php echo $record['SITE_CODE']; ?>.png" alt="<?php echo $record['SITE_TITLE']; ?> LOGO" draggable="false">
+                            <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO" draggable="false">
                         </figure>
                         <h2 class="site-code"><?php echo $record['SITE_CODE']; ?></h2>
                         <small class="site-total-accounts"><?php echo $record['TOTAL_ACCOUNTS']; ?> ACCOUNTS</small>
@@ -148,7 +148,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                         </svg>
                 </button>
                 <figure class="site-logo">
-                    <img src="../assets/websites_logos/<?php echo $single_website['SITE_CODE']; ?>.png" alt="<?php echo $single_website['SITE_TITLE']; ?> LOGO" draggable="false">
+                    <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($single_website['SITE_CODE']) . '.png'; ?>" alt="<?php echo $single_website['SITE_TITLE']; ?> LOGO" draggable="false">
                 </figure>
                 <div class="site-info">
                     <h3 class="title"><?php echo $single_website['SITE_TITLE']; ?></h3>
@@ -193,7 +193,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                             <input type="text" value="********" readonly>
                         </div>
                         <a href="" class="vendor-link">
-                            <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $record['VENDOR_ID']; ?>.png');"></figure>
+                            <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($record['VENDOR_ID']) . '.png'; ?>');"></figure>
                             <span class="vendor__label">@<?php echo $record['VENDOR_ID']; ?></span>
                         </a>
                         <div class="account-offers">
@@ -240,7 +240,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                             <input type="text" value="**********" readonly>
                         </div>
                         <a href="" class="vendor-link">
-                            <figure class="vendor__avatar" style="background-image: url('../assets/vendors/<?php echo $record['VENDOR_ID']; ?>.png');"></figure>
+                        <figure class="vendor__avatar" style="background-image: url('<?php echo __URL_ROOT . 'assets/vendors/' . strtolower($record['VENDOR_ID']) . '.png'; ?>');"></figure>
                             <span class="vendor__label">@<?php echo $record['VENDOR_ID']; ?></span>
                         </a>
                         <div class="account-offers">
