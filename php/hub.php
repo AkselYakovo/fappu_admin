@@ -107,7 +107,7 @@ if ( isset($_POST['__PUT']) && isset($_POST['__WEBSITE']) && isset($_FILES) )
 
 
     // Create New Website Record.
-    $new_website_query = "INSERT INTO `$__WEBSITES` VALUES('$site_code', '$site_title', '$site_url', $original_price, $offer_price)";
+    $new_website_query = "INSERT INTO `$__WEBSITES` VALUES('$site_code', '$site_title', '$site_url', $original_price, $offer_price, DEFAULT, DEFAULT)";
 
     try { $new_website = $main_conn->query($new_website_query); } 
     catch(Exception $error) { echo $error; }
