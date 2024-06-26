@@ -1,6 +1,7 @@
 <?php
+require_once('./config.php');
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
-$main_conn = new mysqli('localhost', 'root', '', 'test') or die('Almost Done!');
+$main_conn = new mysqli(__CREDENTIALS['USER'], __CREDENTIALS['PASS'], '', __CREDENTIALS['TABLE']) or die('Almost Done!');
 
 // Link to assets/
 define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
