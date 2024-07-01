@@ -2225,6 +2225,16 @@ ul.pagination.loading .link--active {
   animation: show_modal 125ms linear;
 }
 
+.modal.hide {
+  visibility: inherit;
+  animation: hide_modal 125ms linear;
+}
+
+.modal.hide + .overlay {
+  visibility: inherit;
+  animation: hide_modal 125ms linear;
+}
+
 .toast {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;

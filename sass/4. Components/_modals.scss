@@ -39,3 +39,16 @@
     visibility: visible;
     animation: show_modal 125ms linear;
 }
+
+.modal.hide {
+    visibility: inherit;
+    animation: hide_modal 125ms linear;
+
+}
+
+.modal.hide + .overlay {
+    visibility: inherit;
+    animation: hide_modal 125ms linear;
+
+}
+
