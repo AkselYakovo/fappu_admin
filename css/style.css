@@ -2202,7 +2202,6 @@ ul.pagination.loading .link--active {
   position: fixed;
   background-color: #FFF;
   visibility: hidden;
-  animation: hide_modal 125ms linear;
 }
 
 .modal + .overlay {
@@ -2213,7 +2212,6 @@ ul.pagination.loading .link--active {
   right: 0;
   z-index: 5;
   visibility: hidden;
-  animation: hide_modal 125ms linear;
   background-color: rgba(0, 0, 0, 0.25);
 }
 

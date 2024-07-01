@@ -15,7 +15,6 @@
 
     background-color: $classic-w;
     visibility: hidden;
-    animation: hide_modal 125ms linear;
 }
 
 .modal + .overlay {
@@ -27,8 +26,6 @@
     z-index: 5;
 
     visibility: hidden;
-    
-    animation: hide_modal 125ms linear;
     
     background-color: rgba(black, 0.25);
 }
