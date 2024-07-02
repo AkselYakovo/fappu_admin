@@ -124,7 +124,6 @@ hr {
   from {
     opacity: 1;
     display: initial;
-    visibility: visible;
   }
   to {
     opacity: 0;
@@ -149,27 +148,22 @@ hr {
   }
 }
 @keyframes phase_to_center {
-  0% {
+  from {
     opacity: 0;
-    visibility: visible;
     transform: translateX(0%);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateX(-50%);
   }
 }
 @keyframes phase_to_left {
-  0% {
+  from {
     opacity: 1;
-    visibility: visible;
   }
-  99% {
+  to {
     opacity: 0;
     transform: translateX(-100%);
-  }
-  100% {
-    visibility: hidden;
   }
 }
 html {
@@ -2208,7 +2202,6 @@ ul.pagination.loading .link--active {
   position: fixed;
   background-color: #FFF;
   visibility: hidden;
-  animation: hide_modal 125ms linear;
 }
 
 .modal + .overlay {
@@ -2219,7 +2212,6 @@ ul.pagination.loading .link--active {
   right: 0;
   z-index: 5;
   visibility: hidden;
-  animation: hide_modal 125ms linear;
   background-color: rgba(0, 0, 0, 0.25);
 }
 
@@ -2231,6 +2223,16 @@ ul.pagination.loading .link--active {
 .modal.visible + .overlay {
   visibility: visible;
   animation: show_modal 125ms linear;
+}
+
+.modal.hide {
+  visibility: inherit;
+  animation: hide_modal 125ms linear;
+}
+
+.modal.hide + .overlay {
+  visibility: inherit;
+  animation: hide_modal 125ms linear;
 }
 
 .toast {

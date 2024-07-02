@@ -17,7 +17,14 @@ export class Modal {
     }
     // Close Method.
     close() {
-        this.node.classList.remove('visible');
+        const handler = (e) => {
+            this.node.classList.remove('visible');
+            this.node.classList.remove('hide');
+            this.node.removeEventListener('animationend', handler);
+        };
+
+        this.node.addEventListener('animationend', handler);
+        this.node.classList.add('hide');
     }
 
     // Upload Information To The Server.
