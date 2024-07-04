@@ -13,11 +13,11 @@ export class draggableImage {
             };
 
             targetNode.initialCoords = {
-                'X': ( getTranslateX(targetNode) ) 
-                     ? Number.parseInt( getTranslateX(targetNode) ) 
+                'X': ( getTranslateX(targetNode) )
+                     ? ( getTranslateX(targetNode) )
                      : '0',
-                'Y': ( getTranslateY(targetNode) ) 
-                     ? Number.parseInt( getTranslateY(targetNode) ) 
+                'Y': ( getTranslateY(targetNode) )
+                     ? ( getTranslateY(targetNode) )
                      : '0',
             };
 
