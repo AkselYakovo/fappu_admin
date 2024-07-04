@@ -21,9 +21,9 @@ export class draggableImage {
                      : '0',
             };
 
-            let nodeTransformString = ( targetNode.style.transform.length ) 
-                                      ? targetNode.style.transform 
-                                      : 'scale(1.0)';
+            let currentTransformString = ( targetNode.style.transform.length )
+                                         ? targetNode.style.transform
+                                         :'scale(1.0)';
 
             let actualScale = nodeTransformString.replace(/translate\((-?\d{1,})*px, (-?\d{1,})*px\)/ig, '');
             // console.log(nodeTransformString);
