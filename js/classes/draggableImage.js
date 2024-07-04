@@ -124,29 +124,24 @@ function makeCoords(node) {
 }
 
 function getTranslateX(node) {
-    let regEx = /translate\((-?\d{1,})*px, (-?\d{1,})*px\)/i;
-    let string = node.style.transform;
-
-    if ( regEx.test(string) ) {
-        let numberValues = string.substr(string.indexOf('(') + 1, string.length - 1);
-        let coord = numberValues.substr(0, numberValues.indexOf(','));
-        // console.log(numberValues);
-        // console.log(coord);
-        return coord;
+    let regExp = /translate\((-?\d{1,})px, -?\d{1,}px\)/i;
+    let transformString = node.style.transform;
+    
+    if ( regExp.test(transformString) ) {
+        let currentX = regExp.exec(transformString)[1];
+        return currentX;
     }
 
     return false;
 }
 
 function getTranslateY(node) {
-    let regEx = /translate\((-?\d{1,})*px, (-?\d{1,})*px\)/i;
-    let string = node.style.transform;
+    let regExp = /translate\(-?\d{1,}px, (-?\d{1,})px\)/i;
+    let transformString = node.style.transform;
 
-    if ( regEx.test(string) ) {
-        let numberValues = string.substr( string.indexOf('(') + 1, string.length - 1 );
-        let coord = numberValues.substr( numberValues.indexOf(',') + 2, numberValues.indexOf(')') + 1);
-
-        return coord;
+    if ( regExp.test(transformString) ) {
+        let currentY = regExp.exec(transformString)[1];
+        return currentY;
     }
 
     return false;
