@@ -25,9 +25,8 @@ export class draggableImage {
                                          ? targetNode.style.transform
                                          :'scale(1.0)';
 
-            let actualScale = nodeTransformString.replace(/translate\((-?\d{1,})*px, (-?\d{1,})*px\)/ig, '');
-            // console.log(nodeTransformString);
-            // console.log(actualScale);
+            let actualScaleRegExp = /(?!scale\()(\d{1}(\.\d{1})?)(?=\))/i;
+            let actualScale = actualScaleRegExp.exec(currentTransformString)[0];
 
             document.onmousemove = function(event) {
                 targetNode.finalCoords = makeCoords(targetNode);
