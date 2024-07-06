@@ -2,6 +2,7 @@ export class draggableImage {
 
     constructor(targetNode) {
         this.node = targetNode;
+        this.isAdjusting = false;
         let parent = targetNode.parentElement;
         let parentCoords = makeCoords(parent);
         
