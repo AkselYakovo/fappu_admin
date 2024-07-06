@@ -35,10 +35,6 @@ export class draggableImage {
                     'X': event.clientX,
                     'Y': event.clientY
                 };
-                
-                // targetNode.style.left = targetNode.initialCoords.X - (initialMouseCoords.X - diffCoords.X) + 'px';
-                // targetNode.style.top = targetNode.initialCoords.Y - (initialMouseCoords.Y - diffCoords.Y) + 'px';
-
                 targetNode.style.transform = `translate(${targetNode.initialCoords.X - (initialMouseCoords.X - diffCoords.X)}px, ${targetNode.initialCoords.Y - (initialMouseCoords.Y - diffCoords.Y)}px) ${ actualScale }`;
                 targetNode.ontransitionend = function() {
                     targetNode.style.transition = null;
