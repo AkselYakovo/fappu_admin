@@ -683,8 +683,7 @@ if ( document.querySelector('#New-Website-Modal') )
         document.querySelector('input[name="New Logo"]').addEventListener('change', function(e) {
 
         let file = this.files[0];
-            
-            if ( file.type == 'image/png' ) {
+            if ( file.type == 'image/png' && file.size <= 300000 ) {
                 
                 let reader = new FileReader();
                 let img = reader.readAsDataURL(file);
