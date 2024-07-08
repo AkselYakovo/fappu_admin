@@ -587,7 +587,7 @@ if( isset($_POST['__PUT']) && isset($_POST['__WEBSITE_LOGO']) && $_FILES ) {
     $site_code = strtolower(clean_txt($_POST['__SITE_CODE']));
 
     if ( file_exists(_ASSETS . "/websites_logos/$site_code.png") )  {
-        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "websites_logos/$site_code.png");
+        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "/websites_logos/$site_code.png");
     } else {
         throw new Exception('Invalid Site Logo Upload.');
     }
