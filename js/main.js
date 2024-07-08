@@ -689,10 +689,20 @@ if ( document.querySelector('#New-Website-Modal') )
                 reader.readAsDataURL(file);
 
                 reader.onload = function(e) {
-
+                    const image = new Image();
                     let site = document.querySelector('h2.site-code').innerHTML;
-                    document.querySelector('figure.site-logo img').src = reader.result;
+                    image.onload = function(e) {
+                        const aspectRatio = image.height / image.width;
 
+                        if( aspectRatio > .7 && aspectRatio <= 1 ) {
+                            document.querySelector('figure.site-logo img').src = reader.result;
+                            request.send(data);
+                        } else {
+                            console.error('Image has an invalid aspect ratio');
+                        }
+                    }
+
+                    image.src = reader.result;
                     let request = new XMLHttpRequest();
                     let data = new FormData();
 
