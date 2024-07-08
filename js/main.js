@@ -686,7 +686,7 @@ if ( document.querySelector('#New-Website-Modal') )
             if ( file.type == 'image/png' && file.size <= 300000 ) {
                 
                 let reader = new FileReader();
-                let img = reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
 
                 reader.onload = function(e) {
 
