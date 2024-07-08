@@ -713,11 +713,6 @@ if ( document.querySelector('#New-Website-Modal') )
 
                     request.open('POST', './hub.php');
 
-                    // IMAGINARY DELAY.
-                    setTimeout( function(e) { 
-                        request.send(data); 
-                    }, 3000);
-
                     request.onreadystatechange = function(e) {
                         if ( request.status == 200 ) 
                             console.log('');
