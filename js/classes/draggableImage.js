@@ -30,7 +30,6 @@ export class draggableImage {
             let actualScale = actualScaleRegExp.exec(currentTransformString)[0];
 
             document.onmousemove = function(event) {
-                targetNode.finalCoords = makeCoords(targetNode);
                 let diffCoords = {
                     'X': event.clientX,
                     'Y': event.clientY
