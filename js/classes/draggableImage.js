@@ -40,51 +40,63 @@ export class draggableImage {
                     targetNode.style.transition = null;
                 };
 
-                document.onmouseup = function() {
-                    
-                    
-
-                    // // LEFT EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topLeft.X > parentCoords.topLeft.X ) 
-                    {
-                        // console.log('Excess N\' Left!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateX(targetNode) ) ); 
-                        let newCoord = Math.floor( targetNode.finalCoords.topLeft['X'] - parentCoords.topLeft['X'] );;
-                        targetNode.style.transform = `translate(${ actualCoord - newCoord }px, ${ Number.parseInt( getTranslateY(targetNode) ) }px) ${ actualScale }`;
-                    }
-                    // TOP EDEGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topLeft.Y > parentCoords.topLeft.Y ) {
-                        // console.log('Excess N\' Top')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateY(targetNode) ) ); 
-                        let newCoord = Math.floor( targetNode.finalCoords.topRight['Y'] - parentCoords.topRight['Y'] );
-                        targetNode.style.transform = `translate(${ Number.parseInt( getTranslateX(targetNode) ) }px, ${ actualCoord - newCoord }px) ${ actualScale }`;
-                    }
-                    // RIGHT EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topRight.X < parentCoords.topRight.X ) {
-                        // console.log('Excess N\' Right!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateX(targetNode) ) ); 
-                        let newCoord = Math.floor( parentCoords.topRight['X'] - targetNode.finalCoords.topRight['X'] );
-                        targetNode.style.transform = `translate(${ actualCoord + newCoord }px, ${ Number.parseInt( getTranslateY(targetNode) ) }px) ${ actualScale }`;
-                    }
-                    // BOTTOM EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.bottomRight.Y < parentCoords.bottomRight.Y ) {
-                        // console.log('Excess N\' Bottom!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateY(targetNode) ) ); 
-                        let newCoord = Math.floor( parentCoords.bottomRight['Y'] - targetNode.finalCoords.bottomRight['Y'] );
-                        targetNode.style.transform = `translate(${ Number.parseInt( getTranslateX(targetNode) ) }px, ${ actualCoord + newCoord }px) ${ actualScale }`;
-                    }                
-
-
-                    document.onmouseup = null;
                 }
                 
             };
 
-            // Clean Drag Listener..
+            document.onmouseup = function() {
+                targetNode.finalCoords = makeCoords(targetNode);
+                let finalCoord = { X: null, Y: null };
+
+                // // LEFT EDGE AUTO POSITIONING...
+                if ( targetNode.finalCoords.topLeft.X > parentCoords.topLeft.X )
+                {
+                    // console.log('Excess N\' Left!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateX(targetNode);
+                    let newCoord = targetNode.finalCoords.topLeft['X'] - parentCoords.topLeft['X'];
+                    finalCoord.X = actualCoord - newCoord;
+                }
+                // RIGHT EDGE AUTO POSITIONING...
+                else if ( targetNode.finalCoords.topRight.X < parentCoords.topRight.X ) {
+                    // console.log('Excess N\' Right!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateX(targetNode);
+                    let newCoord = parentCoords.topRight['X'] - targetNode.finalCoords.topRight['X'];
+                    finalCoord.X = actualCoord + newCoord;
+                }
+                // TOP EDGE AUTO POSITIONING...
+                if ( targetNode.finalCoords.topLeft.Y > parentCoords.topLeft.Y ) {
+                    // console.log('Excess N\' Top')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateY(targetNode);
+                    let newCoord = targetNode.finalCoords.topRight['Y'] - parentCoords.topRight['Y'];
+                    finalCoord.Y = actualCoord - newCoord;
+                }
+                // BOTTOM EDGE AUTO POSITIONING...
+                else if ( targetNode.finalCoords.bottomRight.Y < parentCoords.bottomRight.Y ) {
+                    // console.log('Excess N\' Bottom!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateY(targetNode);
+                    let newCoord = parentCoords.bottomRight['Y'] - targetNode.finalCoords.bottomRight['Y'];
+                    finalCoord.Y = actualCoord + newCoord;
+                }
+
+                if ( this.isAdjusting ) targetNode.style.transition = '200ms transform ease';
+
+                finalCoord.X = finalCoord.X ?? getTranslateX(targetNode);
+                finalCoord.Y = finalCoord.Y ?? getTranslateY(targetNode);
+
+                targetNode.style.transform = `translate(${ finalCoord.X }px, ${ finalCoord.Y }px) scale(${ actualScale })`;
+
+                document.onmouseup = null;
+                document.ontransitionend = () => {
+                    targetNode.style.transition = null;
+                    document.ontransitionend = null;
+                    this.isAdjusting = false;
+                }
+            }
+
             document.addEventListener('mouseup', (event) => {
                 document.onmousemove = null;
             });
