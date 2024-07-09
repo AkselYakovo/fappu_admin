@@ -2,6 +2,7 @@ export class draggableImage {
 
     constructor(targetNode) {
         this.node = targetNode;
+        this.isAdjusting = false;
         let parent = targetNode.parentElement;
         let parentCoords = makeCoords(parent);
         
@@ -13,82 +14,87 @@ export class draggableImage {
             };
 
             targetNode.initialCoords = {
-                'X': ( getTranslateX(targetNode) ) 
-                     ? Number.parseInt( getTranslateX(targetNode) ) 
+                'X': ( getTranslateX(targetNode) )
+                     ? ( getTranslateX(targetNode) )
                      : '0',
-                'Y': ( getTranslateY(targetNode) ) 
-                     ? Number.parseInt( getTranslateY(targetNode) ) 
+                'Y': ( getTranslateY(targetNode) )
+                     ? ( getTranslateY(targetNode) )
                      : '0',
             };
 
-            let nodeTransformString = ( targetNode.style.transform.length ) 
-                                      ? targetNode.style.transform 
-                                      : 'scale(1.0)';
+            let currentTransformString = ( targetNode.style.transform.length )
+                                         ? targetNode.style.transform
+                                         :'scale(1.0)';
 
-            let actualScale = nodeTransformString.replace(/translate\((-?\d{1,})*px, (-?\d{1,})*px\)/ig, '');
-            // console.log(nodeTransformString);
-            // console.log(actualScale);
+            let actualScaleRegExp = /(?!scale\()(\d{1}(\.\d{1})?)(?=\))/i;
+            let actualScale = actualScaleRegExp.exec(currentTransformString)[0];
 
             document.onmousemove = function(event) {
-                targetNode.finalCoords = makeCoords(targetNode);
-                let diffCoords = {
+                let currentMouseCoords = {
                     'X': event.clientX,
                     'Y': event.clientY
                 };
-                
-                // targetNode.style.left = targetNode.initialCoords.X - (initialMouseCoords.X - diffCoords.X) + 'px';
-                // targetNode.style.top = targetNode.initialCoords.Y - (initialMouseCoords.Y - diffCoords.Y) + 'px';
 
-                targetNode.style.transform = `translate(${targetNode.initialCoords.X - (initialMouseCoords.X - diffCoords.X)}px, ${targetNode.initialCoords.Y - (initialMouseCoords.Y - diffCoords.Y)}px) ${ actualScale }`;
-                targetNode.ontransitionend = function() {
-                    targetNode.style.transition = null;
-                };
-
-                document.onmouseup = function() {
-                    
-                    
-
-                    // // LEFT EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topLeft.X > parentCoords.topLeft.X ) 
-                    {
-                        // console.log('Excess N\' Left!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateX(targetNode) ) ); 
-                        let newCoord = Math.floor( targetNode.finalCoords.topLeft['X'] - parentCoords.topLeft['X'] );;
-                        targetNode.style.transform = `translate(${ actualCoord - newCoord }px, ${ Number.parseInt( getTranslateY(targetNode) ) }px) ${ actualScale }`;
-                    }
-                    // TOP EDEGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topLeft.Y > parentCoords.topLeft.Y ) {
-                        // console.log('Excess N\' Top')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateY(targetNode) ) ); 
-                        let newCoord = Math.floor( targetNode.finalCoords.topRight['Y'] - parentCoords.topRight['Y'] );
-                        targetNode.style.transform = `translate(${ Number.parseInt( getTranslateX(targetNode) ) }px, ${ actualCoord - newCoord }px) ${ actualScale }`;
-                    }
-                    // RIGHT EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.topRight.X < parentCoords.topRight.X ) {
-                        // console.log('Excess N\' Right!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateX(targetNode) ) ); 
-                        let newCoord = Math.floor( parentCoords.topRight['X'] - targetNode.finalCoords.topRight['X'] );
-                        targetNode.style.transform = `translate(${ actualCoord + newCoord }px, ${ Number.parseInt( getTranslateY(targetNode) ) }px) ${ actualScale }`;
-                    }
-                    // BOTTOM EDGE AUTO POSITIONING...
-                    if ( targetNode.finalCoords.bottomRight.Y < parentCoords.bottomRight.Y ) {
-                        // console.log('Excess N\' Bottom!')
-                        targetNode.style.transition = '200ms transform ease';
-                        let actualCoord = Math.floor( Number.parseFloat( getTranslateY(targetNode) ) ); 
-                        let newCoord = Math.floor( parentCoords.bottomRight['Y'] - targetNode.finalCoords.bottomRight['Y'] );
-                        targetNode.style.transform = `translate(${ Number.parseInt( getTranslateX(targetNode) ) }px, ${ actualCoord + newCoord }px) ${ actualScale }`;
-                    }                
-
-
-                    document.onmouseup = null;
+                let finalPositionX = targetNode.initialCoords.X - (initialMouseCoords.X - currentMouseCoords.X);
+                let finalPositionY = targetNode.initialCoords.Y - (initialMouseCoords.Y - currentMouseCoords.Y);
+                if ( !this.isAdjusting ) {
+                    targetNode.style.transform = `translate(${ finalPositionX }px, ${ finalPositionY }px) scale(${ actualScale })`;
                 }
-                
             };
 
-            // Clean Drag Listener..
+            document.onmouseup = function() {
+                targetNode.finalCoords = makeCoords(targetNode);
+                let finalCoord = { X: null, Y: null };
+
+                // // LEFT EDGE AUTO POSITIONING...
+                if ( targetNode.finalCoords.topLeft.X > parentCoords.topLeft.X )
+                {
+                    // console.log('Excess N\' Left!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateX(targetNode);
+                    let newCoord = targetNode.finalCoords.topLeft['X'] - parentCoords.topLeft['X'];
+                    finalCoord.X = actualCoord - newCoord;
+                }
+                // RIGHT EDGE AUTO POSITIONING...
+                else if ( targetNode.finalCoords.topRight.X < parentCoords.topRight.X ) {
+                    // console.log('Excess N\' Right!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateX(targetNode);
+                    let newCoord = parentCoords.topRight['X'] - targetNode.finalCoords.topRight['X'];
+                    finalCoord.X = actualCoord + newCoord;
+                }
+                // TOP EDGE AUTO POSITIONING...
+                if ( targetNode.finalCoords.topLeft.Y > parentCoords.topLeft.Y ) {
+                    // console.log('Excess N\' Top')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateY(targetNode);
+                    let newCoord = targetNode.finalCoords.topRight['Y'] - parentCoords.topRight['Y'];
+                    finalCoord.Y = actualCoord - newCoord;
+                }
+                // BOTTOM EDGE AUTO POSITIONING...
+                else if ( targetNode.finalCoords.bottomRight.Y < parentCoords.bottomRight.Y ) {
+                    // console.log('Excess N\' Bottom!')
+                    this.isAdjusting = true;
+                    let actualCoord = getTranslateY(targetNode);
+                    let newCoord = parentCoords.bottomRight['Y'] - targetNode.finalCoords.bottomRight['Y'];
+                    finalCoord.Y = actualCoord + newCoord;
+                }
+
+                if ( this.isAdjusting ) targetNode.style.transition = '200ms transform ease';
+
+                finalCoord.X = finalCoord.X ?? getTranslateX(targetNode);
+                finalCoord.Y = finalCoord.Y ?? getTranslateY(targetNode);
+
+                targetNode.style.transform = `translate(${ finalCoord.X }px, ${ finalCoord.Y }px) scale(${ actualScale })`;
+
+                document.onmouseup = null;
+                document.ontransitionend = () => {
+                    targetNode.style.transition = null;
+                    document.ontransitionend = null;
+                    this.isAdjusting = false;
+                }
+            }
+
             document.addEventListener('mouseup', (event) => {
                 document.onmousemove = null;
             });
@@ -124,29 +130,28 @@ function makeCoords(node) {
 }
 
 function getTranslateX(node) {
-    let regEx = /translate\((-?\d{1,})*px, (-?\d{1,})*px\)/i;
-    let string = node.style.transform;
-
-    if ( regEx.test(string) ) {
-        let numberValues = string.substr(string.indexOf('(') + 1, string.length - 1);
-        let coord = numberValues.substr(0, numberValues.indexOf(','));
-        // console.log(numberValues);
-        // console.log(coord);
-        return coord;
+    let regExp = /translate\((-?\d{1,})px(?:, -?\d{1,}px)?\)/i;
+    let transformString = node.style.transform;
+    
+    if ( regExp.test(transformString) ) {
+        let currentX = regExp.exec(transformString)[1];
+        return Number.parseInt(currentX);
     }
 
     return false;
 }
 
 function getTranslateY(node) {
-    let regEx = /translate\((-?\d{1,})*px, (-?\d{1,})*px\)/i;
-    let string = node.style.transform;
+    let regExp = /translate\(-?\d{1,}px, (-?\d{1,})px\)/i;
+    let transformString = node.style.transform;
 
-    if ( regEx.test(string) ) {
-        let numberValues = string.substr( string.indexOf('(') + 1, string.length - 1 );
-        let coord = numberValues.substr( numberValues.indexOf(',') + 2, numberValues.indexOf(')') + 1);
-
-        return coord;
+    if ( regExp.test(transformString) ) {
+        let currentY = regExp.exec(transformString)[1];
+        return Number.parseInt(currentY);
+    }
+    else {
+        let regExp = /translate\((-?\d{1,})px(?:, -?\d{1,}px)?\)/i;
+        if ( regExp.test(transformString) ) return 0;
     }
 
     return false;
