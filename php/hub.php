@@ -585,11 +585,15 @@ if( isset($_POST['__UPDATE']) && isset($_POST['__SOLVE_RECLAIM']) && isset($_POS
 // UPDATE: Define New Website Logo.
 if( isset($_POST['__PUT']) && isset($_POST['__WEBSITE_LOGO']) && $_FILES ) {
     $site_code = strtolower(clean_txt($_POST['__SITE_CODE']));
+    $site_code_query = "SELECT * FROM `$__WEBSITES` WHERE `SITE_CODE` = '$site_code'";
 
     if ( file_exists(_ASSETS . "/websites_logos/$site_code.png") )  {
-        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "websites_logos/$site_code.png");
+        move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "/websites_logos/$site_code.png");
     } else {
-        throw new Exception('Invalid Site Logo Upload.');
+        if ( getRecords($main_conn, $site_code_query, 0) ) {
+            move_uploaded_file($_FILES['__NEW_LOGO']['tmp_name'], _ASSETS . "/websites_logos/$site_code.png");
+        }
+        else throw new Exception('Invalid Site Logo Upload.');
     }
 }
 

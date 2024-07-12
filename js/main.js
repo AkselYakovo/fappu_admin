@@ -683,17 +683,26 @@ if ( document.querySelector('#New-Website-Modal') )
         document.querySelector('input[name="New Logo"]').addEventListener('change', function(e) {
 
         let file = this.files[0];
-            
-            if ( file.type == 'image/png' ) {
+            if ( file.type == 'image/png' && file.size <= 300000 ) {
                 
                 let reader = new FileReader();
-                let img = reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
 
                 reader.onload = function(e) {
-
+                    const image = new Image();
                     let site = document.querySelector('h2.site-code').innerHTML;
-                    document.querySelector('figure.site-logo img').src = reader.result;
+                    image.onload = function(e) {
+                        const aspectRatio = image.height / image.width;
 
+                        if( aspectRatio > .7 && aspectRatio <= 1 ) {
+                            document.querySelector('figure.site-logo img').src = reader.result;
+                            request.send(data);
+                        } else {
+                            console.error('Image has an invalid aspect ratio');
+                        }
+                    }
+
+                    image.src = reader.result;
                     let request = new XMLHttpRequest();
                     let data = new FormData();
 
@@ -703,11 +712,6 @@ if ( document.querySelector('#New-Website-Modal') )
                     data.append('__NEW_LOGO', file);
 
                     request.open('POST', './hub.php');
-
-                    // IMAGINARY DELAY.
-                    setTimeout( function(e) { 
-                        request.send(data); 
-                    }, 3000);
 
                     request.onreadystatechange = function(e) {
                         if ( request.status == 200 ) 
