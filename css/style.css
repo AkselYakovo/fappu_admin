@@ -866,20 +866,26 @@ form .label {
 .selection .main-bar svg {
   fill: #B208FA;
 }
-.selection .options-list {
+.selection .options-wrapper {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: none;
+  width: 100%;
+  min-height: 40px;
+  max-height: 156px;
+  border: 1px solid #B208FA;
+  border-radius: 25px 25px 22px 22px;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 3;
-  width: 100%;
-  padding-top: 40px;
-  border: 1px solid #B208FA;
-  border-radius: 25px 25px 22px 22px;
   overflow: hidden;
+  background-color: #FCFCFC;
+}
+.selection .options-list {
+  position: relative;
+  top: 40px;
 }
 .selection .options-list .option {
   margin-bottom: 1px;
@@ -902,8 +908,13 @@ form .label {
   background-color: #FCFCFC;
 }
 
-.selection--options-active .options-list {
+.selection--options-active .options-wrapper {
   display: block;
+}
+
+.selection--options-loading .options-wrapper {
+  display: block;
+  visibility: none;
 }
 
 ul.pagination {
