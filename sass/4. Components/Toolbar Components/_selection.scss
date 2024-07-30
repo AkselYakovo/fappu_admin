@@ -52,23 +52,29 @@
         }
     }
 
-    .options-list {
+    .options-wrapper {
         @include fix-box;
 
         display: none;
-
+        width: 100%;
+        min-height: 40px;
+        max-height: 156px;
+        
+        border: 1px solid $fappu-purple;
+        border-radius: 25px 25px 22px 22px;
+        
         position: absolute;
         top: 0;
         left: 0;
         z-index: 3;
-
-        width: 100%;
-
-        padding-top: 40px;
-        border: 1px solid $fappu-purple;
-        border-radius: 25px 25px 22px 22px;
-
+        
         overflow: hidden;
+        background-color: $bone;        
+    }
+
+    .options-list {
+        position: relative;
+        top: 40px;
 
         .option {
             margin-bottom: 1px;
@@ -106,7 +112,14 @@
 
 
 .selection--options-active {
-    .options-list {
+    .options-wrapper {
         display: block;
+    }
+}
+
+.selection--options-loading {
+    .options-wrapper {
+        display: block;
+        visibility: none;
     }
 }
