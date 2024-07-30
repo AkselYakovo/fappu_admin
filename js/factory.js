@@ -33,4 +33,14 @@ export class Factory {
         });
     }
 
+    static createSelectionOption(data) {
+        const node = document.createElement('li');
+        node.classList.add('option');
+        node.textContent = data['SITE_TITLE'];
+        node.setAttribute('data-display', data['SITE_CODE']);
+        node.setAttribute('title', data['SITE_TITLE']);
+        node.setAttribute('draggable', false)
+        return node;
+    }
+
 }
