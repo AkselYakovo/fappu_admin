@@ -43,4 +43,17 @@ export class Factory {
         return node;
     }
 
+    static swapInstance(oldNode, newNode) {
+        const parentElement = oldNode.parentElement;
+
+        if ( parentElement ) parentElement.replaceChild(newNode, oldNode);
+        else document.replaceChild(newNode, oldNode);
+
+        return new Promise( (resolve, reject) => {
+            setTimeout(() => {
+                resolve(newNode);
+            }, 0);
+        } );
+    }
+
 }
