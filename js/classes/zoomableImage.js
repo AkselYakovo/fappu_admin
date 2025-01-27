@@ -37,7 +37,8 @@ export class zoomableImage {
     // Getters.
 
     getScale() {
-        return this.actualScale;
+        return this.actualScale.toFixed(1)
+    }
     }
 
 }
