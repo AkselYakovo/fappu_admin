@@ -39,6 +39,13 @@ export class zoomableImage {
     getScale() {
         return this.actualScale.toFixed(1)
     }
+
+    setScale(scale) {
+        if (scale >= this.minScale &&
+            scale <= this.maxScale
+        ) {
+            this.actualScale = scale
+        }
     }
 
 }
