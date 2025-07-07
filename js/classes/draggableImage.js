@@ -6,6 +6,7 @@ export class draggableImage {
         this.parent = targetNode.parentElement || targetNode.parentNode.host;
         
         targetNode.addEventListener('mousedown', function(e){
+            const draggableImage = this
             let initialMouseCoords = {
                 'X': e.clientX,
                 'Y': e.clientY
