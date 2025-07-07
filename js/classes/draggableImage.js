@@ -3,9 +3,7 @@ export class draggableImage {
     constructor(targetNode) {
         this.node = targetNode;
         this.isAdjusting = false;
-        let parent = targetNode.parentElement || targetNode.parentNode.host;
-        let parentCoords = makeCoords(parent);
-        
+        this.parent = targetNode.parentElement || targetNode.parentNode.host;
         
         targetNode.addEventListener('mousedown', function(e){
             let initialMouseCoords = {
