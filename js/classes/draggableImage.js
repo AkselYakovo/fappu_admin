@@ -130,7 +130,7 @@ function makeCoords(node) {
 }
 
 function getTranslateX(node) {
-    let regExp = /translate\((-?\d{1,})px(?:, -?\d{1,}px)?\)/i;
+    let regExp = /translate\((-?\d{1,}\.?\d*)px(?:, -?\d{1,}\.?\d*px)?\)/i;
     let transformString = node.style.transform;
     
     if ( regExp.test(transformString) ) {
@@ -142,7 +142,7 @@ function getTranslateX(node) {
 }
 
 function getTranslateY(node) {
-    let regExp = /translate\(-?\d{1,}px, (-?\d{1,})px\)/i;
+    let regExp = /translate\(-?\d{1,}\.?\d*px, (-?\d{1,}\.?\d*)px\)/i;
     let transformString = node.style.transform;
 
     if ( regExp.test(transformString) ) {
