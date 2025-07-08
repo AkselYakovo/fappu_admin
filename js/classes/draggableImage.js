@@ -44,6 +44,7 @@ export class draggableImage {
             document.onmouseup = function() {
                 targetNode.finalCoords = makeCoords(targetNode);
                 let finalCoord = { X: null, Y: null };
+                let parentCoords = makeCoords(draggableImage.parent)
 
                 // // LEFT EDGE AUTO POSITIONING...
                 if ( targetNode.finalCoords.topLeft.X > parentCoords.topLeft.X )
