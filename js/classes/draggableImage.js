@@ -87,10 +87,9 @@ export class draggableImage {
 
                 targetNode.style.transform = `translate(${ finalCoord.X }px, ${ finalCoord.Y }px) scale(${ actualScale })`;
 
-                document.onmouseup = null;
-                document.ontransitionend = () => {
+                targetNode.ontransitionend = () => {
                     targetNode.style.transition = null;
-                    document.ontransitionend = null;
+                    targetNode.ontransitionend = null;
                     this.isAdjusting = false;
                 }
             }
