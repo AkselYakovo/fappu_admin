@@ -92,6 +92,8 @@ export class draggableImage {
                     targetNode.ontransitionend = null;
                     this.isAdjusting = false;
                 }
+
+                document.onmouseup = null;
             }
 
             document.addEventListener('mouseup', (event) => {
