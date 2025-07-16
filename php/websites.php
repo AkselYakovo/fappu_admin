@@ -64,6 +64,23 @@ $websites = $main_conn->query($websites_query);
     <script src="../js/main.js" defer="defer" type="module"></script>
     <script type="module" src="../js/classes/NewWebsiteModal.js"></script>
     <script type="module" src="../js/classes/NewSubsiteModal.js"></script>
+    <script>
+        customElements.whenDefined("new-website-modal").then(() => {
+            let newWebsiteModalButton = document.querySelector("button.add-website")
+            newWebsiteModalButton.addEventListener("click", () => {
+                const modal = document.querySelector("new-website-modal")
+                modal.open()
+            })
+        })
+
+        customElements.whenDefined("new-subsite-modal").then(() => {
+            let newSubsiteButton = document.querySelector("#Add-Screen")
+            newSubsiteButton?.addEventListener("click", () => {
+                const subsiteModal = document.querySelector("new-subsite-modal")
+                subsiteModal.open()
+            })
+        })
+    </script>
     <title>Websites | Admin</title>
 </head>
 <body>
