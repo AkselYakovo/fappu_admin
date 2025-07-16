@@ -420,6 +420,8 @@ $websites = $main_conn->query($websites_query);
 
     </main>
 
+    <new-website-modal></new-website-modal>
+
     <?php if( $single_website_active ): ?>
 
     <?php                               ?>
