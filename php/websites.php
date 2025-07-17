@@ -426,6 +426,8 @@ $websites = $main_conn->query($websites_query);
 
     <?php                               ?>
 
+    <new-subsite-modal sitecode="<?= $single_website_code ?>" />
+
     <div id="New-Children-Website-Modal" class="modal children-website-modal edit">
         <section class="picture">
             <div class="controls">
