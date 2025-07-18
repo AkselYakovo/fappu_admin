@@ -148,10 +148,9 @@ if ( document.querySelector('.screens-wrap') ) {
 
 
 
-// # website.php (landing || single).
-// # Modal config for creation of subsites (children of a website).
 if ( document.querySelector('#New-Children-Website-Modal') ) {
     let modal = new Modal('New-Children-Website-Modal');
+// # `website.php` (landing || single)
 
     let picture;
     let picturePos = { 'X': 0, 'Y': 0 };
