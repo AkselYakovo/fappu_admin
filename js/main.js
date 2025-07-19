@@ -148,9 +148,9 @@ if ( document.querySelector('.screens-wrap') ) {
 
 
 
-if ( document.querySelector('#New-Children-Website-Modal') ) {
     let modal = new Modal('New-Children-Website-Modal');
 // # `website.php` (landing || single)
+if ( document.querySelector('new-subsite-modal') ) {
 
     let picture;
     let picturePos = { 'X': 0, 'Y': 0 };
