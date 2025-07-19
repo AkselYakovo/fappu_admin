@@ -148,164 +148,62 @@ if ( document.querySelector('.screens-wrap') ) {
 
 
 
-    let modal = new Modal('New-Children-Website-Modal');
 // # `website.php` (landing || single)
 if ( document.querySelector('new-subsite-modal') ) {
+    const goBackButton = document.querySelector(".header button.go-back");
+    const newLogoButton = document.querySelector("button[name='New Logo']");
+    const fileInputNode = document.querySelector("input[name='New Logo']")
 
-    let picture;
-    let picturePos = { 'X': 0, 'Y': 0 };
-    let logoNode = modal.node.querySelector('figure.logotype');
-
-    let addButton = modal.node.querySelector('.add-picture');
-    let addScreenButton = document.querySelector('#Add-Screen');
-    let goBackButton = document.querySelector('.header button.go-back');
-
-    let site = document.querySelector('h2.site-code').innerHTML;
-
-    let logoFile;
-
-    // # website.php (landing || single).
-    // + Open modal.
-    addScreenButton?.addEventListener('click', function(e) {
-        modal.open();
-    });
-
-    // # website.php (landing || single).
-    // + Send information to the server.
-    modal.upload = function(site, subsite) {
-
-        let pictureOrigin = getOrigin( modal.node.querySelector('section.picture'), picture.imageNode );
-        let request = new XMLHttpRequest();
-        let data = new FormData();
-
-        data.append('__PUT', '1');
-        data.append('__SUBSCREEN', '1');
-        data.append('__SUBTITLE', subsite);
-        data.append('__SITE_CODE', site);
-        data.append('__LOGO', logoFile);
-        data.append('__PICTURE', picture.getFile());
-        data.append('__SCALE', picture.getScale());
-        data.append('__ORIGIN', `${pictureOrigin.X}/${pictureOrigin.Y}`);
-
-        request.open('POST', './hub.php');
-
-        if ( logoFile && picture.hasFile() && site && subsite )
-            request.send(data);
-
-        else {
-            console.error('Incomplete Form.');
-            return false;
-        }
-
-        request.onreadystatechange = function(e) {
-            if ( request.readyState == 4 && request.status == 200 ) {
-                modal.close();
-                modal.flush();
-            }
-        }
-    };
-
-    modal.flush = function() {
-        picture = null;
-        logoFile = null;
-        logoNode.src = '';
-        logoNode.style.visibility = 'hidden';
-        modal.node.querySelector('.toolbar input').value = '';
-        modal.node.querySelector('button.logotype p ').innerHTML = 'UPLOAD';
-    };
-
-    // # website.php (landing || single).
-    // + Open file input dialog for screen picture.
-    addButton.addEventListener('click', function(e) {
-        modal.node.querySelector('input[name="Subsite Image"]').click();
-    });
-
-    // # website.php (landing || single).
-    // + Set picture to screen node.
-    modal.node.querySelector('input[name="Subsite Image"]').addEventListener('change', function(e) {
-
-        let file = this.files[0];
-        let reader = new FileReader();
-        
-        reader.onload = function(e) {
-            picture = new Picture(modal.node.querySelector('section.picture'));
-            picture.setPicture(reader.result);
-            picture.setFile(file);
-        }
-
-        if ( file.type === 'image/jpeg' )
-            reader.readAsDataURL(file);
-        
-        else {
-            throw new Error('Wrong file format.');
-        }
-
-    });
-
-    // # website.php (landing || single).
-    // + Open file input dialog for logo picture.
-    modal.node.querySelector('button.logotype').addEventListener('click', function(e) {
-        modal.node.querySelector('input[name="Logo"]').click();
-    });
-
-    // # website.php (landing || single).
-    // + Set picture to logo node.
-    modal.node.querySelector('input[name="Logo"]').addEventListener('change', function(e) {
-
-        let file = this.files[0];
-        let reader = new FileReader();
-        
-        reader.onload = (e) => {
-
-            logoNode.style.visibility = 'inherit';
-            logoNode.children[0].src = reader.result;
-            logoFile = file;
-            document.querySelector('button.logotype > p').innerHTML = file.name.substring(0, 3) + file.name.substring( (file.name.lastIndexOf('.') - 1), file.name.length);
-        }
-
-        if ( file.type === 'image/png' )
-            reader.readAsDataURL(file);
-
-        else {
-            this.files = null; // Flush unknown files.
-            // logoFile = null; // Flush main file.
-            modal.node.querySelector('button.logotype > p').innerHTML = 'NO IMAGE';
-            throw new Error('Invalid logo image format.');
-        }
-
-    });
-
-    // # website.php (landing || single).
-    // + Remove existing logo.
-    modal.node.querySelector('.remove-logo').addEventListener('click', function(e) {
-        logoNode.src = '';
-        logoNode.style.visibility = 'hidden';
-        logoFile = null;
-        document.querySelector('button.logotype > p').innerHTML = 'UPLOAD';
-    });
-
-    // # website.php (landing || single).
-    // + Validate title string.
-    // + Submit data.
-    modal.node.querySelector("button.add").addEventListener('click', function(e) {
-
-        let subsiteTitle = modal.node.querySelector('.toolbar input').value;
-        let reg = /^[A-Z]{4,20}$/i
-
-        if ( reg.test(subsiteTitle) )
-            modal.upload(site, subsiteTitle.toLowerCase());
-        
-        else
-            throw new Error('Invalid subsite title.')
-    });
-    
-    // # website.php (landing || single).
-    // + Go back to websites.php page.
-    goBackButton.addEventListener('click', function(e) {
+    goBackButton.addEventListener('click', () => {
         let url = window.location.toString();
         let questionMark = url.lastIndexOf('?');
         window.location = url.substring(0, questionMark);
     });
+
+    newLogoButton?.addEventListener("click", () => fileInputNode.click());
+
+    fileInputNode?.addEventListener("change", function() {
+
+        let file = this.files[0],
+            site = document.querySelector("h2.site-code").innerHTML,
+            logoImage = document.querySelector('figure.site-logo img'),
+            data = new FormData(),
+            url = "./hub.php"
+
+        const body = {
+            method: "POST",
+            body: data
+        }
+        const image = new Image();
+        
+        data.append("__PUT", "1");
+        data.append("__WEBSITE_LOGO", "1");
+        data.append("__SITE_CODE", site);
+        data.append("__NEW_LOGO", file);
+
+        image.onload = function() {
+            const aspectRatio = image.height / image.width;
+
+            if (aspectRatio > .7 && aspectRatio <= 1) {
+                fetch(url, body)
+            } else {
+                // console.error('Image has an invalid aspect ratio');
+            }
+        }
+
+        if ( file.type == "image/png" && file.size <= 300000 ) {
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onload = function() {
+                image.src = reader.result;
+                logoImage.src = reader.result;
+            }
+        } else {
+            // console.error('Invalid file format.');
+        }
+        });
 }
 
 
