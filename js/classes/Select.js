@@ -139,3 +139,5 @@ class Select extends HTMLElement {
 }
 
 window.customElements.define('select-emphasized', Select);
+
+export default Select
