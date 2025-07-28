@@ -68,6 +68,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
+    <script type="module" src="../js/classes/NewAccountModal.js"></script>
     <title>Accounts | Admin</title>
 </head>
 <body>
