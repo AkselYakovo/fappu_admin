@@ -465,6 +465,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
     <?php        ?>
 
+    <new-account-modal />
 
     <div class="alerts-hub"></div>
 
