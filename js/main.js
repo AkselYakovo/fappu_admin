@@ -17,12 +17,6 @@ import { Pagination } from './pagination.js';
 // cleanPriceInput()
 // Request()
 
-function cleanPriceInput(str) {
-    let start = str.indexOf('$');
-    let end = str.indexOf('.');
-    return str.substring(start + 1, end);
-}
-
 function Request(data) {
     if (typeof data != 'object')
         return false;
