@@ -69,6 +69,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/main.js" defer="defer" type="module"></script>
     <script type="module" src="../js/classes/NewAccountModal.js"></script>
+    <script type="module" src="../js/classes/EditAccountModal.js"></script>
     <script>
         customElements.whenDefined("new-account-modal").then(() => {
             let newAccountModal = document.querySelector("button#New-Account")
