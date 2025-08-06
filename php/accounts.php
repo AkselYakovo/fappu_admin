@@ -310,6 +310,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
     <?php if ($active_site) :?>
 
+    <edit-account-modal />
 
     <?php endif; ?>
 
