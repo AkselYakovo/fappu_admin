@@ -1002,17 +1002,6 @@ if ( document.querySelector('#Inactive-Account-Modal') ) {
         // inputsValues.set('Price Paid', `$${JSONresponse['PRICE_PAID']}.00 MXN`);
         // inputsValues.set('Accounts Sold', JSONresponse['N_SOLD']);
         // inputsValues.set('Accounts Available', JSONresponse['N_AVAILABLE']);
-
-        // Extra code for setting initial state of plus/minus buttons on # accounts.
-        if ( Number.parseInt(availableAccounts.innerHTML) > (Number.parseInt(soldAccounts.innerHTML) + 1) ) {
-            document.querySelector('button.round.minus').removeAttribute('disabled');
-            document.querySelector('button.round.plus').removeAttribute('disabled');
-            // console.log(availableAccounts.innerHTML);
-            // console.log(soldAccounts.innerHTML + 1);
-        }
-        else if ( (Number.parseInt(soldAccounts.innerHTML) + 1) == Number.parseInt(availableAccounts.innerHTML) ) {
-            document.querySelector('button.round.plus').removeAttribute('disabled');
-        }
     }
 
 
