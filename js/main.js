@@ -460,6 +460,18 @@ if ( document.querySelector('#Accounts-Card') ) {
         let daysLeft = getDaysLeft(dateString);
         account.querySelector('.expiration-date').innerHTML = daysLeft;
     }
+
+    // Attach an event handler to each edit button.
+    accountsCards.forEach( card => {
+        const editButton = card.querySelector('.edit');
+        const accountID = editButton.getAttribute('data-display');
+
+        editButton.addEventListener('click', function()
+        {
+            const editAccountModal = document.querySelector('edit-account-modal')
+            editAccountModal.setAttribute('account', accountID)
+        });
+    });
 }
 
 
