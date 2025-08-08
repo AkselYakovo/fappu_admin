@@ -312,6 +312,73 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
     <edit-account-modal />
 
+    <div id="Inactive-Account-Modal" class="modal inactive-account-modal">
+        <div class="content">
+            <div class="separator">
+                <figure class="line"></figure>
+                <span class="label" draggable="false">STATUS</span>
+                <figure class="line"></figure>
+            </div>
+            <div class="row">
+                <span class="label status">STATUS: <span class="badge badge-killed">KILLED</span> </span>
+                <small class="expiration">KILLED X DAYS AGO</small>
+                <span class="label">WARRANTY BEGINS:</span>
+                <input type="text" class="LL" autocomplete="off" name="Warranty Begins" disabled>
+                <span class="label">WARRANTY ENDS:</span>
+                <input type="text" class="LL" autocomplete="off" name="Warranty Ends" disabled>
+            </div>
+            <div class="separator">
+                <figure class="line"></figure>
+                <span class="label" draggable="false">ACCOUNT:</span>
+                <figure class="line"></figure>
+            </div>
+            <div class="row straight">
+                <span class="label">BELONGS TO:</span>
+                <h4 class="site-code">BANG</h4>
+            </div>
+            <div class="row">
+                <span class="label">CREDENTIALS:</span>
+                <input type="text" class="LL" autocomplete="off" name="Nickname" disabled>
+                <input type="text" class="LL" autocomplete="off" name="Password" disabled>
+            </div>
+            <div class="separator">
+                <figure class="line"></figure>
+                <span class="label" draggable="false">DETAILS:</span>
+                <figure class="line"></figure>
+            </div>
+            <div class="row">
+                <span class="label">ACCOUNT'S OFFERS:</span>
+                <div class="account-offers">
+                    <svg width="28" height="27" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.1335 11.001C15.8835 11.001 16.5435 10.591 16.8835 9.97098L20.4635 3.48098C20.8335 2.82098 20.3535 2.00098 19.5935 2.00098H4.7935L3.8535 0.000976562H0.583496V2.00098H2.5835L6.1835 9.59098L4.8335 12.031C4.1035 13.371 5.0635 15.001 6.5835 15.001H18.5835V13.001H6.5835L7.6835 11.001H15.1335ZM5.7435 4.00098H17.8935L15.1335 9.00098H8.1135L5.7435 4.00098ZM6.5835 16.001C5.4835 16.001 4.5935 16.901 4.5935 18.001C4.5935 19.101 5.4835 20.001 6.5835 20.001C7.6835 20.001 8.5835 19.101 8.5835 18.001C8.5835 16.901 7.6835 16.001 6.5835 16.001ZM16.5835 16.001C15.4835 16.001 14.5935 16.901 14.5935 18.001C14.5935 19.101 15.4835 20.001 16.5835 20.001C17.6835 20.001 18.5835 19.101 18.5835 18.001C18.5835 16.901 17.6835 16.001 16.5835 16.001Z"/>
+                    </svg>
+                    <div class="offers-number">
+                        <span class="remaining-offers">0</span>
+                        <span class="separator">/</span>
+                        <span class="total-offers">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row straight">
+                <span class="label">VENDOR:</span>
+                <a href="" class="vendor-link">
+                    <figure class="vendor__avatar" style="background-image: url('../assets/vendors/self.png');"></figure>
+                    <span class="vendor__label">@SELF</span>
+                </a>
+            </div>
+            <div class="row straight">
+                <span class="label">PAID PRICE:</span>
+                <span class="text price-paid">$ 00<sup>.00</sup> MXN</span>
+            </div>
+        </div>
+        <button class="button button-secondary button-small reactivate-button">REACTIVATE</button>
+        <small class="account-label">
+            ACCOUNT ID:
+            <b>2103X-SDSD</b>
+        </small>
+    </div>
+    <div class="overlay"></div>
+
     <?php endif; ?>
 
     <?php        ?>
