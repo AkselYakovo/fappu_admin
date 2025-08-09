@@ -310,7 +310,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
     <?php if ($active_site) :?>
 
-    <edit-account-modal />
+    <edit-account-modal></edit-account-modal>
 
     <div id="Inactive-Account-Modal" class="modal inactive-account-modal">
         <div class="content">
@@ -383,7 +383,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
 
     <?php        ?>
 
-    <new-account-modal />
+    <new-account-modal></new-account-modal>
 
     <div class="alerts-hub"></div>
 
