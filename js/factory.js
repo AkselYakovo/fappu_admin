@@ -33,4 +33,27 @@ export class Factory {
         });
     }
 
+    static createSelectionOption(data) {
+        const node = document.createElement('li');
+        node.classList.add('option');
+        node.textContent = data['SITE_TITLE'];
+        node.setAttribute('data-display', data['SITE_CODE']);
+        node.setAttribute('title', data['SITE_TITLE']);
+        node.setAttribute('draggable', false)
+        return node;
+    }
+
+    static swapInstance(oldNode, newNode) {
+        const parentElement = oldNode.parentElement;
+
+        if ( parentElement ) parentElement.replaceChild(newNode, oldNode);
+        else document.replaceChild(newNode, oldNode);
+
+        return new Promise( (resolve, reject) => {
+            setTimeout(() => {
+                resolve(newNode);
+            }, 0);
+        } );
+    }
+
 }
