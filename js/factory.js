@@ -1,59 +1,54 @@
-import { getDaysAgo } from "./date.js";
+import { getDaysAgo } from "./date.js"
 
 export class Factory {
+  static createMessageRow(data) {
+    let messageNode = document.createElement("div")
+    messageNode.classList.add("message-row")
+    messageNode.setAttribute("data-display", data["MESSAGE_ID"])
 
-    static createMessageRow(data) {
-        let messageNode = document.createElement('div');
-        messageNode.classList.add('message-row');
-        messageNode.setAttribute('data-display', data['MESSAGE_ID']);
+    messageNode.innerHTML = `
+      <div class="message-info">
+          <h2 class="regard">${data["CATEGORY_LABEL"]} ISSUES</h2>
+          <small class="date">HACE ${getDaysAgo(data["DATE"])}</small>
+          <span class="email">${data["USER_EMAIL"]}</span>
+      </div>
+      <p class="message">${data["MESSAGE"]}</p>
+    `
 
-        messageNode.innerHTML = 
-        `
-            <div class="message-info">
-                <h2 class="regard">${data['CATEGORY_LABEL']} ISSUES</h2>
-                <small class="date">HACE ${getDaysAgo(data['DATE'])}</small>
-                <span class="email">${data['USER_EMAIL']}</span>
-            </div>
-            <p class="message">${data['MESSAGE']}</p>
-        `;
-        return messageNode;
-    }
+    return messageNode
+  }
 
-    static setMessageRow(messageNode) {
-        messageNode.addEventListener('click', function(e) {
-            console.log('message row node set !');
-        });
-    }
+  static setMessageRow(messageNode) {
+    messageNode.addEventListener("click", function () {
+      // console.log("message row node set !")
+    })
+  }
 
+  static setPaginationLink(linkNode) {
+    linkNode.addEventListener("click", function () {})
+  }
 
+  static createSelectionOption(data) {
+    const node = document.createElement("li")
+    node.classList.add("option")
+    node.textContent = data["SITE_TITLE"]
+    node.setAttribute("data-display", data["SITE_CODE"])
+    node.setAttribute("title", data["SITE_TITLE"])
+    node.setAttribute("draggable", false)
 
-    static setPaginationLink(linkNode) {
-        linkNode.addEventListener('click', function(e) {
+    return node
+  }
 
-        });
-    }
+  static swapInstance(oldNode, newNode) {
+    const parentElement = oldNode.parentElement
 
-    static createSelectionOption(data) {
-        const node = document.createElement('li');
-        node.classList.add('option');
-        node.textContent = data['SITE_TITLE'];
-        node.setAttribute('data-display', data['SITE_CODE']);
-        node.setAttribute('title', data['SITE_TITLE']);
-        node.setAttribute('draggable', false)
-        return node;
-    }
+    if (parentElement) parentElement.replaceChild(newNode, oldNode)
+    else document.replaceChild(newNode, oldNode)
 
-    static swapInstance(oldNode, newNode) {
-        const parentElement = oldNode.parentElement;
-
-        if ( parentElement ) parentElement.replaceChild(newNode, oldNode);
-        else document.replaceChild(newNode, oldNode);
-
-        return new Promise( (resolve, reject) => {
-            setTimeout(() => {
-                resolve(newNode);
-            }, 0);
-        } );
-    }
-
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(newNode)
+      }, 0)
+    })
+  }
 }

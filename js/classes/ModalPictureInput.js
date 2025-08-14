@@ -139,7 +139,7 @@ class ModalPictureInput extends HTMLElement {
     fileReader.onload = () => {
       this.setPicture(fileReader.result)
       this.showPicture()
-      const pictureOrigin = getOrigin(this.root.host, this.imageNode)      
+      const pictureOrigin = getOrigin(this.root.host, this.imageNode)
       this.setCoords(`${pictureOrigin.X}/${pictureOrigin.Y}`)
       this.setCoords(0, 0)
       this.showControls()

@@ -1,7 +1,7 @@
-import { Factory } from "../factory.js";
-import { Scroller } from "./Scroller.js";
+import { Factory } from "../factory.js"
+import { Scroller } from "./Scroller.js"
 
-const template = document.createElement('template');
+const template = document.createElement("template")
 template.innerHTML = `
 <style>
     @import url('../css/style.css');
@@ -18,126 +18,127 @@ template.innerHTML = `
         <ul class="options-list"></ul>
     </div>
 </div>
-`;
+`
 
 class Select extends HTMLElement {
-    static observedAttributes = ['label'];
+    static observedAttributes = ["label"]
 
     constructor() {
-        super();
+        super()
     }
 
     connectedCallback() {
-        const clone = template.content.cloneNode(true);
-        this.root = this.attachShadow({ mode: 'closed' });
-        this.root.append(clone);
-        
-        this.root.querySelector('span.label').innerHTML = this.label ?? 'SELECT';
+        const clone = template.content.cloneNode(true)
+        this.root = this.attachShadow({ mode: "closed" })
+        this.root.append(clone)
 
-        this.optionChosen = null;
-        
-        this.node = this.root.querySelector('.selection.toolbar');
-        this.node.list = this.node.querySelector('ul.options-list');
-        this.node.label = this.node.querySelector('span.label');
-        
-        this.node.addEventListener('click', (e) => {
+        this.root.querySelector("span.label").innerHTML = this.label ?? "SELECT"
 
-            if ( e.target.classList.contains('option') ) {
+        this.optionChosen = null
+
+        this.node = this.root.querySelector(".selection.toolbar")
+        this.node.list = this.node.querySelector("ul.options-list")
+        this.node.label = this.node.querySelector("span.label")
+
+        this.node.addEventListener("click", (e) => {
+
+            if ( e.target.classList.contains("option") ) {
 
                 if ( this.optionChosen ) {
-                    this.optionChosen.node.classList.remove('option--active');
+                    this.optionChosen.node.classList.remove("option--active")
                 }
 
                 this.optionChosen = {
                     node: e.target,
                     title: e.target.textContent,
-                    code: e.target.getAttribute('data-display')
+                    code: e.target.getAttribute("data-display")
                 }
 
-                this.optionChosen.node.classList.add('option--active');
+                this.optionChosen.node.classList.add("option--active")
 
-                this.setLabel(this.optionChosen.title);
+                this.setLabel(this.optionChosen.title)
             }
 
 
-            this.toggleList();
-        });
+            this.toggleList()
+        })
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        this[name] = newValue;
+        this[name] = newValue
     }
 
     getOption(input) {
         if(this.options) {
-            const defaultOption = this.options.find( opt => (opt['SITE_CODE'] === input)  || 
-                                                            (opt['SITE_TITLE'] === input));
-            return defaultOption || false;
+            const defaultOption = this.options.find( opt => (opt["SITE_CODE"] === input)  ||
+                                                            (opt["SITE_TITLE"] === input))
+            return defaultOption || false
         }
     }
-    
+
     setInitialLabel(label) {
-        if( label && label !== '' ) {
-            this.label = label;
-            this.node.label.innerHTML = label;
+        if( label && label !== "" ) {
+            this.label = label
+            this.node.label.innerHTML = label
         }
     }
 
     setLabel(label) {
-        const option = this.getOption(label);
-        if( label && label !== '' && option ) {
-            this.label = label;
-            this.node.label.innerHTML = label;
-            this.node.setAttribute('data-display', option['SITE_CODE']);
+        const option = this.getOption(label)
+        if( label && label !== "" && option ) {
+            this.label = label
+            this.node.label.innerHTML = label
+            this.node.setAttribute("data-display", option["SITE_CODE"])
         } else {
-            throw new Error('Invalid label:', label);
+            throw new Error("Invalid label:", label)
         }
     }
 
     setDefault(option) {
-        const optionSelected = this.getOption(option);
-        console.log(optionSelected['SITE_TITLE']);
+        const optionSelected = this.getOption(option)
+        // console.log(optionSelected["SITE_TITLE"])
         if ( optionSelected ) {
-            this.setLabel(optionSelected['SITE_TITLE']);
+            this.setLabel(optionSelected["SITE_TITLE"])
         } else {
-            throw new Error(`Invalid option '${ option }'`);
+            throw new Error(`Invalid option '${ option }'`)
         }
     }
 
     setOptions(optionsList) {
-        if ( !Array.isArray(optionsList) ) throw new Error(`Select component was expecting an array and not a ${ typeof optionsList }`);
-        
+        if ( !Array.isArray(optionsList) ) throw new Error(`Select component was expecting an array and not a ${ typeof optionsList }`)
+
         for (let index = 0; index < optionsList.length; index++) {
-            const optionNode = Factory.createSelectionOption(optionsList[index]);
-            this.node.list.append(optionNode);
+            const optionNode = Factory.createSelectionOption(optionsList[index])
+            this.node.list.append(optionNode)
         }
 
-        this.options = optionsList;
-        this.bootstrapListListeners();
-        this.optionsFinishLoading();
+        this.options = optionsList
+        this.bootstrapListListeners()
+        this.optionsFinishLoading()
     }
 
     toggleList() {
-        this.node.classList.toggle('selection--options-active');
+        this.node.classList.toggle("selection--options-active")
     }
 
     bootstrapListListeners() {
         const options = {
             visibleArea: { Y: (156 - 40)},
             stepSize: 39
-        };
+        }
 
-        const optionsWrapper = new Scroller(this.node.list, options);
+        // eslint-disable-next-line no-unused-vars
+        const optionsWrapper = new Scroller(this.node.list, options)
     }
 
     optionsFinishLoading() {
-        if (this.node.classList.contains('selection--options-loading')) {
-            this.node.classList.remove('selection--options-loading');
+        if (this.node.classList.contains("selection--options-loading")) {
+            this.node.classList.remove("selection--options-loading")
         }
     }
 
 }
 
-window.customElements.define('select-emphasized', Select);
+window.customElements.define("select-emphasized", Select)
 
 export default Select
