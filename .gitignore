@@ -14,6 +14,7 @@ assets/*/**
 # EXCEPT .svg & .tff files.
 !assets/*/*.svg
 !assets/*/*.ttf
-
+# Ignore /node_modules
+/node_modules
 # CSS Map.
 *css.map
