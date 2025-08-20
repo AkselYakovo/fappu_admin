@@ -20,6 +20,15 @@ $conn = new mysqli('localhost', 'root', '', 'test');
 //     15 => 'F',
 // ];
 
+$column_dictionary = array(
+    '__WBEGINS' => 'WARRANTY_BEGINS',
+    '__WENDS' => 'WARRANTY_ENDS',
+    '__NICKNAME' => 'ACCOUNT_NICK',
+    '__PASSWORD' => 'ACCOUNT_PASS',
+    '__PRICE' => 'PRICE_PAID',
+    '__AVAILABLE_ACCOUNTS' => 'N_AVAILABLE'
+);
+
 function create_toast(string $message) {
     return <<<TOAST
                 <div class="toast"> 
