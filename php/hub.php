@@ -513,7 +513,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
 
 // UPDATE : 
 //
-// Update Variable Length Columns..
+// Update Variable Length Columns of a Given Account..
 if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
     $updated_columns = '';
     $updated_columns_values = '';
