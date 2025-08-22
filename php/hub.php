@@ -516,6 +516,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
 // Update Variable Length Columns of a Given Account..
 if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
     $account_id = clean_txt($_POST['__ACCOUNT_ID']);
+    $update_str = createMultipleColumnUpdateString($_POST);
 
     $update_account_query = "UPDATE `$__ACCOUNTS` 
                              SET $updated_columns 
