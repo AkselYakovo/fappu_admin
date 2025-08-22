@@ -518,8 +518,8 @@ if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
     $account_id = clean_txt($_POST['__ACCOUNT_ID']);
     $update_str = createMultipleColumnUpdateString($_POST);
 
-    $update_account_query = "UPDATE `$__ACCOUNTS` 
-                             SET $updated_columns 
+    $update_account_query = "UPDATE `$__ACCOUNTS`
+                             SET $update_str
                              WHERE `ACCOUNT_ID` = '$account_id'";
 
     $results = $main_conn->query($update_account_query);
