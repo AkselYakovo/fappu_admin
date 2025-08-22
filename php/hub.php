@@ -515,23 +515,7 @@ if( isset($_POST['__PULL']) && isset($_POST['__TOTAL_MESSAGES']) && isset($_POST
 //
 // Update Variable Length Columns of a Given Account..
 if( isset($_POST['__PUT']) && isset($_POST['__ACCOUNT']) ) {
-    $updated_columns = '';
-    $updated_columns_values = '';
     $account_id = clean_txt($_POST['__ACCOUNT_ID']);
-
-    foreach($_POST as $index => $value) 
-    {
-
-        if ( $index != '__PUT' && $index != '__ACCOUNT' && $index != '__ACCOUNT_ID' ) 
-        {
-            if ( $index == '__PRICE' || $index == '__AVAILABLE_ACCOUNTS' ) {
-                $updated_columns .= "`$dictionary[$index]` = $value ";
-            }
-            else {
-                $updated_columns .= "`$dictionary[$index]` = '$value' ";
-            }
-        }
-    }
 
     $update_account_query = "UPDATE `$__ACCOUNTS` 
                              SET $updated_columns 
