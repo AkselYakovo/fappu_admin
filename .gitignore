@@ -1,9 +1,8 @@
 # Server config file.
 .htaccess
 
-# Backend credentials 
-php/config.php
-
+# Environment variables
+.env
 # ~ /assets DIR avoid local content being pushed.
 # Ignore .png files contained by ANY folder.
 assets/**/*.png
