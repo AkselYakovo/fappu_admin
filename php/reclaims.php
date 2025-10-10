@@ -1,10 +1,9 @@
 <?php
-// @ Configuration Items Below..
-$actual_website = "reclaims";
-
 require_once(dirname(__FILE__) . "/resources.php");
 require_once(dirname(__FILE__) . "/_general.php");
 require_once(dirname(__FILE__) . "/fun/reclaims.php");
+
+$actual_website = "reclaims";
 
 $page = ( isset($_GET['page']) && (int) $_GET['page'] > 0 ) ? (int) abs( (int) $_GET['page']) : 1;
 $post_per_page = 10;

@@ -2,14 +2,6 @@
 require_once(dirname(__FILE__) . '/resources.php');
 require_once(dirname(__FILE__) . '/_general.php');
 
-// # Configuration variables..
-// $__ACCOUNTS = "_accounts";
-// $__WEBSITES = "_websites";
-// $__ACCOUNTS_KILLED = "_accounts_killed";
-
-// const __LEVELS = '../';
-
-
 // # Important variables for single page accounts page..
 $actual_website = "accounts";
 $active_site = ( isset($_GET['website']) ) 
