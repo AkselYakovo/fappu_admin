@@ -3,10 +3,6 @@ require_once(dirname(__FILE__) . '/resources.php');
 require_once(dirname(__FILE__) . '/_general.php');
 require_once(dirname(__FILE__) . '/fun/websites.php');
 
-// @ Configuration items below..
-// $__WEBSITES = '_websites';
-// $__ACCOUNTS = '_accounts';
-
 $actual_website = "websites";
 
 // Important for single page data retrivement.. //

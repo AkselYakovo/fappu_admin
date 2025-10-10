@@ -1,9 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/resources.php");
 
-// $__SALES = '_sales';
-// $__ACCOUNTS = ''
-
 $actual_website = "sales";
 $actual_site = $_GET['website'] ?? false;
 
