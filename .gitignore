@@ -15,5 +15,7 @@ assets/*/**
 !assets/*/*.ttf
 # Ignore /node_modules
 /node_modules
+#Ignore composer modules
+/vendor
 # CSS Map.
 *css.map
