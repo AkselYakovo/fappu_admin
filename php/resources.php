@@ -1,5 +1,4 @@
 <?php
-require_once('./config.php');
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
 $main_conn = new mysqli(__CREDENTIALS['USER'], __CREDENTIALS['PASS'], '', __CREDENTIALS['TABLE']) or die('Almost Done!');
 
