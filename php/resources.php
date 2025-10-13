@@ -1,4 +1,8 @@
 <?php
+require "../vendor/autoload.php";
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
 $main_conn = new mysqli(__CREDENTIALS['USER'], __CREDENTIALS['PASS'], '', __CREDENTIALS['TABLE']) or die('Almost Done!');
 
