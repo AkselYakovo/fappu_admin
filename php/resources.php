@@ -12,7 +12,7 @@ define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims
 
 // Link to assets/
 define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
-define('__URL_ROOT', '/projects/fappu_admin/');
+define('__URL_ROOT', $_ENV['ROOT_DIR']);
 
 // Pagination Constants:
 define('__MESSAGES_PER_PAGE', 1);
