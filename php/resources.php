@@ -3,8 +3,12 @@ require "../vendor/autoload.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
+
+$main_conn = new mysqli($_ENV["DB_USER"], $_ENV["DB_PASS"], '', $_ENV["DB_NAME"])
+    or die('An error occured while trying to initialize the connection to the database.');
+
+# Navigation Links:
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
-$main_conn = new mysqli(__CREDENTIALS['USER'], __CREDENTIALS['PASS'], '', __CREDENTIALS['TABLE']) or die('Almost Done!');
 
 // Link to assets/
 define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
