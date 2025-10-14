@@ -20,14 +20,14 @@ define('__SALES_PER_PAGE', 10);
 define('__RECLAIMS_PER_PAGE', 10);
 
 // Tables References:
-$__WEBSITES = '_websites';
-$__WEBSITES_CHILDREN = '_websites_children';
-$__ACCOUNTS = '_accounts';
-$__ACCOUNTS_KILLED = '_accounts_killed';
-$__RECLAIMS = '_reclaims';
-$__SALES = '_sales';
-$__MESSAGES = '_messages';
-$__VENDORS = '_vendors';
+$__WEBSITES = $_ENV['DB_TB_WEBSITES'];
+$__WEBSITES_CHILDREN = $_ENV['DB_TB_WEBSITES_CHILDREN'];
+$__ACCOUNTS = $_ENV['DB_TB_ACCOUNTS'];
+$__ACCOUNTS_KILLED = $_ENV['DB_TB_ACCOUNTS_KILLED'];
+$__RECLAIMS = $_ENV['DB_TB_RECLAIMS'];
+$__SALES = $_ENV['DB_TB_SALES'];
+$__MESSAGES = $_ENV['DB_TB_MESSAGES'];
+$__VENDORS = $_ENV['DB_TB_VENDORS'];
 
 function get_date_diff(string $str) 
 {
