@@ -105,7 +105,7 @@ $total_number_pages = ( !$email ) ? (int) (get_all_reclaims_number() / $post_per
                     <p class="reclaim__email"><?php echo $reclaim['USER_EMAIL']; ?></p>
                     <span class="overlay"></span>
                 </div>
-                <a href="<?php echo "./websites.php?website=" . $reclaim['SITE_CODE'] ?>" class="page-link"><?php echo $reclaim['SITE_TITLE']; ?></a>
+                <a href="<?= __URL_ROOT . 'website' . '/' . $reclaim['SITE_CODE'] ?>" class="page-link"><?= $reclaim['SITE_TITLE'] ?></a>
                 <p class="reclaim__date"><?php echo get_date_diff($reclaim['DATE']); ?> DAYS AGO</p>
             </div>
 

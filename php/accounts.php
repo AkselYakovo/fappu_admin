@@ -120,12 +120,12 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                 ?>
 
                 <div class="website-accounts-row">
-                    <a href="?website=<?php echo $record['SITE_CODE']; ?>">
+                    <a href="<?= __URL_ROOT . 'accounts/' . $record['SITE_CODE']; ?>">
                         <figure class="site-logo">
-                            <img src="<?php echo __URL_ROOT . 'assets/websites_logos/' . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO" draggable="false">
+                            <img src="<?= __URL_ROOT . 'assets/websites_logos/' . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?= '"' . $record['SITE_TITLE'] . '"' ?> LOGO" draggable="false">
                         </figure>
-                        <h2 class="site-code"><?php echo $record['SITE_CODE']; ?></h2>
-                        <small class="site-total-accounts"><?php echo $record['TOTAL_ACCOUNTS']; ?> ACCOUNTS</small>
+                        <h2 class="site-code"><?= $record['SITE_CODE']; ?></h2>
+                        <small class="site-total-accounts"><?= $record['TOTAL_ACCOUNTS']; ?> ACCOUNTS</small>
                     </a>
                 </div>
 
@@ -165,7 +165,7 @@ $inactive_accounts = $main_conn->query($inactive_accounts_query);
                 </div>
                 <div class="option-wrap">
                     <div class="link-wrapper">
-                        <a href="./websites.php?website=<?php echo $single_website['SITE_CODE']; ?>" class="page-link">EDIT WEBSITE</a>
+                        <a href="<?php echo __URL_ROOT . 'website' . '/' . $single_website['SITE_CODE']; ?>" class="page-link">EDIT WEBSITE</a>
                     </div>
                 </div>
             </header>

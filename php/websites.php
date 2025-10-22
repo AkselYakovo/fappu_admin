@@ -103,7 +103,7 @@ $websites = $main_conn->query($websites_query);
                 <h2 class="subtitle">ACCOUNTS WITH RECLAIMS:</h2>
                 <span class="total-reclaims-accounts number number-err">0</span>
             </section>
-            <a href="./php" class="page-link">GO TO RECLAIMS</a>
+            <a href="<?= __URL_ROOT . 'reclaims'?>" class="page-link">GO TO RECLAIMS</a>
             <button class="button button-primary button-medium add-website">ADD WEBSITE</button>
         </article>
 
@@ -132,9 +132,9 @@ $websites = $main_conn->query($websites_query);
                 <?php foreach($websites as $index => $record) : ?>
 
                 <div class="website-row">
-                    <a href="?website=<?php echo $record['SITE_CODE']; ?>">
+                    <a href="<?= __URL_ROOT . 'website' . '/' . $record['SITE_CODE'] ?>">
                         <div class="site-logo">
-                            <img src="<?php echo __URL_ROOT . "assets/websites_logos/" . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO">
+                            <img src="<?php echo __URL_ROOT . "assets/websites_logos" . '/' . strtolower($record['SITE_CODE']) . '.png'; ?>" alt="<?php echo '"' . $record['SITE_TITLE'] . '"'; ?> LOGO">
                         </div>
                         <div class="site-info">
                             <h4 class="title"><?php echo $record['SITE_TITLE']; ?></h4>
@@ -340,7 +340,7 @@ $websites = $main_conn->query($websites_query);
             </ul>
             
             <div class="link-wrap">
-                <a href="./accounts.php?website=<?php echo $single_website['SITE_CODE']; ?>" class="page-link">GO TO ACCOUNTS</a>
+                <a href="<?= __URL_ROOT . 'accounts' . '/' . $single_website['SITE_CODE'] ?>" class="page-link">GO TO ACCOUNTS</a>
             </div>
 
         </article>
