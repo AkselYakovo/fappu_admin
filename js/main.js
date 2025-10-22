@@ -128,8 +128,8 @@ if (document.querySelector("new-subsite-modal")) {
 
   goBackButton.addEventListener("click", () => {
     let url = window.location.toString()
-    let questionMark = url.lastIndexOf("?")
-    window.location = url.substring(0, questionMark)
+    let currentPage = url.toLowerCase().lastIndexOf("/website/")
+    window.location = url.substring(0, currentPage + "/website/".length)
   })
 
   newLogoButton?.addEventListener("click", () => fileInputNode.click())
@@ -325,8 +325,8 @@ if (document.querySelector("#Accounts-Card")) {
 
   closeButton.onclick = function () {
     let url = window.location.toString()
-    let questionMark = url.lastIndexOf("?")
-    window.location = url.substring(0, questionMark)
+    let currentPage = url.toLowerCase().lastIndexOf("/accounts/")
+    window.location = url.substring(0, currentPage + "/accounts/".length)
     // console.warn(url);
   }
 
