@@ -98,11 +98,11 @@ $messages_list = $main_conn->query($messages_list_query);
 
                 <?php if ( $i == 1 ): ?>
 
-                    <li class="link link--active"><a href="#"><?php echo $i ?></a></li>
+                    <li class="link link--active"><a href="<?= __URL_ROOT . 'messages' . '#'?>"><?= $i ?></a></li>
 
                 <?php else: ?>
 
-                    <li class="link"><a href="#"><?php echo $i ?></a></li>
+                    <li class="link"><a href="<?= __URL_ROOT . 'messages' . '#'?>"><?php echo $i ?></a></li>
 
                 <?php endif ?>
 
