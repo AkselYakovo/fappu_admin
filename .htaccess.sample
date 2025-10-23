@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Internal Rewriting of `/<SECTION>`
+RewriteCond %{REQUEST_URI} ^/(\w*)$ [NC]
+RewriteRule ^ /php/%1.php [END]
+
+# Rule for hub.php
+RewriteCond %{REQUEST_URI} ^/php/hub.php$
+RewriteRule ^(.*)\.php$ $1.php [END]
+
+# Rewriting of `/php/<FILENAME>.php`
+RewriteCond %{REQUEST_URI} ^/php/(.*)\.php$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)\.php$ /%1 [R]
+
+# Rewriting of `/accounts/<WEBSITE>`
+RewriteCond %{REQUEST_URI} ^/accounts/(.*) [NC]
+RewriteRule ^ /php/accounts.php?website=%1 [END]
+
+# Rewriting of `/website/<WEBSITE>`
+RewriteCond %{REQUEST_URI} ^/website/(.*) [NC]
+RewriteRule ^ /php/websites.php?website=%1 [END]
