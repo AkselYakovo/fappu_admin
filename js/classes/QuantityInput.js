@@ -10,7 +10,7 @@ template.innerHTML = `
       <path d="M0 6V8H8V6H0ZM15 13H13V2.38L10 3.4V1.7L14.7 0H15V13Z"/>
     </svg>
   </button>
-  <span class="counter">1</span>
+  <span class="counter">0</span>
   <button class="button-primary round" name="add">
     <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M6 2H4V6H0V8H4V12H6V8H10V6H6V2ZM16 13H14V2.38L11 3.4V1.7L15.7 0H16V13Z"/>
