@@ -5,7 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose",
+    "test.Select": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll Select.test.js",
+    "test.SelectVendor": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll SelectVendor.test.js",
+    "test.QuantityInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll QuantityInput.test.js",
+    "test.ModalURLInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalURLInput.test.js",
+    "test.ModalTextInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalTextInput.test.js",
+    "test.ModalPriceInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPriceInput.test.js",
+    "test.ModalPictureInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPictureInput.test.js"
   },
   "keywords": [],
   "author": "",
