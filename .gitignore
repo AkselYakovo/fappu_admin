@@ -4,6 +4,7 @@
 .env
 # Cypress
 cypress.env.json
+cypress/screenshots
 # ~ /assets DIR avoid local content being pushed.
 # Ignore .png files contained by ANY folder.
 assets/**/*.png
