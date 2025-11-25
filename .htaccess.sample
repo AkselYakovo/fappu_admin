@@ -9,6 +9,7 @@ RewriteCond %{REQUEST_URI} ^/php/hub.php$
 RewriteRule ^(.*)\.php$ $1.php [END]
 
 # Rewriting of `/php/<FILENAME>.php`
+RewriteCond %{REQUEST_URI} !^/php/mocks/(.*)\.php$ [NC]
 RewriteCond %{REQUEST_URI} ^/php/(.*)\.php$ [NC]
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^(.*)\.php$ /%1 [R]
