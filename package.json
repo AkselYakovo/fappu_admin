@@ -12,7 +12,9 @@
     "test.ModalURLInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalURLInput.test.js",
     "test.ModalTextInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalTextInput.test.js",
     "test.ModalPriceInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPriceInput.test.js",
-    "test.ModalPictureInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPictureInput.test.js"
+    "test.ModalPictureInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPictureInput.test.js",
+    "test.api.websites": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/websitesApi.test.js",
+    "test.api.accounts": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/accountsApi.test.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "@types/jest": "^29.5.12",
     "cypress": "^15.6.0",
     "cypress-file-upload": "^5.0.8",
+    "dotenv": "^17.2.3",
     "eslint": "^9.14.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
