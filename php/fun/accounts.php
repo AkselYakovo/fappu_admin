@@ -20,15 +20,6 @@ $conn = new mysqli('localhost', 'root', '', 'test');
 //     15 => 'F',
 // ];
 
-$column_dictionary = array(
-    '__WBEGINS' => 'WARRANTY_BEGINS',
-    '__WENDS' => 'WARRANTY_ENDS',
-    '__NICKNAME' => 'ACCOUNT_NICK',
-    '__PASSWORD' => 'ACCOUNT_PASS',
-    '__PRICE' => 'PRICE_PAID',
-    '__AVAILABLE_ACCOUNTS' => 'N_AVAILABLE'
-);
-
 function create_toast(string $message) {
     return <<<TOAST
                 <div class="toast"> 
@@ -96,6 +87,15 @@ function createMultipleColumnUpdateString(array $POST) {
   global $column_dictionary;
   $update_str = "";
   $updated_columns = array();
+
+  $column_dictionary = array(
+    '__WBEGINS' => 'WARRANTY_BEGINS',
+    '__WENDS' => 'WARRANTY_ENDS',
+    '__NICKNAME' => 'ACCOUNT_NICK',
+    '__PASSWORD' => 'ACCOUNT_PASS',
+    '__PRICE' => 'PRICE_PAID',
+    '__AVAILABLE_ACCOUNTS' => 'N_AVAILABLE'
+);
 
   foreach($POST as $column => $value) {
     $front_comma = (sizeof($updated_columns) > 0) ? "," : "";
