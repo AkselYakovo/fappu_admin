@@ -83,8 +83,7 @@ function new_id() {
     
 }
 
-function createMultipleColumnUpdateString(array $POST) {
-  global $column_dictionary;
+function createMultipleColumnUpdateString(array $body) {
   $update_str = "";
   $updated_columns = array();
 
@@ -97,29 +96,32 @@ function createMultipleColumnUpdateString(array $POST) {
     '__AVAILABLE_ACCOUNTS' => 'N_AVAILABLE'
 );
 
-  foreach($POST as $column => $value) {
+  foreach($body as $column => $value) {
     $front_comma = (sizeof($updated_columns) > 0) ? "," : "";
 
     switch($column) {
       case "__PRICE":
-        $update_str .= "$front_comma `{$column_dictionary["__PRICE"]}` = {$_POST["__PRICE"]}";
-        array_push($updated_columns, $_POST["__PRICE"]);
+        $update_str .= "$front_comma `{$column_dictionary["__PRICE"]}` = {$body["__PRICE"]}";
+        array_push($updated_columns, $body["__PRICE"]);
         break;
       case "__AVAILABLE_ACCOUNTS":
-        $update_str .= "$front_comma `{$column_dictionary["__AVAILABLE_ACCOUNTS"]}` = {$_POST["__AVAILABLE_ACCOUNTS"]}";
-        array_push($updated_columns, $_POST["__AVAILABLE_ACCOUNTS"]);
+        $update_str .= "$front_comma `{$column_dictionary["__AVAILABLE_ACCOUNTS"]}` = {$body["__AVAILABLE_ACCOUNTS"]}";
+        array_push($updated_columns, $body["__AVAILABLE_ACCOUNTS"]);
         break;
       case "__PASSWORD":
-        $update_str .= "$front_comma `{$column_dictionary["__PASSWORD"]}` = '{$_POST["__PASSWORD"]}'";
-        array_push($updated_columns, $_POST["__PASSWORD"]);
+        if (!strlen($body['__PASSWORD'])) break;
+        $update_str .= "$front_comma `{$column_dictionary["__PASSWORD"]}` = '{$body["__PASSWORD"]}'";
+        array_push($updated_columns, $body["__PASSWORD"]);
         break;
       case "__WBEGINS":
-        $update_str .= "$front_comma `{$column_dictionary["__WBEGINS"]}` = '{$_POST["__WBEGINS"]}'";
-        array_push($updated_columns, $_POST["__WBEGINS"]);
+        if (!strlen($body['__WBEGINS'])) break;
+        $update_str .= "$front_comma `{$column_dictionary["__WBEGINS"]}` = '{$body["__WBEGINS"]}'";
+        array_push($updated_columns, $body["__WBEGINS"]);
         break;
       case "__WENDS":
-        $update_str .= "$front_comma `{$column_dictionary["__WENDS"]}` = '{$_POST["__WENDS"]}'";
-        array_push($updated_columns, $_POST["__WENDS"]);
+        if (!strlen($body['__WENDS'])) break;
+        $update_str .= "$front_comma `{$column_dictionary["__WENDS"]}` = '{$body["__WENDS"]}'";
+        array_push($updated_columns, $body["__WENDS"]);
         break;
 
       default:
