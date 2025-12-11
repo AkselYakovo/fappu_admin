@@ -36,8 +36,6 @@ TOAST;
 
 
 function new_id() {
-    global $__ACCOUNTS;
-    $conn = $GLOBALS['conn'];
     $dictionary = array(
     0 => '0',
     1 => '1',
@@ -56,7 +54,7 @@ function new_id() {
     14 => 'E',
     15 => 'F',
     );
-    // print_r($dictionary);
+
     $year = date('Y');
     $year = substr($year, 2);
 
@@ -70,17 +68,7 @@ function new_id() {
 
     $new_id = "X$year$month-$trailing_digits";
 
-    $q = "SELECT * FROM `$__ACCOUNTS` WHERE `ACCOUNT_ID` = '$new_id'";
-    $results = $conn->query($q);
-
-    // print_r($results);
-
-    if ( $results->fetch_assoc()['num_rows'] == 0 ) {
-        return $new_id;
-    }
-
-    return false;
-    
+    return $new_id;
 }
 
 function createMultipleColumnUpdateString(array $body) {
