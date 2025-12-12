@@ -10,6 +10,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 define('__LINKS', array('accounts', 'websites', 'statistics', 'sales', 'reclaims', 'vendors', 'messages'));
 
 // Link to assets/
+define('__ASSETS', dirname(__DIR__) . "/assets");
 define('_ASSETS', dirname(dirname(__FILE__)) . "/assets");
 define('__URL_ROOT', $_ENV['ROOT_DIR']);
 
