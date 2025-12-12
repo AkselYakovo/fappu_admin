@@ -1,5 +1,5 @@
 <?php
-require_once("./environment.php");
+require_once __DIR__ . "/environment.php";
 
 $main_conn = new mysqli($_ENV["DB_USER"], $_ENV["DB_PASS"], '', $_ENV["DB_NAME"])
     or die('An error occured while trying to initialize the connection to the database.');
