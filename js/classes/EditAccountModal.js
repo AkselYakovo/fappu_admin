@@ -182,20 +182,15 @@ class EditAccountModal extends HTMLElement {
 
   async fetchAccount(accountID) {
     let account
-    const url = "./hub.php"
-    const body = new FormData()
+    const url = "../v1/accounts/" + accountID
     const options = {
-      method: "POST",
-      body: body,
+      method: "GET",
+
     }
 
     if (this.requestExists) {
       return
     }
-
-    body.append("__PULL", "1")
-    body.append("__ACCOUNT", "1")
-    body.append("__ACCOUNT_ID", accountID)
 
     account = await fetch(url, options)
       .then((req) => {

@@ -256,7 +256,7 @@ export class NewWebsiteModal extends HTMLElement {
       return
     }
 
-    const url = "./hub.php"
+    const url = "../v1/websites"
     const body = this.makeRequestBody()
 
     const options = {
