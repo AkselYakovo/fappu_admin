@@ -142,15 +142,10 @@ class NewAccountModal extends HTMLElement {
 
   async fetchWebsites() {
     let websites
-    const url = "./hub.php"
-    const body = new FormData()
+    const url = "../v1/websites"
     const options = {
-      method: "POST",
-      body: body,
+      method: "GET",
     }
-
-    body.append("__PULL", "1")
-    body.append("__WEBSITES", "1")
 
     websites = await fetch(url, options)
       .then((req) => {
@@ -310,7 +305,7 @@ class NewAccountModal extends HTMLElement {
 
     this.requestExists = true
 
-    const url = "./hub.php"
+    const url = "../v1/accounts"
     const body = this.makeRequestBody()
     const options = {
       method: "POST",
