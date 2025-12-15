@@ -61,16 +61,10 @@ class SelectVendor extends HTMLElement {
     }
 
     this.requestExists = true
-    const url = "./hub.php"
-    const data = new FormData()
+    const url = "../v1/vendors/search/" + query
     const body = {
-      method: "POST",
-      body: data,
+      method: "GET",
     }
-
-    data.append("__PULL", "1")
-    data.append("__VENDORS", "1")
-    data.append("__QUERY", query)
 
     const result = await fetch(url, body)
       .then((req) => {

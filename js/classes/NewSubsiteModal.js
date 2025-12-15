@@ -153,7 +153,7 @@ class NewSubsiteModal extends HTMLElement {
       return
     }
 
-    const url = "./hub.php"
+    const url = "../v1/subsites"
     const body = this.makeRequestBody()
 
     const options = {
