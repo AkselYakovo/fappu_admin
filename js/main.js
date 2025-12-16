@@ -1041,46 +1041,14 @@ if (document.querySelector(".card-messages-listing")) {
   })
 
   // + Add event handler for links container.
-  linksContainer.addEventListener("click", function (e) {
+  linksContainer.addEventListener("click", async function (e) {
+    e.preventDefault()
+
     if (e.target.tagName === "A") {
       let page = e.target.innerHTML
+      const URL = `../v1/messages?page=${page}&category=${category}`
 
-      if (!(page in messagesCollection)) {
-        let request = Request({
-          __PULL: "1",
-          __MESSAGES_PAGE: page,
-          __CATEGORY: category,
-        })
-
-        request.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            setTimeout(function () {
-              messagesCollection[page] = []
-              let res = JSON.parse(request.response)
-
-              document
-                .querySelector("ul.pagination")
-                .classList.remove("loading")
-              document
-                .querySelector("ul.pagination li.link--active ")
-                .classList.remove("link--active")
-              e.target.parentElement.classList.add("link--active")
-              document.querySelector("section.content").innerHTML = ""
-
-              for (let message of res) {
-                let node = Factory.createMessageRow(message)
-                Factory.setMessageRow(node)
-                document.querySelector("section.content").appendChild(node)
-                messagesCollection[page].push(node)
-              }
-            }, 2500)
-          }
-        }
-
-        request.onload = function () {
-          document.querySelector("ul.pagination").classList.add("loading")
-        }
-      } else {
+      if (page in messagesCollection) {
         document.querySelector("section.content").innerHTML = ""
         document
           .querySelector("ul.pagination li.link--active ")
@@ -1090,6 +1058,36 @@ if (document.querySelector(".card-messages-listing")) {
         for (let message of messagesCollection[page]) {
           document.querySelector("section.content").append(message)
         }
+
+        return
+      }
+
+      let messages = await fetch(URL)
+        .then((res) => {
+          document.querySelector("ul.pagination").classList.add("loading")
+          if (res.ok) return res.json()
+          else return false
+        })
+        .finally(() => {
+          document.querySelector("ul.pagination").classList.remove("loading")
+        })
+
+      if (!messages) return
+
+      messagesCollection[page] = []
+
+      document
+        .querySelector("ul.pagination li.link--active")
+        .classList.remove("link--active")
+      e.target.parentElement.classList.add("link--active")
+
+      document.querySelector("section.content").innerHTML = ""
+
+      for (let message of messages) {
+        let node = Factory.createMessageRow(message)
+        Factory.setMessageRow(node)
+        document.querySelector("section.content").appendChild(node)
+        messagesCollection[page].push(node)
       }
     }
   })
