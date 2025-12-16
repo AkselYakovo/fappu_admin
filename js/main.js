@@ -139,16 +139,14 @@ if (document.querySelector("new-subsite-modal")) {
       site = document.querySelector("h2.site-code").innerHTML,
       logoImage = document.querySelector("figure.site-logo img"),
       data = new FormData(),
-      url = "./hub.php"
+      url = "../v1/websites/logo"
 
+    const image = new Image()
     const body = {
       method: "POST",
       body: data,
     }
-    const image = new Image()
 
-    data.append("__PUT", "1")
-    data.append("__WEBSITE_LOGO", "1")
     data.append("__SITE_CODE", site)
     data.append("__NEW_LOGO", file)
 
@@ -222,22 +220,15 @@ if (
   }
 
   let screens = new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest()
-    let data = new FormData()
-    data.append("__PULL", "1")
-    data.append("__SCREENS", "1")
-    data.append("__SITE_CODE", site)
-
-    request.open("POST", "./hub.php")
-    request.send(data)
-
-    request.onreadystatechange = function () {
-      if (this.readyState == 4) resolve(JSON.parse(request.responseText))
+    const URL = `../v1/websites/${site}/screens`
+    const options = {
+      method: "GET",
     }
 
-    request.onerror = function () {
-      reject("Error with Server.")
-    }
+    fetch(URL, options).then((res) => {
+      if (res.ok) resolve(res.json())
+      else reject("Error with server")
+    })
   })
 
   screens
@@ -878,25 +869,14 @@ if (document.querySelector("#Reclaim-Modal")) {
       if (reclaimID) {
         modal.open()
         let promise = new Promise((resolve) => {
-          let request = new XMLHttpRequest()
-          let data = new FormData()
-
-          data.append("__PULL", "1")
-          data.append("__RECLAIM", "1")
-          data.append("__ID", reclaimID)
-          // data.append('__', '');
-          // data.append('__', '');
-
-          request.open("POST", "./hub.php")
-          setTimeout(() => {
-            request.send(data)
-          }, 2225)
-
-          request.onreadystatechange = function () {
-            if (this.status == 200 && this.readyState == 4) {
-              resolve(JSON.parse(this.response))
-            }
+          const URL = `../v1/reclaims/${reclaimID}`
+          let body = {
+            method: "GET",
           }
+
+          fetch(URL, body).then((res) => {
+            if (res.ok) resolve(res.json())
+          })
         })
 
         promise.then((data) => {
@@ -915,27 +895,30 @@ if (document.querySelector("#Reclaim-Modal")) {
 
   // Close modal when button is activated.
   resolveButton.addEventListener("click", function () {
-    let request = new XMLHttpRequest()
-    let data = new FormData()
+    const URL = "../v1/reclaims/resolve"
     let reclaimID = modal.node.querySelector("a#reclaim-id").innerHTML
-
-    data.append("__UPDATE", "1")
-    data.append("__SOLVE_RECLAIM", "1")
-    data.append("__ID", reclaimID)
-
-    request.open("POST", "./hub.php")
-    request.send(data)
-
-    request.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        // console.log(this.responseText)
-        globalThis.rowTarget.classList.remove("not-solved")
-        globalThis.rowTarget.classList.add("solved")
-      }
+    let data = {
+      __RECLAIM_ID: reclaimID,
+    }
+    const body = {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
 
-    modal.close()
-    modal.flush()
+    fetch(URL, body)
+      .then((res) => {
+        if (res.ok) {
+          globalThis.rowTarget.classList.remove("not-solved")
+          globalThis.rowTarget.classList.add("solved")
+        }
+      })
+      .finally(() => {
+        modal.close()
+        modal.flush()
+      })
   })
 }
 
