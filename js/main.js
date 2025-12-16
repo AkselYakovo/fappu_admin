@@ -1150,59 +1150,86 @@ if (document.querySelector(".card-messages-listing")) {
   // Category selection handlers.
   document
     .querySelector(".toolbar.selection")
-    .addEventListener("click", function (e) {
+    .addEventListener("click", async function (e) {
       if (e.target.tagName !== "LI") return // Target ONLY list items.
 
-      let cat = this.getAttribute("data-display")
+      let newCategory = this.getAttribute("data-display")
 
-      if (category !== cat) {
-        category = cat
+      if (category !== newCategory && newCategory !== "ALL") {
+        category = newCategory
+        const URL = `../v1/messages/total?category=${newCategory}`
         messagesCollection = {}
 
-        Request({
-          __PULL: "1",
-          __TOTAL_MESSAGES: "1",
-          __CATEGORY: category,
-        }).onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            let messages = JSON.parse(this.response)
-            content.innerHTML = ""
+        let totalNumber = await fetch(URL).then((res) => {
+          if (res.ok) return res.json()
+          else return false
+        })
 
-            Pagination.rewrite(
-              document.querySelector("ul.pagination"),
-              messages["TOTAL"],
-              Pagination.MESSAGES_PER_PAGE
-            )
+        if (!totalNumber) return
 
-            for (let index in messages) {
-              if (Number.isNaN(Number.parseInt(messages[index]))) {
-                let node = Factory.createMessageRow(messages[index])
-                Factory.setMessageRow(node)
-                content.appendChild(node)
-                // console.log(messages[index]);
-              }
-            }
-          }
+        content.innerHTML = ""
+
+        Pagination.rewrite(
+          document.querySelector("ul.pagination"),
+          totalNumber["TOTAL_MESSAGES"],
+          Pagination.MESSAGES_PER_PAGE
+        )
+
+        let messages = await fetch(`../v1/messages?page=1&category=${category}`)
+          .then((res) => {
+            document.querySelector("ul.pagination").classList.add("loading")
+            if (res.ok) return res.json()
+            else return false
+          })
+          .finally(() => {
+            document.querySelector("ul.pagination").classList.remove("loading")
+          })
+
+        if (!messages) return
+
+        for (let message of messages) {
+          let node = Factory.createMessageRow(message)
+          Factory.setMessageRow(node)
+          document.querySelector("section.content").appendChild(node)
         }
-      } else if (category != cat && category == "ALL") {
-        category = cat
-        messagesCollection = {}
+      } else if (category !== newCategory && newCategory === "ALL") {
+        const URL = "../v1/messages/total"
 
-        Request({
-          __PULL: "1",
-          __TOTAL_MESSAGES: "1",
-          __CATEGORY: "",
-        }).onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            let messages = JSON.parse(this.response)
-            Pagination.rewrite(
-              document.querySelector("ul.pagination"),
-              messages["TOTAL"],
-              Pagination.MESSAGES_PER_PAGE
-            )
-          }
+        let totalNumber = await fetch(URL).then((res) => {
+          if (res.ok) return res.json()
+          else return false
+        })
+
+        if (!totalNumber) return
+
+        content.innerHTML = ""
+
+        Pagination.rewrite(
+          document.querySelector("ul.pagination"),
+          totalNumber["TOTAL_MESSAGES"],
+          Pagination.MESSAGES_PER_PAGE
+        )
+
+        let messages = await fetch("../v1/messages?page=1")
+          .then((res) => {
+            document.querySelector("ul.pagination").classList.add("loading")
+            if (res.ok) return res.json()
+            else return false
+          })
+          .finally(() => {
+            document.querySelector("ul.pagination").classList.remove("loading")
+          })
+
+        if (!messages) return
+
+        for (let message of messages) {
+          let node = Factory.createMessageRow(message)
+          Factory.setMessageRow(node)
+          document.querySelector("section.content").appendChild(node)
         }
       }
+
+      category = newCategory
     })
 
   // let pagination = {
