@@ -185,7 +185,6 @@ class EditAccountModal extends HTMLElement {
     const url = "../v1/accounts/" + accountID
     const options = {
       method: "GET",
-
     }
 
     if (this.requestExists) {
@@ -305,7 +304,9 @@ class EditAccountModal extends HTMLElement {
   }
 
   makeRequestBody() {
-    const body = new FormData()
+    const body = {
+      __ACCOUNT_ID: this.accountId,
+    }
     const dictionary = new Map()
 
     dictionary.set("Warranty Begins", "__WBEGINS")
@@ -315,18 +316,14 @@ class EditAccountModal extends HTMLElement {
     dictionary.set("Price", "__PRICE")
     dictionary.set("Offers", "__AVAILABLE_ACCOUNTS")
 
-    body.append("__PUT", "1")
-    body.append("__ACCOUNT", "1")
-    body.append("__ACCOUNT_ID", this.accountId)
-
     for (const diffInput of this.diffInputCollection.collection) {
       const translatedLabel = dictionary.get(diffInput.label)
       if (translatedLabel === "__PRICE") {
-        body.append(translatedLabel, diffInput.node.getNumberValue())
+        body[translatedLabel] = diffInput.node.getNumberValue()
         continue
       }
 
-      body.append(translatedLabel, diffInput.value)
+      body[translatedLabel] = diffInput.value
     }
 
     return body
@@ -484,11 +481,14 @@ class EditAccountModal extends HTMLElement {
       return
     }
 
-    const url = "./hub.php"
+    const url = "../v1/accounts"
     const body = this.makeRequestBody()
     const options = {
-      method: "POST",
-      body: body,
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
 
     this.requestExists = true
