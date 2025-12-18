@@ -14,7 +14,11 @@
     "test.ModalPriceInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPriceInput.test.js",
     "test.ModalPictureInput": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose --watchAll ModalPictureInput.test.js",
     "test.api.websites": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/websitesApi.test.js",
-    "test.api.accounts": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/accountsApi.test.js"
+    "test.api.accounts": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/accountsApi.test.js",
+    "test.api.reclaims": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/reclaimsApi.test.js",
+    "test.api.messages": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/messagesApi.test.js",
+    "test.api.vendors": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/vendorsApi.test.js",
+    "test.api": "node --experimental-vm-modules node_modules/jest/bin/jest.js --env='jsdom' --verbose ./__test__/api/"
   },
   "keywords": [],
   "author": "",
