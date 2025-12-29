@@ -152,7 +152,7 @@ class ModalPriceInput extends HTMLElement {
 
   rewrite() {
     this.field.value = this.field.dollars
-      ? this.field.dollars + "." + this.field.cents + " MXN/MONTH"
+      ? "$" + this.field.dollars + "." + this.field.cents + " MXN/MONTH"
       : ""
     this.field.setSelectionRange(this.field.caret, this.field.caret)
   }
