@@ -22,7 +22,7 @@ describe("basic typing functionality", () => {
   test("typing of simple numbers", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const validInput = "123"
-      const expectedValue = "123.00 MXN/MONTH"
+      const expectedValue = "$123.00 MXN/MONTH"
 
       for (let i = 0; i < validInput.length; i++) {
         const char = validInput[i]
@@ -40,7 +40,7 @@ describe("basic typing functionality", () => {
   test("typing of invalid characters", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const invalidInput = "ASD$123,,~@#&*"
-      const expectedValue = "123.00 MXN/MONTH"
+      const expectedValue = "$123.00 MXN/MONTH"
 
       for (let i = 0; i < invalidInput.length; i++) {
         const char = invalidInput[i]
@@ -59,7 +59,7 @@ describe("basic typing functionality", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const initialInput = "890"
       const lastInput = "75"
-      const expectedValue = "875.00 MXN/MONTH"
+      const expectedValue = "$875.00 MXN/MONTH"
 
       for (let i = 0; i < initialInput.length; i++) {
         const char = initialInput[i]
@@ -93,7 +93,7 @@ describe("basic typing functionality", () => {
   test("typing decimal numbers", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const invalidInput = "123.45"
-      const expectedValue = "123.45 MXN/MONTH"
+      const expectedValue = "$123.45 MXN/MONTH"
 
       for (let i = 0; i < invalidInput.length; i++) {
         const char = invalidInput[i]
@@ -127,7 +127,7 @@ describe("edge-cases typing functionality", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const leadingZeroes = "000"
       const validInput = "123"
-      const expectedValue = "123.00 MXN/MONTH"
+      const expectedValue = "$123.00 MXN/MONTH"
 
       for (let i = 0; i < leadingZeroes.length; i++) {
         const char = leadingZeroes[i]
@@ -155,7 +155,7 @@ describe("edge-cases typing functionality", () => {
     customElements.whenDefined("modal-price-input").then(() => {
       const initialValue = "1"
       const validInput = "23"
-      const expectedValue = "123.00 MXN/MONTH"
+      const expectedValue = "$123.00 MXN/MONTH"
 
       priceInput.value = initialValue
       fireEvent.focus(priceInput.field)
@@ -182,7 +182,7 @@ describe("edge-cases typing functionality", () => {
       let decimalPointPos
       const initialValue = "123"
       const decimalValue = "45"
-      const expectedValue = "123.45 MXN/MONTH"
+      const expectedValue = "$123.45 MXN/MONTH"
 
       priceInput.value = initialValue
       decimalPointPos = priceInput.field.value.indexOf(".")
