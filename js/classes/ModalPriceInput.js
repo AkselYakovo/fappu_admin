@@ -59,15 +59,18 @@ class ModalPriceInput extends HTMLElement {
     const dollarsAndCents = this.field.dollars + "." + this.field.cents
 
     // Initial empty field
-    if (this.field.dollars === "0") {
+    if (this.field.dollars === "0" || !this.field.dollars) {
       this.field.dollars = key
       this.field.caret = 1
     }
     // When caret is on dollars section
-    else if (this.field.caret < this.field.dollars.length) {
+    else if (
+      this.field.caret > 0 &&
+      this.field.caret <= this.field.dollars.length + 1
+    ) {
       // Caret is not at the final pos of dollars
-      if (this.field.caret !== this.field.dollars.length) {
         const leftDigits = this.field.dollars.substr(0, this.field.caret)
+      if (this.field.caret !== this.field.dollars.length + 1) {
         const rightDigits = this.field.dollars.substr(
           this.field.caret,
           this.field.dollars.length
@@ -82,13 +85,13 @@ class ModalPriceInput extends HTMLElement {
     }
     // When caret is on cents section
     else if (
-      this.field.caret > this.field.dollars.length &&
-      this.field.caret < dollarsAndCents.length
+      this.field.caret > this.field.dollars.length + 1 &&
+      this.field.caret < dollarsAndCents.length + 1
     ) {
-      if (this.field.caret === dollarsAndCents.length - 2) {
+      if (this.field.caret === dollarsAndCents.length - 1) {
         // Caret will edit .nX
         this.field.cents = key + this.field.cents[1]
-      } else if (this.field.caret === dollarsAndCents.length - 1) {
+      } else if (this.field.caret === dollarsAndCents.length) {
         // Caret will edit .Xn
         this.field.cents = this.field.cents[0] + key
         this.field.blur()
@@ -118,31 +121,31 @@ class ModalPriceInput extends HTMLElement {
 
       case "Backspace":
         if (
-          this.field.caret > this.field.dollars.length &&
-          this.field.caret < dollarsAndCents.length + 1
+          this.field.caret > this.field.dollars.length + 1 &&
+          this.field.caret <= dollarsAndCents.length + 1
         ) {
-          if (this.field.caret === dollarsAndCents.length - 1)
             // Caret will edit .0X
+          if (this.field.caret === dollarsAndCents.length)
             this.field.cents = "0" + this.field.cents[1]
-          else if (this.field.caret === dollarsAndCents.length)
             // Caret will edit .X0
+          else if (this.field.caret === dollarsAndCents.length + 1)
             this.field.cents = this.field.cents[0] + "0"
 
           this.field.caret = this.field.caret - 1
-        } else if (this.field.caret > dollarsAndCents.length) {
-          this.field.dollars = this.field.dollars.substr(
-            0,
-            this.field.dollars.length - 1
-          )
-          this.field.caret = this.field.dollars.length
-        } else {
-          const leftDigits = this.field.dollars.substr(0, this.field.caret - 1)
+        } else if (
+          this.field.caret > 0 &&
+          this.field.caret <= this.field.dollars.length + 1
+        ) {
           const rightDigits = this.field.dollars.substr(
             this.field.caret,
             this.field.dollars.length
           )
           this.field.dollars = leftDigits + rightDigits
           this.field.caret = this.field.caret - 1
+        } else if (
+          this.field.caret > dollarsAndCents.length + 1 &&
+          this.field.caret > 0
+        ) {
         }
 
         this.rewrite()
