@@ -61,7 +61,7 @@ class ModalPriceInput extends HTMLElement {
     // Initial empty field
     if (this.field.dollars === "0" || !this.field.dollars) {
       this.field.dollars = key
-      this.field.caret = 1
+      this.field.caret = 2
     }
     // When caret is on dollars section
     else if (
@@ -69,20 +69,20 @@ class ModalPriceInput extends HTMLElement {
       this.field.caret <= this.field.dollars.length + 1
     ) {
       // Caret is not at the final pos of dollars
-        const leftDigits = this.field.dollars.substr(0, this.field.caret)
       if (this.field.caret !== this.field.dollars.length + 1) {
+        const leftDigits = this.field.dollars.substr(0, this.field.caret - 1)
         const rightDigits = this.field.dollars.substr(
-          this.field.caret,
+          this.field.caret - 1,
           this.field.dollars.length
         )
         this.field.dollars = leftDigits + key + rightDigits
-        this.field.caret = this.field.caret
+        this.field.caret = this.field.caret + 1
       }
       // Caret is at the final pos of dollars
       else {
         this.field.dollars =
           this.field.dollars[0] === "0" ? key : this.field.dollars + key
-        this.field.caret = this.field.dollars.length
+        this.field.caret = this.field.dollars.length + 1
       }
     }
     // When caret is on cents section
@@ -103,7 +103,7 @@ class ModalPriceInput extends HTMLElement {
     // When caret is anywhere else
     else {
       this.field.dollars = this.field.dollars + key
-      this.field.caret = this.field.dollars.length
+      this.field.caret = this.field.dollars.length + 1
     }
 
     this.rewrite()
@@ -138,8 +138,9 @@ class ModalPriceInput extends HTMLElement {
           this.field.caret > 0 &&
           this.field.caret <= this.field.dollars.length + 1
         ) {
+          const leftDigits = this.field.dollars.substr(0, this.field.caret - 2)
           const rightDigits = this.field.dollars.substr(
-            this.field.caret,
+            this.field.caret - 1,
             this.field.dollars.length
           )
           this.field.dollars = leftDigits + rightDigits
