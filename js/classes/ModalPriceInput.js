@@ -77,7 +77,9 @@ class ModalPriceInput extends HTMLElement {
         )
         this.field.dollars = leftDigits + key + rightDigits
         this.field.caret = this.field.caret
-      } else {
+      }
+      // Caret is at the final pos of dollars
+      else {
         this.field.dollars =
           this.field.dollars[0] === "0" ? key : this.field.dollars + key
         this.field.caret = this.field.dollars.length
