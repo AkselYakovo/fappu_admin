@@ -149,6 +149,11 @@ class ModalPriceInput extends HTMLElement {
           this.field.caret > dollarsAndCents.length + 1 &&
           this.field.caret > 0
         ) {
+          this.field.dollars = this.field.dollars.substr(
+            0,
+            this.field.dollars.length - 1
+          )
+          this.field.caret = this.field.dollars.length + 1
         }
 
         this.rewrite()
