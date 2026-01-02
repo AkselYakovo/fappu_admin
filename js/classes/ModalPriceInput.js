@@ -126,11 +126,11 @@ class ModalPriceInput extends HTMLElement {
           this.field.caret > this.field.dollars.length + 1 &&
           this.field.caret <= dollarsAndCents.length + 1
         ) {
-            // Caret will edit .0X
           if (this.field.caret === dollarsAndCents.length)
+            // Caret will edit .XX -> .0X
             this.field.cents = "0" + this.field.cents[1]
-            // Caret will edit .X0
           else if (this.field.caret === dollarsAndCents.length + 1)
+            // Caret will edit .XX -> .X0
             this.field.cents = this.field.cents[0] + "0"
 
           this.field.caret = this.field.caret - 1
