@@ -20,7 +20,7 @@ class ModalPriceInput extends HTMLElement {
     this.field = this.root.querySelector("input[type='text']")
     this.field.dollars = "0"
     this.field.cents = "00"
-    this.field.caret = null
+    this.field.caret = 0
   }
 
   connectedCallback() {
@@ -57,6 +57,9 @@ class ModalPriceInput extends HTMLElement {
 
   writeNumber(key) {
     const dollarsAndCents = this.field.dollars + "." + this.field.cents
+
+    // Avoiding leading zeroes right after "$" sign
+    if (key === "0" && this.field.caret === 1) return
 
     // Initial empty field
     if (this.field.dollars === "0" || !this.field.dollars) {
