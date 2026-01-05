@@ -176,7 +176,7 @@ class NewAccountModal extends HTMLElement {
   makeRequestBody() {
     const formData = new FormData()
     formData.append("__FUN", "New Account")
-    formData.append("__WEBSITE", this.selectWebsiteNode.label)
+    formData.append("__WEBSITE", this.selectWebsiteNode.optionChosen.code)
     formData.append("__NICK", this.usernameInput.value)
     formData.append("__PASS", this.passwordInput.value)
     formData.append("__PRICE", this.priceInputNode.value)
