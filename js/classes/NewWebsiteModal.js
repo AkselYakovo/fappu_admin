@@ -252,6 +252,7 @@ export class NewWebsiteModal extends HTMLElement {
   submit() {
     if (this.stage === 1) {
       this.showSecondStage()
+      return
     } else if (!this.validateModal()) {
       return
     }
