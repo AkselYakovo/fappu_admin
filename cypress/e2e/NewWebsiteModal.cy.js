@@ -34,7 +34,7 @@ describe("basic functionality", () => {
       .should("not.be.visible")
   })
 
-  it("prevents form submision when fields are invalid", () => {
+  it("prevents form submission when fields are invalid", () => {
     cy.get("new-website-modal").then(($modal) => {
       const modal = $modal[0]
       const formSubmit = cy.stub(modal, "submit").as("formSubmitMethod")
