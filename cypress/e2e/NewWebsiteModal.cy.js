@@ -51,7 +51,6 @@ describe("basic functionality", () => {
   it("shows second stage when next button is pressed", () => {
     cy.get("new-website-modal").then(($modal) => {
       const modal = $modal[0]
-      const formSubmit = cy.stub(modal, "submit").as("formSubmitMethod")
 
       cy.wrap($modal).shadow().find("button.next").should("exist")
       cy.wrap($modal).shadow().find("button.next").click()
