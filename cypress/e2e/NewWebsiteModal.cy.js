@@ -37,7 +37,7 @@ describe("basic functionality", () => {
   it("prevents form submission when fields are invalid", () => {
     cy.get("new-website-modal").then(($modal) => {
       const modal = $modal[0]
-      const formSubmit = cy.stub(modal, "submit").as("formSubmitMethod")
+      const formSubmit = cy.stub(modal, "makeRequestBody").as("formSubmitMethod")
 
       modal.showSecondStage()
 
