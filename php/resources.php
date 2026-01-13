@@ -28,6 +28,7 @@ $__RECLAIMS = $_ENV['DB_TB_RECLAIMS'];
 $__SALES = $_ENV['DB_TB_SALES'];
 $__MESSAGES = $_ENV['DB_TB_MESSAGES'];
 $__VENDORS = $_ENV['DB_TB_VENDORS'];
+$__USERS = $_ENV['DB_TB_USERS'];
 
 function get_date_diff(string $str) 
 {
