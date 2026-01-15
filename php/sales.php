@@ -1,5 +1,11 @@
 <?php
+session_start();
+
 require_once(dirname(__FILE__) . "/resources.php");
+
+if (!isset($_SESSION['user'])) {
+    header('Location:' . $_ENV['ROOT_DIR'] . '/login' );
+}
 
 $actual_website = "sales";
 $actual_site = $_GET['website'] ?? false;

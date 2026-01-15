@@ -1,5 +1,12 @@
 <?php
+session_start();
+
 require_once(dirname(__FILE__) . '/resources.php');
+
+if (!isset($_SESSION['user'])) {
+    header('Location:' . $_ENV['ROOT_DIR'] . '/login' );
+}
+
 require_once(dirname(__FILE__) . '/_general.php');
 
 // # Important variables for single page accounts page..

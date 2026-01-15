@@ -1,5 +1,12 @@
 <?php
+session_start();
+
 include(dirname(__FILE__) . '/resources.php');
+
+if (!isset($_SESSION['user'])) {
+    header('Location:' . $_ENV['ROOT_DIR'] . '/login' );
+}
+
 include (dirname(__FILE__) .'/_general.php');
 
 $actual_website = "vendors";
