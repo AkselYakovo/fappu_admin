@@ -33,4 +33,5 @@
     ?>
     </ul>
     </div>
+    <a class="page-link" href="<?= $_ENV['ROOT_DIR'] . '/logout' ?>">Log Out</a>
 </header>
