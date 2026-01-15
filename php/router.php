@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require __DIR__ . "/resources.php";
 
 use Slim\Factory\AppFactory;
@@ -347,6 +349,36 @@ $app->post("/v1/accounts", function (Request $request, Response $response) {
 
   $response->getBody()->write("Account created.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(201);
+});
+
+$app->post("/v1/users", function (Request $request, Response $response) {
+  global $main_conn, $__USERS;
+
+  $body = $request->getParsedBody();
+  $username = clean_txt($body['Username']);
+  $password = clean_txt($body['Password']);
+
+  $stmp = $main_conn->prepare("SELECT * FROM `$__USERS` WHERE `USERNAME` = ?");
+  $stmp->bind_param("s", $username);
+  $stmp->execute();
+  $results = $stmp->get_result()->fetch_assoc();
+
+  if (!$main_conn->affected_rows) {
+    return $response->withHeader('Location', $_ENV['ROOT_DIR'] . '/login?error_banner=1')->withStatus(302);
+  }
+
+  $hashed_password = $results['password'];
+
+  if (!password_verify($password, $hashed_password)) {
+    return $response->withHeader('Location', $_ENV['ROOT_DIR'] . '/login?error_banner=1')->withStatus(302);
+  }
+
+  $_SESSION['user'] = $results['ID'];
+  $_SESSION['username'] = $results['username'];
+  $_SESSION['priviledges'] = $results['access_level'];
+  $_SESSION['loggedInOn'] = date('Y m d H:i:s');
+
+  return $response->withHeader('Location', $_ENV['ROOT_DIR'] . '/accounts')->withStatus(302);
 });
 
 $app->post("/v1/subsites", function (Request $request, Response $response) {
