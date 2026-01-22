@@ -6,6 +6,9 @@ require __DIR__ . "/resources.php";
 use Slim\Factory\AppFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Firebase\JWT\JWT;
+
+require __DIR__ . "/middleware/auth.php";
 
 $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
@@ -23,7 +26,7 @@ $app->get("/v1/websites", function (Request $request, Response $response) {
   $data = json_encode($final_list);
   $response->getBody()->write($data);
   return $response->withHeader("Content-Type", "application/json",)->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/accounts/{accountID}', function (Request $request, Response $response, $args) {
   global $main_conn, $__WEBSITES, $__ACCOUNTS;
@@ -60,7 +63,7 @@ $app->get('/v1/accounts/{accountID}', function (Request $request, Response $resp
 
   $response->getBody()->write(json_encode($account_data));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/accounts_killed/{accountID}', function (Request $request, Response $response, $args) {
   global $main_conn, $__ACCOUNTS, $__ACCOUNTS_KILLED;
@@ -93,7 +96,7 @@ $app->get('/v1/accounts_killed/{accountID}', function (Request $request, Respons
 
   $response->getBody()->write(json_encode($account_data));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/websites/{website}/screens', function (Request $request, Response $response, $args) {
   global $main_conn, $__WEBSITES_CHILDREN;
@@ -114,7 +117,7 @@ $app->get('/v1/websites/{website}/screens', function (Request $request, Response
   $screens_arr = json_encode(explode('/', $screens));
   $response->getBody()->write($screens_arr);
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/vendors/search/{vendor}', function (Request $request, Response $response, $args) {
   global $main_conn, $__VENDORS;
@@ -136,7 +139,7 @@ $app->get('/v1/vendors/search/{vendor}', function (Request $request, Response $r
 
   $response->getBody()->write(json_encode($vendors_list));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/reclaims/{reclaimID}', function (Request $request, Response $response, $args) {
   global $main_conn, $__RECLAIMS, $__ACCOUNTS, $__ACCOUNTS_KILLED;
@@ -169,7 +172,7 @@ $app->get('/v1/reclaims/{reclaimID}', function (Request $request, Response $resp
 
   $response->getBody()->write(json_encode($results->fetch_assoc()));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/messages', function (Request $request, Response $response, $args) {
   global $main_conn, $__MESSAGES;
@@ -200,7 +203,7 @@ $app->get('/v1/messages', function (Request $request, Response $response, $args)
 
   $response->getBody()->write(json_encode($messages));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->get('/v1/messages/total', function (Request $request, Response $response, $args) {
   global $main_conn, $__MESSAGES;
@@ -222,7 +225,7 @@ $app->get('/v1/messages/total', function (Request $request, Response $response, 
   );
   $response->getBody()->write(json_encode($total));
   return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->post("/v1/websites", function (Request $request, Response $response) {
   global $main_conn, $__WEBSITES, $__WEBSITES_CHILDREN;
@@ -313,7 +316,7 @@ $app->post("/v1/websites", function (Request $request, Response $response) {
 
   $response->getBody()->write("Website \"$site_title\" created");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(201);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->post("/v1/accounts", function (Request $request, Response $response) {
   require_once __DIR__ . '/fun/accounts.php';
@@ -349,7 +352,7 @@ $app->post("/v1/accounts", function (Request $request, Response $response) {
 
   $response->getBody()->write("Account created.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(201);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->post("/v1/users", function (Request $request, Response $response) {
   global $main_conn, $__USERS;
@@ -479,7 +482,7 @@ $app->post("/v1/subsites", function (Request $request, Response $response) {
 
   $response->getBody()->write("Subsite Created.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(201);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->post("/v1/vendors", function (Request $request, Response $response) {
   global $main_conn, $__VENDORS;
@@ -518,7 +521,7 @@ $app->post("/v1/vendors", function (Request $request, Response $response) {
 
   $response->getBody()->write("Vendor Created.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(201);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->post("/v1/websites/logo", function (Request $request, Response $response) {
   global $main_conn, $__WEBSITES;
@@ -542,7 +545,7 @@ $app->post("/v1/websites/logo", function (Request $request, Response $response) 
 
   $response->getBody()->write("No resource was modified.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->patch('/v1/accounts', function (Request $request, Response $response) {
   require_once __DIR__ . '/fun/accounts.php';
@@ -566,7 +569,7 @@ $app->patch('/v1/accounts', function (Request $request, Response $response) {
 
   $response->getBody()->write("Account \"$account_id\" has been updated.");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->patch('/v1/accounts/kill', function (Request $request, Response $response) {
   global $main_conn, $__ACCOUNTS, $__ACCOUNTS_KILLED;
@@ -599,7 +602,7 @@ $app->patch('/v1/accounts/kill', function (Request $request, Response $response)
 
   $response->getBody()->write("Account \"$account_id\" has been updated");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->patch('/v1/accounts/revive', function (Request $request, Response $response) {
   global $main_conn, $__ACCOUNTS, $__ACCOUNTS_KILLED;
@@ -631,7 +634,7 @@ $app->patch('/v1/accounts/revive', function (Request $request, Response $respons
 
   $response->getBody()->write("Account \"$account_id\" has been updated");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->patch('/v1/reclaims/resolve', function (Request $request, Response $response) {
   global $main_conn, $__RECLAIMS;
@@ -655,7 +658,7 @@ $app->patch('/v1/reclaims/resolve', function (Request $request, Response $respon
 
   $response->getBody()->write("Account \"$reclaim_id\" has been updated");
   return $response->withHeader('Content-Type', 'text/text')->withStatus(200);
-});
+})->add(new AuthMiddleware($app->getResponseFactory()));
 
 $app->run();
 
