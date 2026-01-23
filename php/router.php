@@ -357,6 +357,7 @@ $app->post("/v1/accounts", function (Request $request, Response $response) {
 $app->post("/v1/users", function (Request $request, Response $response) {
   global $main_conn, $__USERS;
 
+  $key = $_ENV['SECRET'];
   $body = $request->getParsedBody();
   $username = clean_txt($body['Username']);
   $password = clean_txt($body['Password']);
@@ -376,10 +377,15 @@ $app->post("/v1/users", function (Request $request, Response $response) {
     return $response->withHeader('Location', $_ENV['ROOT_DIR'] . '/login?error_banner=1')->withStatus(302);
   }
 
+  $data = array(
+    'user' => $results['username'],
+    'priviledges' => $results['access_level'],
+    'loggedInDate' => date('Y m d H:i:s'),
+    'exp' => time() + 3600,
+  );
+
   $_SESSION['user'] = $results['ID'];
-  $_SESSION['username'] = $results['username'];
-  $_SESSION['priviledges'] = $results['access_level'];
-  $_SESSION['loggedInOn'] = date('Y m d H:i:s');
+  $_SESSION['jwt'] = JWT::encode($data, $key, 'HS256');
 
   return $response->withHeader('Location', $_ENV['ROOT_DIR'] . '/accounts')->withStatus(302);
 });
