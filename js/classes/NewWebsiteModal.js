@@ -215,12 +215,12 @@ export class NewWebsiteModal extends HTMLElement {
     )
     this.addInput(
       this.siteNormalPriceInput,
-      /^[1-9]+\d{0,2}\.\d\d MXN\/MONTH$/i,
+      /^\$[1-9]+\d{0,2}\.\d\d MXN\/MONTH$/i,
       {}
     )
     this.addInput(
       this.siteSalePriceInput,
-      /^[1-9]+\d{0,2}\.\d\d MXN\/MONTH$/i,
+      /^\$[1-9]+\d{0,2}\.\d\d MXN\/MONTH$/i,
       {}
     )
   }
