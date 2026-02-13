@@ -75,6 +75,8 @@ class QuantityInput extends HTMLElement {
     const parsedInt = Number.parseInt(value)
     if (!Number.isFinite(parsedInt)) return
 
+    if (parsedInt < this.min || parsedInt > this.max) return
+
     this.currentValue = parsedInt
     this.numberLabel.innerHTML = parsedInt
   }
