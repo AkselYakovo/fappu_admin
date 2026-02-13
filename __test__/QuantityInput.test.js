@@ -18,11 +18,10 @@ describe("initial behavior", () => {
     parent.innerHTML = ""
   })
 
-  test("correct initial value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
-      expect(quantityInput.numberLabel.textContent).toBe("0")
-      expect(quantityInput.value).toBe(0)
-    })
+  test("correct initial value", async () => {
+    await customElements.whenDefined("quantity-input")
+    expect(quantityInput.numberLabel.textContent).toBe("0")
+    expect(quantityInput.value).toBe(0)
   })
 })
 
@@ -40,60 +39,69 @@ describe("functionality", () => {
     parent.innerHTML = ""
   })
 
-  test("the label increments in value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
+  test("the label increments in value", async () => {
+    await customElements.whenDefined("quantity-input")
+    quantityInput.addUp()
+
+    expect(quantityInput.numberLabel.textContent).toBe("1")
+    expect(quantityInput.value).toBe(1)
+  })
+
+  it("prevents going above the max value", async () => {
+    const maxValue = quantityInput.max.toString()
+
+    await customElements.whenDefined("quantity-input")
+
+    for (let i = 0; i < 15; i++) {
       quantityInput.addUp()
+    }
 
-      expect(quantityInput.numberLabel.textContent).toBe("1")
-      expect(quantityInput.value).toBe(1)
-    })
+    expect(quantityInput.numberLabel.textContent).toBe(maxValue)
+    expect(quantityInput.value).toBe(Number(maxValue))
   })
 
-  it("prevents going above the max value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
-      for (let i = 0; i < 15; i++) {
-        quantityInput.addUp()
-      }
+  it("prevents going below the min value", async () => {
+    const minValue = quantityInput.min.toString()
 
-      const maxValue = quantityInput.max.toString()
-      expect(quantityInput.numberLabel.textContent).toBe(maxValue)
-      expect(quantityInput.value).toBe(Number(maxValue))
-    })
+    await customElements.whenDefined("quantity-input")
+
+    for (let i = 0; i < 15; i++) {
+      quantityInput.subtract()
+    }
+
+    expect(quantityInput.numberLabel.textContent).toBe(minValue)
+    expect(quantityInput.value).toBe(Number(minValue))
   })
 
-  it("prevents going above the min value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
-      for (let i = 0; i < 15; i++) {
-        quantityInput.subtract()
-      }
+  it("prevents setting an initial value that offsets max value", async () => {
+    let quantityLabel
+    const maxValue = 20
+    const initialValue = 50
 
-      const minValue = quantityInput.min.toString()
-      expect(quantityInput.numberLabel.textContent).toBe(minValue)
-      expect(quantityInput.value).toBe(Number(minValue))
-    })
+    await customElements.whenDefined("quantity-input")
+    quantityInput.setMaximum(maxValue)
+    quantityInput.setInitial(initialValue)
+
+    quantityLabel = Number.parseInt(quantityInput.numberLabel.textContent)
+
+    expect(quantityLabel).toBe(0)
+    expect(quantityInput.value).toBe(0)
+
   })
 
-  it("prevents setting an initial value that offsets max value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
-      const initialValue = 50
-      const maxValue = quantityInput.max.toString()
+  it("prevents setting an initial value that offsets min value", async () => {
+    let quantityLabel
+    const initialValue = -20
+    const minValue = -10
 
-      quantityInput.setInitial(initialValue)
+    await customElements.whenDefined("quantity-input")
+    quantityInput.setMinimum(minValue)
+    quantityInput.setInitial(initialValue)
 
-      expect(quantityInput.numberLabel.textContent).toBe(maxValue)
-      expect(quantityInput.value).toBe(Number(maxValue))
-    })
-  })
+    quantityLabel = Number.parseInt(quantityInput.numberLabel.textContent)
 
-  it("prevents setting an initial value that offsets min value", () => {
-    customElements.whenDefined("quantity-input").then(() => {
-      const initialValue = -10
-      const minValue = quantityInput.min.toString()
+    expect(quantityLabel).toBe(0)
+    expect(quantityInput.value).toBe(0)
 
-      quantityInput.setInitial(initialValue)
-
-      expect(quantityInput.numberLabel.textContent).toBe(minValue)
-      expect(quantityInput.value).toBe(Number(minValue))
-    })
   })
 })

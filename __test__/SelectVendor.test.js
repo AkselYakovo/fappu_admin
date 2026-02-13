@@ -12,13 +12,13 @@ global.fetch = jest.fn(() =>
       Promise.resolve([
         {
           ID: "TESTA",
-          EMAIL: "jon@doe.gov",
+          EMAIL: "jon@doe.gov"
         },
         {
           ID: "TESTB",
-          EMAIL: "doen@jon.gov",
-        },
-      ]),
+          EMAIL: "doen@jon.gov"
+        }
+      ])
   })
 )
 
@@ -37,10 +37,9 @@ describe("initial behavior", () => {
     parent.innerHTML = ""
   })
 
-  test("<select-vendor> main node exists", () => {
-    customElements
-      .whenDefined("select-vendor")
-      .then(expect(selectVendor.parent).toBeDefined())
+  test("<select-vendor> main node exists", async () => {
+    await customElements.whenDefined("select-vendor")
+    expect(selectVendor.parent).toBeDefined()
   })
 })
 
@@ -59,22 +58,21 @@ describe("functionality", () => {
     parent.innerHTML = ""
   })
 
-  it("fetches vendors", () => {
-    customElements.whenDefined("select-vendor").then(async () => {
-      await selectVendor.fetchVendors("TEST")
+  it("fetches vendors", async () => {
+    await customElements.whenDefined("select-vendor")
+    await selectVendor.fetchVendors("TEST")
 
-      expect(selectVendor.vendorsArray.length).toBe(2)
-    })
+    expect(selectVendor.vendorsArray.length).toBe(2)
   })
 
-  it("fills option list with the fetched values", () => {
-    customElements.whenDefined("select-vendor").then(async () => {
-      await selectVendor.fetchVendors("TEST")
-      selectVendor.fillOptionsList()
+  it("fills option list with the fetched values", async () => {
+    await customElements.whenDefined("select-vendor")
+    await selectVendor.fetchVendors("TEST")
+    selectVendor.fillOptionsList()
 
-      const firstOption =
-        selectVendor.optionsList.childNodes[0].querySelector("span")
-      expect(firstOption.textContent).toBe("@TESTA")
-    })
+    const firstOption =
+      selectVendor.optionsList.childNodes[0].querySelector("span")
+
+    expect(firstOption.textContent).toBe("@TESTA")
   })
 })

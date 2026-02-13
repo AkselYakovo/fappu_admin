@@ -21,19 +21,17 @@ describe("initial behavior", () => {
   })
 
   test("the existence of the main node", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      const node = pictureInput.root
+    await customElements.whenDefined("modal-picture-input")
+    const node = pictureInput.root
 
-      expect(node).toBeDefined()
-    })
+    expect(node).toBeDefined()
   })
 
   test("initial values", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      expect(pictureInput.scale).toBe(1)
-      expect(pictureInput.coords).toBeNull()
-      expect(pictureInput.file).toBeNull()
-    })
+    await customElements.whenDefined("modal-picture-input")
+    expect(pictureInput.scale).toBe(1)
+    expect(pictureInput.coords).toBeNull()
+    expect(pictureInput.file).toBeNull()
   })
 })
 
@@ -52,54 +50,51 @@ describe("file uploading", () => {
   })
 
   test("file upload", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      const mockPicture = new File([], "TEST.jpeg", { type: "image/jpeg" })
+    await customElements.whenDefined("modal-picture-input")
+    const mockPicture = new File([], "TEST.jpeg", { type: "image/jpeg" })
 
-      fireEvent.change(pictureInput.fileInputNode, {
-        target: {
-          files: [mockPicture],
-        },
-      })
-
-      expect(pictureInput.file).toBe(mockPicture)
+    fireEvent.change(pictureInput.fileInputNode, {
+      target: {
+        files: [mockPicture]
+      }
     })
+
+    expect(pictureInput.file).toBe(mockPicture)
   })
 
   it("prevents upload of an invalid file format", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      const mockPicture = new File([], "TEST.png", { type: "image/png" })
+    await customElements.whenDefined("modal-picture-input")
+    const mockPicture = new File([], "TEST.png", { type: "image/png" })
 
-      fireEvent.change(pictureInput.fileInputNode, {
-        target: {
-          files: [mockPicture],
-        },
-      })
-
-      expect(pictureInput.file).toBeNull()
+    fireEvent.change(pictureInput.fileInputNode, {
+      target: {
+        files: [mockPicture]
+      }
     })
+
+    expect(pictureInput.file).toBeNull()
   })
 
   it.skip("prevents upload of an overly heavy file", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let data = ""
-      const size = 3 * 1024 * 1024
+    await customElements.whenDefined("modal-picture-input")
+    let data = ""
+    const size = 3 * 1024 * 1024
 
-      for (let i = 0; i < size; i++) {
-        data += "0"
-      }
+    for (let i = 0; i < size; i++) {
+      data += "0"
+    }
 
-      const mockPicture = new Blob([data], {
-        type: "image/jpeg",
-      })
-
-      fireEvent.change(pictureInput.fileInputNode, {
-        target: {
-          files: [mockPicture],
-        },
-      })
-
-      expect(pictureInput.file).toBeNull()
+    const mockPicture = new Blob([data], {
+      type: "image/jpeg"
     })
+
+    fireEvent.change(pictureInput.fileInputNode, {
+      target: {
+        files: [mockPicture]
+      }
+    })
+
+    expect(pictureInput.file).toBeNull()
   })
 })
 
@@ -125,8 +120,8 @@ describe("picture transformations", () => {
 
     fireEvent.change(pictureInput.fileInputNode, {
       target: {
-        files: [mockedPicture],
-      },
+        files: [mockedPicture]
+      }
     })
   })
 
@@ -135,107 +130,101 @@ describe("picture transformations", () => {
   })
 
   it("zooms in the image", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
 
-      for (let i = 0; i < 3; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe("1.3")
-    })
+    expect(actualScale).toBe("1.3")
   })
 
   it("zooms in the image (max)", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
-      const tooManyTimes = 15
-      const maxScale = "2.0"
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
+    const tooManyTimes = 15
+    const maxScale = "2.0"
 
-      for (let i = 0; i < tooManyTimes; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < tooManyTimes; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe(maxScale)
-    })
+    expect(actualScale).toBe(maxScale)
   })
 
   it("zooms in the image (random 1-9 number)", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
-      const randomNumber = Number.parseInt(Math.random() * 10)
-      const expectedScale = "1" + "." + randomNumber
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
+    const randomNumber = Number.parseInt(Math.random() * 10)
+    const expectedScale = "1" + "." + randomNumber
 
-      for (let i = 0; i < randomNumber; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < randomNumber; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe(expectedScale)
-    })
+    expect(actualScale).toBe(expectedScale)
   })
 
   it("zooms out the image", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
 
-      for (let i = 0; i < 5; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      for (let i = 0; i < 5; i++) {
-        fireEvent.click(pictureInput.controls.zoomOut)
-      }
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(pictureInput.controls.zoomOut)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe("1.0")
-    })
+    expect(actualScale).toBe("1.0")
   })
 
   it("zooms out the image (max)", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
-      const tooManyTimes = 15
-      const minScale = "1.0"
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
+    const tooManyTimes = 15
+    const minScale = "1.0"
 
-      for (let i = 0; i < 5; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      for (let i = 0; i < tooManyTimes; i++) {
-        fireEvent.click(pictureInput.controls.zoomOut)
-      }
+    for (let i = 0; i < tooManyTimes; i++) {
+      fireEvent.click(pictureInput.controls.zoomOut)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe(minScale)
-    })
+    expect(actualScale).toBe(minScale)
   })
 
   it("zooms out the image (random 1-9 number)", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      let actualScale = null
-      const randomNumber = Number.parseInt(Math.random() * 8) + 1
-      const expectedScale = "1" + "." + (10 - randomNumber)
+    await customElements.whenDefined("modal-picture-input")
+    let actualScale = null
+    const randomNumber = Number.parseInt(Math.random() * 8) + 1
+    const expectedScale = "1" + "." + (10 - randomNumber)
 
-      for (let i = 0; i < 10; i++) {
-        fireEvent.click(pictureInput.controls.zoomIn)
-      }
+    for (let i = 0; i < 10; i++) {
+      fireEvent.click(pictureInput.controls.zoomIn)
+    }
 
-      for (let i = 0; i < randomNumber; i++) {
-        fireEvent.click(pictureInput.controls.zoomOut)
-      }
+    for (let i = 0; i < randomNumber; i++) {
+      fireEvent.click(pictureInput.controls.zoomOut)
+    }
 
-      actualScale = pictureInput.zoom.getScale()
+    actualScale = pictureInput.zoom.getScale()
 
-      expect(actualScale).toBe(expectedScale)
-    })
+    expect(actualScale).toBe(expectedScale)
   })
 })
 
@@ -254,20 +243,19 @@ describe("flushing", () => {
   })
 
   it("flushes out the file and settings", async () => {
-    await customElements.whenDefined("modal-picture-input").then(() => {
-      const mockPicture = new File([], "TEST.jpeg", { type: "image/jpeg" })
+    await customElements.whenDefined("modal-picture-input")
+    const mockPicture = new File([], "TEST.jpeg", { type: "image/jpeg" })
 
-      fireEvent.change(pictureInput.fileInputNode, {
-        target: {
-          files: [mockPicture],
-        },
-      })
-
-      fireEvent.click(pictureInput.controls.remove)
-
-      expect(pictureInput.file).toBeNull()
-      expect(pictureInput.coords).toBeNull()
-      expect(pictureInput.zoom.getScale()).toBe("1.0")
+    fireEvent.change(pictureInput.fileInputNode, {
+      target: {
+        files: [mockPicture]
+      }
     })
+
+    fireEvent.click(pictureInput.controls.remove)
+
+    expect(pictureInput.file).toBeNull()
+    expect(pictureInput.coords).toBeNull()
+    expect(pictureInput.zoom.getScale()).toBe("1.0")
   })
 })
