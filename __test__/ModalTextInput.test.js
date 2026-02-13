@@ -23,30 +23,27 @@ describe("initial behavior", () => {
     parent.innerHTML = ""
   })
 
-  it("sets correct placeholder string", () => {
-    customElements.whenDefined("modal-text-input").then(() => {
-      const placeholder = textInput.field.getAttribute("placeholder")
+  it("sets correct placeholder string", async () => {
+    await customElements.whenDefined("modal-text-input")
+    const placeholder = textInput.field.getAttribute("placeholder")
 
-      expect(placeholder).toBe(placeholderText)
-    })
+    expect(placeholder).toBe(placeholderText)
   })
 
-  it("sets correct field's name", () => {
-    customElements.whenDefined("modal-text-input").then(() => {
-      const fieldName = textInput.field.getAttribute("name")
+  it("sets correct field's name", async () => {
+    await customElements.whenDefined("modal-text-input")
+    const fieldName = textInput.field.getAttribute("name")
 
-      expect(fieldName).toBe(textFieldName)
-    })
+    expect(fieldName).toBe(textFieldName)
   })
 
-  it("sets value correctly", () => {
-    customElements.whenDefined("modal-text-input").then(() => {
-      const initialValue = "DEFAULT"
+  it("sets value correctly", async () => {
+    const initialValue = "DEFAULT"
+    await customElements.whenDefined("modal-text-input")
 
-      textInput.value = initialValue
+    textInput.value = initialValue
 
-      expect(textInput.field.value).toBe(initialValue)
-    })
+    expect(textInput.field.value).toBe(initialValue)
   })
 })
 
@@ -67,45 +64,42 @@ describe("default functionality", () => {
   test("typing of a valid string", async () => {
     const validString = "TEST"
 
-    await customElements.whenDefined("modal-text-input").then(async () => {
-      await userEvent.type(textInput.field, validString, {
-        delay: 25,
-      })
-
-      expect(textInput.field.value).toBe(validString)
+    await customElements.whenDefined("modal-text-input")
+    await userEvent.type(textInput.field, validString, {
+      delay: 25
     })
+
+    expect(textInput.field.value).toBe(validString)
   })
 
   test("typing of valid keys", async () => {
     const validString = "TEST"
 
-    await customElements.whenDefined("modal-text-input").then(async () => {
-      await userEvent.type(textInput.field, validString, {
-        delay: 25,
-      })
-
-      // trigger three keystrokes of Backspace
-      await userEvent.type(textInput.field, "{Backspace}")
-      await userEvent.type(textInput.field, "{Backspace}")
-      await userEvent.type(textInput.field, "{Backspace}")
-
-      expect(textInput.field.value).toBe(
-        validString.substring(0, validString.length - 3)
-      )
+    await customElements.whenDefined("modal-text-input")
+    await userEvent.type(textInput.field, validString, {
+      delay: 25
     })
+
+    // trigger three keystrokes of Backspace
+    await userEvent.type(textInput.field, "{Backspace}")
+    await userEvent.type(textInput.field, "{Backspace}")
+    await userEvent.type(textInput.field, "{Backspace}")
+
+    expect(textInput.field.value).toBe(
+      validString.substring(0, validString.length - 3)
+    )
   })
 
   test("typing of invalid keys", async () => {
     const invalidString = "TE3ST STR!NG@"
     const finalString = "TESTSTRNG"
 
-    await customElements.whenDefined("modal-text-input").then(async () => {
-      await userEvent.type(textInput.field, invalidString, {
-        delay: 25,
-      })
-
-      expect(textInput.field.value).toBe(finalString)
+    await customElements.whenDefined("modal-text-input")
+    await userEvent.type(textInput.field, invalidString, {
+      delay: 25
     })
+
+    expect(textInput.field.value).toBe(finalString)
   })
 })
 
@@ -125,15 +119,15 @@ describe("custom functionality", () => {
 
   it("sets custom accepted keys", async () => {
     const string = "TEST $TRING@"
-    await customElements.whenDefined("modal-text-input").then(async () => {
-      const validKeys = /\s|[a-z]|@|\$|Backspace/i
+    const validKeys = /\s|[a-z]|@|\$|Backspace/i
 
-      textInput.setAllowedKeys(validKeys)
+    await customElements.whenDefined("modal-text-input")
 
-      await userEvent.type(textInput.field, string)
+    textInput.setAllowedKeys(validKeys)
 
-      expect(textInput.field.value).toBe(string)
-    })
+    await userEvent.type(textInput.field, string)
+
+    expect(textInput.field.value).toBe(string)
   })
 
   it("sets a custom validation Regex", async () => {
@@ -141,21 +135,20 @@ describe("custom functionality", () => {
     const validString = "TEST"
     const invalidString = "LONGSTRING"
 
-    await customElements.whenDefined("modal-text-input").then(async () => {
-      textInput.setValidationRegex(validationRegex)
+    await customElements.whenDefined("modal-text-input")
+    textInput.setValidationRegex(validationRegex)
 
-      await userEvent.type(textInput.field, invalidString, {})
-      await userEvent.tab()
+    await userEvent.type(textInput.field, invalidString, {})
+    await userEvent.tab()
 
-      expect(textInput.field.value).toBe("")
+    expect(textInput.field.value).toBe("")
 
-      // get rid of existing previous string
-      for await (let i of Array.from({ length: invalidString.length }))
-        await userEvent.type(textInput.field, "{Backspace}")
+    // get rid of existing previous string
+    for await (let i of Array.from({ length: invalidString.length }))
+      await userEvent.type(textInput.field, "{Backspace}")
 
-      await userEvent.type(textInput.field, validString)
+    await userEvent.type(textInput.field, validString)
 
-      expect(textInput.field.value).toBe(validString)
-    })
+    expect(textInput.field.value).toBe(validString)
   })
 })
