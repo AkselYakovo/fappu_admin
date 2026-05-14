@@ -2,7 +2,7 @@ RewriteEngine On
 
 # API Router Controller
 RewriteCond %{REQUEST_URI} ^/v1/(.*)$ [NC]
-RewriteRule ^ /php/router.php [L]
+RewriteRule ^ /php/router.php [END]
 
 # Internal Rewriting of `/<SECTION>`
 RewriteCond %{REQUEST_URI} ^/(\w*)$ [NC]
