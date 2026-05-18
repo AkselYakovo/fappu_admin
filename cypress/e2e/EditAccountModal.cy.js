@@ -2,20 +2,24 @@ describe("basic functionality", () => {
   const accountID = "XXX-25A1B2"
 
   beforeEach(() => {
-    cy.intercept("POST", Cypress.env("API_HUB_URI"), (req) => {
-      req.reply({
-        SITE_CODE: "TEST",
-        ACCOUNT_ID: "XXX-25A1B2",
-        ACCOUNT_NICK: "JohnDoe",
-        ACCOUNT_PASS: "superman",
-        PRICE_PAID: "99.99",
-        WARRANTY_BEGINS: "2025-01-01",
-        WARRANTY_ENDS: "2025-01-31",
-        N_SOLD: 0,
-        N_AVAILABLE: 4,
-        SITE_URL: "test.com",
-      })
-    }).as("accountRequest")
+    cy.intercept(
+      "GET",
+      Cypress.env("API_URI") + "/accounts/" + accountID,
+      (req) => {
+        req.reply({
+          SITE_CODE: "TEST",
+          ACCOUNT_ID: "XXX-25A1B2",
+          ACCOUNT_NICK: "JohnDoe",
+          ACCOUNT_PASS: "superman",
+          PRICE_PAID: "99.99",
+          WARRANTY_BEGINS: "2025-01-01",
+          WARRANTY_ENDS: "2025-01-31",
+          N_SOLD: 0,
+          N_AVAILABLE: 4,
+          SITE_URL: "test.com",
+        })
+      }
+    ).as("accountRequest")
 
     cy.visit(Cypress.env("EDITACCOUNTMODAL_MOCKUP_URI"))
     cy.get("edit-account-modal", { timeout: 5000 })
@@ -132,7 +136,9 @@ describe("basic functionality", () => {
   })
 
   it("prevents form submission if there exists no changes on fields", () => {
-    cy.intercept("POST", Cypress.env("API_HUB_URI")).as("submitRequest")
+    cy.intercept("PUT", Cypress.env("API_URI") + "accounts/" + accountID).as(
+      "submitRequest"
+    )
     cy.get("edit-account-modal").then(($modal) => {
       const modal = $modal[0]
       modal.setAttribute("account", accountID)
@@ -164,20 +170,24 @@ describe("how does the modal react to modifications of its initial state", () =>
   const price_mock = "77.77"
 
   beforeEach(() => {
-    cy.intercept("POST", Cypress.env("API_HUB_URI"), (req) => {
-      req.reply({
-        SITE_CODE: "TEST",
-        ACCOUNT_ID: "XXX-25A1B2",
-        ACCOUNT_NICK: "JohnDoe",
-        ACCOUNT_PASS: "superman",
-        PRICE_PAID: "99.99",
-        WARRANTY_BEGINS: "2025-01-01",
-        WARRANTY_ENDS: "2025-01-31",
-        N_SOLD: 0,
-        N_AVAILABLE: 4,
-        SITE_URL: "test.com",
-      })
-    }).as("accountRequest")
+    cy.intercept(
+      "GET",
+      Cypress.env("API_URI") + "/accounts/" + accountID,
+      (req) => {
+        req.reply({
+          SITE_CODE: "TEST",
+          ACCOUNT_ID: "XXX-25A1B2",
+          ACCOUNT_NICK: "JohnDoe",
+          ACCOUNT_PASS: "superman",
+          PRICE_PAID: "99.99",
+          WARRANTY_BEGINS: "2025-01-01",
+          WARRANTY_ENDS: "2025-01-31",
+          N_SOLD: 0,
+          N_AVAILABLE: 4,
+          SITE_URL: "test.com",
+        })
+      }
+    ).as("accountRequest")
 
     cy.visit(Cypress.env("EDITACCOUNTMODAL_MOCKUP_URI"))
     cy.get("edit-account-modal", { timeout: 5000 })

@@ -1,6 +1,6 @@
 describe("basic functionality", () => {
-  before(() => {
-    cy.intercept("POST", Cypress.env("API_HUB_URI"), (req) => {
+  beforeEach(() => {
+    cy.intercept("GET", Cypress.env("API_URI") + "/websites", (req) => {
       req.reply([
         {
           ID: "TEST_A",
@@ -24,9 +24,6 @@ describe("basic functionality", () => {
         },
       ])
     })
-  })
-
-  beforeEach(() => {
     cy.visit(Cypress.env("NEWACCOUNTMODAL_MOCKUP_URI"))
     cy.get("new-account-modal", { timeout: 5000 })
     cy.get("button.open").click().wait(1000)
